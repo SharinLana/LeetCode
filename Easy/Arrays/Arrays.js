@@ -114,9 +114,9 @@ console.log(decompressRLElist([1, 2, 3, 4])); // [2,4,4,4]
 console.log(decompressRLElist([1, 1, 2, 3])); // [1,3,3]
 
 // * 5. Count Equal and Divisible Pairs in an Array ------------------------------
-// Given a 0-indexed integer array nums of length n and an integer k, 
-//return the number of pairs (i, j) where 0 <= i < j < n, 
-//such that nums[i] == nums[j] and (i * j) is divisible by k.
+// Given a 0-indexed integer array nums of length n and an integer k,
+// return the number of pairs (i, j) where 0 <= i < j < n,
+// such that nums[i] == nums[j] and (i * j) is divisible by k.
 // Explanation:
 // There are 4 pairs that meet all the requirements:
 // - nums[0] == nums[6], and 0 * 6 == 0, which is divisible by 2.
@@ -124,11 +124,25 @@ console.log(decompressRLElist([1, 1, 2, 3])); // [1,3,3]
 // - nums[2] == nums[4], and 2 * 4 == 8, which is divisible by 2.
 // - nums[3] == nums[4], and 3 * 4 == 12, which is divisible by 2.
 
- var countPairs = function (nums, k) {};
+var countPairs = function (nums, k) {
+  let pairCounter = [];
 
-console.log(countPairs([1, 2, 3, 4], 1)); //
-console.log(countPairs([3, 1, 2, 2, 2, 1, 3], 2)); //
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] === nums[j] && ((i * j) % k) === 0) {
+        pairCounter.push([nums[i], nums[j], i * j]);
+      }
+    }
+  }
 
+  return pairCounter;
+};
+
+console.log(countPairs([1, 2, 3, 4], 1)); // 0
+console.log(countPairs([3, 1, 2, 2, 2, 1, 3], 2)); // 4
+console.log(
+  countPairs([5, 5, 9, 2, 5, 5, 9, 2, 2, 5, 5, 6, 2, 2, 5, 2, 5, 4, 3], 7)
+); // 18
 
 // ! =============== Simulation Problems ===================
 
