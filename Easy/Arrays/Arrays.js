@@ -144,6 +144,94 @@ console.log(
   countPairs([5, 5, 9, 2, 5, 5, 9, 2, 2, 5, 5, 6, 2, 2, 5, 2, 5, 4, 3], 7)
 ); // 18
 
+// * 6. Number of Rectangles That Can Form The Largest Square ---------------------
+// You are given an array of rectangles
+// where rectangles[i] = [li, wi] represents the ith rectangle of length li and width wi.
+// You can cut the ith rectangle to form a square with a side length of k
+// if both k <= li and k <= wi.
+// For example, if you have a rectangle [4,6],
+// you can cut it to get a square with a side length of at most 4.
+// Let maxLen be the side length of the largest square you can obtain
+// from any of the given rectangles.
+// Return the number of rectangles that can make a square with a side length of maxLen.
+// Explanation:
+// The largest squares you can get from each rectangle are of lengths [5,3,5,5].
+// The largest possible square is of length 5, and you can get it out of 3 rectangles.
+
+// O(2N)
+var countGoodRectangles = function (rectangles) {
+  let maxLen = 0;
+  let result = 0;
+
+  // Find the largest of the smallest numbers from the sub-arrays
+  for (let subArr of rectangles) {
+    let smallest = Math.min.apply(null, subArr);
+    maxLen = maxLen < smallest ? smallest : maxLen;
+  }
+
+  // Count how many squares can be made with this length out of the entered rectangle
+  for (let i = 0; i < rectangles.length; i++) {
+    if (rectangles[i][0] >= maxLen && rectangles[i][1] >= maxLen) {
+      result++;
+    }
+  }
+
+  return result;
+};
+
+console.log(
+  countGoodRectangles([
+    [5, 8],
+    [3, 9],
+    [5, 12],
+    [16, 5],
+  ])
+); // 3
+console.log(
+  countGoodRectangles([
+    [2, 3],
+    [3, 7],
+    [4, 3],
+    [3, 7],
+  ])
+); // 3
+
+// * 7. Find Numbers With Even Number of Digits ---------------------
+// Given an array nums of integers, return how many of them contain an even number of digits.
+// Explanation:
+// 12 contains 2 digits (even number of digits).
+// 345 contains 3 digits (odd number of digits).
+// 2 contains 1 digit (odd number of digits).
+// 6 contains 1 digit (odd number of digits).
+// 7896 contains 4 digits (even number of digits).
+// Therefore only 12 and 7896 contain an even number of digits.
+
+// O(N)
+var findNumbers = function (nums) {
+  let counter = 0;
+
+  for (let elem of nums) {
+    if (elem.toString().length % 2 === 0) {
+      counter++;
+    } else {
+      continue;
+    }
+  }
+
+  return counter;
+
+  // RECURSIVE SOLUTION (not that efficient as the previous one)
+  // Add counter=0 as a second parameter to the findNumbers function
+  if (nums.length === 0) return counter;
+  let length = nums[0].toString().length;
+  length % 2 === 0 ? (counter += 1) : counter;
+
+  return findNumbers(nums.slice(1), counter);
+};
+
+console.log(findNumbers([12, 345, 2, 6, 7896])); // 2
+console.log(findNumbers([555, 901, 482, 1771])); // 1
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
