@@ -125,12 +125,12 @@ console.log(decompressRLElist([1, 1, 2, 3])); // [1,3,3]
 // - nums[3] == nums[4], and 3 * 4 == 12, which is divisible by 2.
 
 var countPairs = function (nums, k) {
-  let pairCounter = [];
+  let pairCounter = 0;
 
   for (let i = 0; i < nums.length; i++) {
     for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] === nums[j] && ((i * j) % k) === 0) {
-        pairCounter.push([nums[i], nums[j], i * j]);
+      if (nums[i] === nums[j] && (i * j) % k === 0) {
+        pairCounter++;
       }
     }
   }
