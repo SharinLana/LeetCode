@@ -232,6 +232,155 @@ var findNumbers = function (nums) {
 console.log(findNumbers([12, 345, 2, 6, 7896])); // 2
 console.log(findNumbers([555, 901, 482, 1771])); // 1
 
+// * 8. Number of Students Doing Homework at a Given Time ---------------------
+// Given two integer arrays startTime and endTime and given an integer queryTime.
+// The ith student started doing their homework at the time startTime[i]
+// and finished it at time endTime[i].
+// Return the number of students doing their homework at time queryTime.
+// More formally, return the number of students
+// where queryTime lays in the interval [startTime[i], endTime[i]] inclusive.
+
+// Input: startTime = [1,2,3], endTime = [3,2,7], queryTime = 4
+// Output: 1
+// Explanation:
+// We have 3 students where:
+// The first student started doing homework at time 1 and finished at time 3 and wasn't doing anything at time 4.
+// The second student started doing homework at time 2 and finished at time 2 and also wasn't doing anything at time 4.
+// The third student started doing homework at time 3 and finished at time 7 and was the only student doing homework at time 4.
+
+// O(N + M)
+var busyStudent = function (startTime, endTime, queryTime) {
+  let numberOfStudents = 0;
+
+  for (let i = 0; i < startTime.length; i++) {
+    if (startTime[i] <= queryTime && endTime[i] >= queryTime) {
+      numberOfStudents++;
+    }
+  }
+  return numberOfStudents;
+};
+
+console.log(busyStudent([1, 2, 3], [3, 2, 7], 4)); // 1
+console.log(busyStudent([4], [4], 4)); // 1
+
+// * 9. Smallest Index With Equal Value ---------------------
+// Given a 0-indexed integer array nums,
+// return the smallest index i of nums such that i mod 10 == nums[i],
+// or -1 if such index does not exist.
+// x mod y denotes the remainder when x is divided by y.
+
+// Input: nums = [0,1,2]
+// Output: 0
+// Explanation:
+// i=0: 0 mod 10 = 0 == nums[0].
+// i=1: 1 mod 10 = 1 == nums[1].
+// i=2: 2 mod 10 = 2 == nums[2].
+// All indices have i mod 10 == nums[i], so we return the smallest index 0.
+
+// O(N) in the worst case
+var smallestEqual = function (nums) {
+  for (let i = 0; i < nums.length; i++) {
+    if (i % 10 == nums[i]) {
+      return i;
+    }
+  }
+  return -1;
+};
+
+console.log(smallestEqual([0, 1, 2])); // 0
+console.log(smallestEqual([4, 3, 2, 1])); // 2
+console.log(smallestEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 0])); // -1
+
+// * 10. Remove One Element to Make the Array Strictly Increasing ---------------------
+// Given a 0-indexed integer array nums,
+// return true if it can be made strictly increasing after removing exactly one element,
+// or false otherwise.
+// If the array is already strictly increasing, return true.
+// The array nums is strictly increasing if nums[i - 1] < nums[i]
+// for each index (1 <= i < nums.length).
+
+// Input: nums = [2,3,1,2]
+// Output: false
+// Explanation:
+// [3,1,2] is the result of removing the element at index 0.
+// [2,1,2] is the result of removing the element at index 1.
+// [2,3,2] is the result of removing the element at index 2.
+// [2,3,1] is the result of removing the element at index 3.
+// No resulting array is strictly increasing, so return false.
+
+function canBeIncreasing(nums) {
+  // Cases:
+  // 1. Array has only 2 elements = true, (if we delete 1 elem, it will be arranged in a perfect order)
+  // 2. All elements are the same = false
+  // 3. Array is already in a perfect increasing order = true
+  // 4. If the highest element is the first in the array:
+  //    a. If 2 following elements are in the increasing order = true
+  //    b. If not, compare the current element to the n+2 element:
+  //      - If the current element is lower than the n+2 element = true
+  //      - else = false;
+  // 5. If the lowest element is the last in the array = true;
+  // 6. Middle cases (when n-1 and n+2 are available):
+  //    a. Check if the rest of the array is sorted properly. If not, return false
+  //    b. If n-1 is lower than n+1 = true
+  //    c. If not, compare the current element to the n + 2 element:
+  //        - if the current element is lower than the n+2 = true
+
+  if (nums.length === 2) return true;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] >= nums[i + 1]) {
+      // Check if the rest of the array is sorted properly
+      for (let j = i + 1; j < nums.length; j++) {
+        if (nums[j] >= nums[j + 1]) {
+          return false;
+        }
+      }
+      // If the rest of the array is sorted properly:
+      // The first element case:
+      if (i === 0) {
+        if (nums[i + 1] < nums[i + 2]) {
+          return true;
+        } else {
+          if (nums[i] < nums[i + 2]) {
+            return true;
+          }
+        }
+      }
+      // The last element case:
+      else if (i + 1 === nums.length - 1) {
+        return true;
+      }
+      // Middle case:
+      else {
+        if (nums[i - 1] < nums[i + 1]) {
+          return true;
+        } else {
+          if (nums[i] < nums[i + 2]) {
+            return true;
+          }
+        }
+      }
+    } else {
+      continue;
+    }
+
+    return false;
+  }
+
+  return true;
+}
+
+console.log(canBeIncreasing([13, 205, 553, 527, 790, 238])); // false
+console.log(canBeIncreasing([89, 384, 691, 680, 111, 756])); // false
+console.log(canBeIncreasing([2, 3, 1, 2])); // false
+console.log(canBeIncreasing([1, 1, 1])); // false
+console.log(canBeIncreasing([1, 2, 10, 5, 7])); // true
+console.log(canBeIncreasing([1, 2, 3])); // true
+console.log(canBeIncreasing([1, 1])); // true
+console.log(canBeIncreasing([100, 21, 100])); // true
+console.log(canBeIncreasing([105, 924, 32, 968])); // true
+console.log(canBeIncreasing([512, 867, 904, 997, 403])); // true
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
