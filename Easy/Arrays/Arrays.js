@@ -381,6 +381,81 @@ console.log(canBeIncreasing([100, 21, 100])); // true
 console.log(canBeIncreasing([105, 924, 32, 968])); // true
 console.log(canBeIncreasing([512, 867, 904, 997, 403])); // true
 
+// * 11. Replace Elements With Greatest Element on Right Side ---------------------
+// Given an array arr, replace every element in that array
+// with the greatest element among the elements to its right,
+// and replace the last element with -1.
+// After doing so, return the array.
+
+// Example:
+// Input: arr = [17,18,5,4,6,1]
+// Output: [18,6,6,6,1,-1]
+// Explanation:
+// - index 0 --> the greatest element to the right of index 0 is index 1 (18).
+// - index 1 --> the greatest element to the right of index 1 is index 4 (6).
+// - index 2 --> the greatest element to the right of index 2 is index 4 (6).
+// - index 3 --> the greatest element to the right of index 3 is index 4 (6).
+// - index 4 --> the greatest element to the right of index 4 is index 5 (1).
+// - index 5 --> there are no elements to the right of index 5, so we put -1.
+
+var replaceElements = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (i === arr.length - 1) {
+      arr[i] = -1;
+    } else {
+      let max = Math.max.apply(null, arr.slice(i + 1));
+      arr[i] = max;
+    }
+  }
+  return arr;
+};
+
+console.log(replaceElements([17, 18, 5, 4, 6, 1])); // [18,6,6,6,1,-1]
+console.log(replaceElements([400])); // [-1]
+
+// * 12. Valid Mountain Array ---------------------
+// Given an array of integers arr,
+// return true if and only if it is a valid mountain array.
+// Recall that arr is a mountain array if and only if:
+// arr.length >= 3
+// There exists some i with 0 < i < arr.length - 1 such that:
+// arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+// arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+
+var validMountainArray = function (arr) {
+  if (arr.length < 3) return false;
+
+  let increasing = false;
+  let decreasing = false;
+
+  // If we decreasing before increasing, return false
+  // If we start from decreasing, return false
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < arr[i + 1]) {
+      // If decreasing before increasing
+      if (decreasing) {
+        return false;
+      }
+      increasing = true;
+    } else if (arr[i] > arr[i + 1]) {
+      decreasing = true;
+    } else if (arr[i] === arr[i + 1]) {
+      return false;
+    }
+  }
+
+  if ((decreasing && !increasing) || (increasing && !decreasing)) return false;
+  return true;
+};
+
+console.log(validMountainArray([2, 1])); // false (only decreasing numbers)
+console.log(validMountainArray([3, 5, 5])); // false (increasing, then plato)
+console.log(validMountainArray([0, 3, 2, 1])); // true (increasing, then decreasing)
+console.log(validMountainArray([2, 0, 2])); // false (decreasing, then increasing)
+console.log(validMountainArray([0, 1, 2, 4, 2, 1])); // true
+console.log(validMountainArray([0, 1, 2, 1, 2])); // false
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
