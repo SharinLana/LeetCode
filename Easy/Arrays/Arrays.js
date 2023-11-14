@@ -456,6 +456,37 @@ console.log(validMountainArray([2, 0, 2])); // false (decreasing, then increasin
 console.log(validMountainArray([0, 1, 2, 4, 2, 1])); // true
 console.log(validMountainArray([0, 1, 2, 1, 2])); // false
 
+// * 13. Max Value of an Order Triplet ---------------------
+// You are given a 0-indexed integer array nums.
+// Return the maximum value over ALL POSSIBLE triplets of indices (i, j, k)
+// such that i < j < k.
+// If all such triplets have a negative value, return 0.
+// The value of a triplet of indices (i, j, k) is equal to (nums[i] - nums[j]) * nums[k].
+
+// Example:
+// Input: nums = [12,6,1,2,7]
+// Output: 77
+// Explanation: The value of the triplet (0, 2, 4) is (nums[0] - nums[2]) * nums[4] = 77.
+// It can be shown that there are no ordered triplets of indices
+// with a value greater than 77.
+
+var maximumTripletValue = function (nums) {
+  let res = 0;
+  let count = 0;
+  for (let i = 0; i < nums.length - 2; i++) {
+    for (let j = i + 1; j < nums.length - 1; j++) {
+      count = (nums[i] - nums[j]) * Math.max(...nums.slice(j + 1));
+      if (count > res) res = count;
+    }
+  }
+  return res;
+};
+
+console.log(maximumTripletValue([12, 6, 1, 2, 7])); // 77
+console.log(maximumTripletValue([1, 10, 3, 4, 19])); // 133
+console.log(maximumTripletValue([1, 2, 3])); // 0
+console.log(maximumTripletValue([1000000, 1, 1000000])); // 999999000000
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
