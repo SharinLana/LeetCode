@@ -487,6 +487,106 @@ console.log(maximumTripletValue([1, 10, 3, 4, 19])); // 133
 console.log(maximumTripletValue([1, 2, 3])); // 0
 console.log(maximumTripletValue([1000000, 1, 1000000])); // 999999000000
 
+// * 14. Find Nearest Point That Has the Same X or Y Coordinate ---------------------
+// You are given two integers, x and y,
+// which represent your current location on a Cartesian grid: (x, y).
+// You are also given an array points where each points[i] = [ai, bi] represents
+// that a point exists at (ai, bi).
+// A point is valid if it shares the same x-coordinate
+// or the same y-coordinate as your location.
+// Return the index (0-indexed) of the valid point
+// with the smallest Manhattan distance from your current location.
+// If there are multiple, return the valid point with the smallest index.
+// If there are no valid points, return -1.
+
+// The Manhattan distance between two points (x1, y1) and (x2, y2)
+// is abs(x1 - x2) + abs(y1 - y2).
+
+// Example :
+// Input: x = 3, y = 4, points = [[1,2],[3,1],[2,4],[2,3],[4,4]]
+// Output: 2
+// Explanation: Of all the points, only [3,1], [2,4] and [4,4] are valid.
+// Of the valid points, [2,4] and [4,4] have the smallest Manhattan distance from your current location,
+// with a distance of 1.
+// [2,4] has the smallest index, so return 2.
+
+var nearestValidPoint = function (x, y, points) {
+  let smallestManhattanDistance;
+  let smallestIndex;
+
+  for (let i = 0; i < points.length; i++) {
+    if (points[i][0] === x || points[i][1] === y) {
+      let distance = getManhattanDistance(x, y, points[i][0], points[i][1]);
+
+      if (
+        smallestManhattanDistance === undefined ||
+        distance < smallestManhattanDistance
+      ) {
+        smallestManhattanDistance = distance;
+        smallestIndex = i;
+      }
+    }
+  }
+
+  return smallestIndex !== undefined ? smallestIndex : -1;
+};
+
+function getManhattanDistance(x1, y1, x2, y2) {
+  return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+}
+
+console.log(
+  nearestValidPoint(3, 4, [
+    [1, 2],
+    [3, 1],
+    [2, 4],
+    [2, 3],
+    [4, 4],
+  ])
+); // 2
+console.log(nearestValidPoint(3, 4, [[3, 4]])); // 0
+console.log(nearestValidPoint(3, 4, [[2, 3]])); // -1
+
+// * 15. Find All K-Distant Indices in an Array ---------------------
+// You are given a 0-indexed integer array nums and two integers key and k.
+// A k-distant index is an index i of nums for which there exists at least one index j
+// such that |i - j| <= k and nums[j] == key.
+// |i-j| means the same thing as abs(i-j).
+// Return a list of all k-distant indices sorted in increasing order.
+
+// Example:
+// Input: nums = [3,4,9,1,3,9,5], key = 9, k = 1
+// Output: [1,2,3,4,5,6]
+// Explanation: Here, nums[2] == key and nums[5] == key.
+// - For index 0, abs|0 - 2| > k and |0 - 5| > k, so there is no j where |0 - j| <= k and nums[j] == key. Thus, 0 is not a k-distant index.
+// - For index 1, abs|1 - 2| <= k and nums[2] == key, so 1 is a k-distant index.
+// - For index 2, abs|2 - 2| <= k and nums[2] == key, so 2 is a k-distant index.
+// - For index 3, abs|3 - 2| <= k and nums[2] == key, so 3 is a k-distant index.
+// - For index 4, abs|4 - 5| <= k and nums[5] == key, so 4 is a k-distant index.
+// - For index 5, abs|5 - 5| <= k and nums[5] == key, so 5 is a k-distant index.
+// - For index 6, abs|6 - 5| <= k and nums[5] == key, so 6 is a k-distant index.
+// Thus, we return [1,2,3,4,5,6] which is sorted in increasing order.
+
+// O(N * M)
+var findKDistantIndices = function (nums, key, k) {
+  let output = new Set();
+
+  for (let j = 0; j < nums.length; j++) {
+    if (nums[j] === key) {
+      for (let i = 0; i < nums.length; i++) {
+        if (Math.abs(i - j) <= k) {
+          output.add(i);
+        }
+      }
+    }
+  }
+
+  return [...output];
+}
+
+console.log(findKDistantIndices([3, 4, 9, 1, 3, 9, 5], 9, 1)); // [1,2,3,4,5,6]
+console.log(findKDistantIndices([2, 2, 2, 2, 2], 2, 2)); // [0,1,2,3,4]
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
