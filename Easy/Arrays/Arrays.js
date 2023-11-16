@@ -475,7 +475,7 @@ var maximumTripletValue = function (nums) {
   let count = 0;
   for (let i = 0; i < nums.length - 2; i++) {
     for (let j = i + 1; j < nums.length - 1; j++) {
-      count = (nums[i] - nums[j]) * Math.max(...nums.slice(j + 1));
+      count = (nums[i] - nums[j]) * Math.max(...nums.slice(j + 1)); // * METHOD!!!
       if (count > res) res = count;
     }
   }
@@ -582,10 +582,59 @@ var findKDistantIndices = function (nums, key, k) {
   }
 
   return [...output];
-}
+};
 
 console.log(findKDistantIndices([3, 4, 9, 1, 3, 9, 5], 9, 1)); // [1,2,3,4,5,6]
 console.log(findKDistantIndices([2, 2, 2, 2, 2], 2, 2)); // [0,1,2,3,4]
+
+// * 16. Defuse the Bomb ---------------------
+// You have a bomb to defuse, and your time is running out!
+// Your informer will provide you with a circular array code of length of n and a key k.
+
+// To decrypt the code, you must replace every number.
+// All the numbers are replaced simultaneously.
+// If k > 0, replace the ith number with the sum of the next k numbers.
+// If k < 0, replace the ith number with the sum of the previous k numbers.
+// If k == 0, replace the ith number with 0.
+// As code is circular, the next element of code[n-1] is code[0],
+// and the previous element of code[0] is code[n-1].
+
+// Given the circular array code and an integer key k,
+// return the decrypted code to defuse the bomb!
+
+// Example :
+// Input: code = [5,7,1,4], k = 3
+// Output: [12,10,16,13]
+// Explanation:
+// Each number is replaced by the sum of the next 3 numbers.
+// The decrypted code is [7+1+4, 1+4+5, 4+5+7, 5+7+1].
+// Notice that the numbers wrap around.
+
+var decrypt = function (code, k) {
+  let sum = 0;
+  let arr = [];
+
+  for (let i = 0; i < code.length; i++) {
+    for (let j = 1; j <= Math.abs(k); j++) {
+      if (k > 0) {
+        sum += code[(i + j) % code.length]; // Circle the array from left to right
+      } else if (k < 0) {
+        sum += code[Math.abs((i + (code.length - j)) % code.length)]; // Circle the array from right to left
+      } else {
+        code[i] = 0;
+        return code;
+      }
+    }
+
+    arr.push(sum);
+    sum = 0;
+  }
+  return arr;
+};
+
+console.log(decrypt([5, 7, 1, 4], 3)); // [12,10,16,13]
+console.log(decrypt([1,2,3,4], 0)); // [0,0,0,0]
+console.log(decrypt([2, 4, 9, 3], -2)); // [12,5,6,13]
 
 // ! =============== Simulation Problems ===================
 
