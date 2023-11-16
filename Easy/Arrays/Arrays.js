@@ -633,8 +633,65 @@ var decrypt = function (code, k) {
 };
 
 console.log(decrypt([5, 7, 1, 4], 3)); // [12,10,16,13]
-console.log(decrypt([1,2,3,4], 0)); // [0,0,0,0]
+console.log(decrypt([1, 2, 3, 4], 0)); // [0,0,0,0]
 console.log(decrypt([2, 4, 9, 3], -2)); // [12,5,6,13]
+
+// * 17. Minimum Sum of Mountain Triplets ---------------------
+// You are given a 0-indexed array nums of integers.
+
+// A triplet of indices (i, j, k) is a mountain if:
+// i < j < k
+// nums[i] < nums[j] and nums[k] < nums[j]
+// Return the minimum possible sum of a mountain triplet of nums.
+// If no such triplet exists, return -1.
+
+// Example:
+// Input: nums = [8,6,1,5,3]
+// Output: 9
+
+// Explanation:
+// Triplet (2, 3, 4) is a mountain triplet of sum 9 since:
+// - 2 < 3 < 4
+// - nums[2] < nums[3] and nums[4] < nums[3]
+// And the sum of this triplet is nums[2] + nums[3] + nums[4] = 9.
+// It can be shown that there are no mountain triplets with a sum of less than 9.
+
+var minimumSum = function (nums) {
+  let sum = Infinity;
+
+  for (let j = 1; j < nums.length - 1; j++) {
+    let a = nums[0];
+    let b = nums[j + 1];
+
+    for (let i = 0; i < j; i++) {
+      if (nums[i] < nums[j]) {
+        a = Math.min(a, nums[i]);
+      }
+    }
+
+    for (let i = j + 1; i < nums.length; i++) {
+      if (nums[i] < nums[j]) {
+        b = Math.min(b, nums[i]);
+      }
+    }
+
+    if (a < nums[j] && nums[j] > b) {
+      sum = Math.min(sum, a + nums[j] + b);
+    }
+  }
+  if (sum === Infinity) {
+    return -1;
+  }
+
+  return sum;
+};
+console.log(minimumSum([8, 6, 1, 5, 3])); // 9
+console.log(minimumSum([5, 4, 8, 7, 10, 2])); // 13
+console.log(minimumSum([6, 5, 4, 3, 4, 5])); // -1
+console.log(minimumSum([1, 2, 1])); // 4
+console.log(minimumSum([1, 1, 2, 1])); // 4
+console.log(minimumSum([1, 2, 3, 2])); // 6
+console.log(minimumSum([1, 2, 4, 3])); // 8
 
 // ! =============== Simulation Problems ===================
 
