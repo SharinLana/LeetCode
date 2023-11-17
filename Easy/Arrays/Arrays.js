@@ -693,6 +693,110 @@ console.log(minimumSum([1, 1, 2, 1])); // 4
 console.log(minimumSum([1, 2, 3, 2])); // 6
 console.log(minimumSum([1, 2, 4, 3])); // 8
 
+// * 18. Three Consecutive Odds ---------------------
+// Given an integer array arr,
+// return true if there are three consecutive odd numbers in the array.
+// Otherwise, return false.
+
+// Example:
+// Input: arr = [2,6,4,1]
+// Output: false
+// Explanation: There are no three consecutive odds.
+
+var threeConsecutiveOdds = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] % 2 !== 0 && arr[i + 2] !== undefined) {
+      // checking the next 2 numbers
+      if (arr[i + 1] % 2 !== 0 && arr[i + 2] % 2 !== 0) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
+console.log(threeConsecutiveOdds([1, 2, 34, 3, 4, 5, 7, 23, 12])); // true
+console.log(threeConsecutiveOdds([2, 6, 4, 1])); // false
+
+// * 19. Find Indices With Index and Value Difference ---------------------
+// You are given a 0-indexed integer array nums having length n,
+// an integer indexDifference, and an integer valueDifference.
+// Your task is to find two indices i and j, both in the range [0, n - 1],
+// that satisfy the following conditions:
+
+// abs(i - j) >= indexDifference, and
+// abs(nums[i] - nums[j]) >= valueDifference
+// Return an integer array answer, where answer = [i, j] if there are two such indices,
+// and answer = [-1, -1] otherwise.
+// If there are multiple choices for the two indices, return any of them.
+
+// Note: i and j may be equal.
+
+// Example :
+// Input: nums = [5,1,4,1], indexDifference = 2, valueDifference = 4
+// Output: [0,3]
+// Explanation: In this example, i = 0 and j = 3 can be selected.
+// abs(0 - 3) >= 2 and abs(nums[0] - nums[3]) >= 4.
+// Hence, a valid answer is [0,3].
+// [3,0] is also a valid answer.
+
+// O(n^2)
+var findIndices = function (nums, indexDifference, valueDifference) {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = indexDifference; j < nums.length; j++) {
+      if (
+        Math.abs(nums[i] - nums[j]) >= valueDifference &&
+        Math.abs(i - j) >= indexDifference
+      ) {
+        return [i, j];
+      }
+    }
+  }
+  return [-1, -1];
+};
+
+console.log(findIndices([5, 1, 4, 1], 2, 4)); // [0,3]
+console.log(findIndices([2, 1], 0, 0)); // [0,0]
+console.log(findIndices([1, 2, 3], 2, 4)); // [-1,-1]
+console.log(findIndices([0], 0, 0)); // [0, 0]
+console.log(findIndices([5, 10], 1, 2)); // [0,1]
+
+// * 20. Maximum Ascending Subarray Sum ---------------------
+// Given an array of positive integers nums,
+// return the maximum possible sum of an ascending subarray in nums.
+// A subarray is defined as a contiguous sequence of numbers in an array.
+
+// A subarray [numsl, numsl+1, ..., numsr-1, numsr] is ascending
+// if for all i where l <= i < r, nums[i]  < nums[i+1].
+// Note that a subarray of size 1 is ascending.
+
+// Example :
+// Input: nums = [10,20,30,5,10,50]
+// Output: 65
+// Explanation: [5,10,50] is the ascending subarray with the maximum sum of 65.
+
+// O(N)
+var maxAscendingSum = function (nums) {
+  let sum = 0;
+  let temp = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    temp += nums[i];
+
+    if (nums[i + 1] <= nums[i] || i === nums.length - 1) {
+      // (i === nums.length - 1) => without this expression the new round of iteration will not run
+      sum < temp ? (sum = temp) : sum;
+      temp = 0;
+    }
+  }
+
+  return sum;
+};
+
+console.log(maxAscendingSum([10, 20, 30, 5, 10, 50])); // 65
+// console.log(maxAscendingSum([10, 20, 30, 40, 50])); // 150
+// console.log(maxAscendingSum([12, 17, 15, 13, 10, 11, 12])); // 33
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
