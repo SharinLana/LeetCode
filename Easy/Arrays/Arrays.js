@@ -797,6 +797,70 @@ console.log(maxAscendingSum([10, 20, 30, 5, 10, 50])); // 65
 // console.log(maxAscendingSum([10, 20, 30, 40, 50])); // 150
 // console.log(maxAscendingSum([12, 17, 15, 13, 10, 11, 12])); // 33
 
+// * 21. Monotonic Array ---------------------
+// An array is monotonic if it is either monotone increasing or monotone decreasing.
+// An array nums is monotone increasing if for all i <= j, nums[i] <= nums[j].
+// An array nums is monotone decreasing if for all i <= j, nums[i] >= nums[j].
+// Given an integer array nums, return true if the given array is monotonic,
+// or false otherwise.
+
+var isMonotonic = function (nums) {
+  let min = Math.min(...nums);
+  let max = Math.max(...nums);
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[0] === min) {
+      if (nums[i] > nums[i + 1]) {
+        return false;
+      }
+    } else if (nums[0] === max) {
+      if (nums[i] < nums[i + 1]) {
+        return false;
+      }
+    }
+    // if the first element is neither max, no min
+    else {
+      return false;
+    }
+  }
+  return true;
+};
+
+console.log(isMonotonic([1, 2, 2, 3])); // true
+console.log(isMonotonic([6, 5, 4, 4])); // true
+console.log(isMonotonic([1, 3, 2])); // false
+console.log(isMonotonic([2, 2, 2, 1, 4, 5])); // false
+console.log(isMonotonic([2, 2, 2, 1, 4, 5])); // false
+
+// * 22. Element Appearing More Than 25% in Sorted Array ---------------------
+// Given an integer array sorted in non-decreasing order,
+// there is exactly one integer in the array that occurs more than 25% of the time,
+// return that integer.
+
+var findSpecialInteger = function (arr) {
+  let quarter = Math.ceil((25 * arr.length) / 100);
+  let counter = {};
+
+  for (let i = 0; i < arr.length; i++) {
+    counter[arr[i]] ? (counter[arr[i]] += 1) : (counter[arr[i]] = 1);
+  }
+
+  // looking for the biggest value in the counter hashTable
+  const max = Object.keys(counter).reduce(
+    (a, key) => Math.max(a, counter[key]),
+    -Infinity // initial max value
+  );
+
+  if (max >= quarter) {
+    const result = Object.keys(counter).filter((v) => counter[v] === max);
+    return Number(result);
+  }
+};
+
+console.log(findSpecialInteger([1, 2, 2, 6, 6, 6, 6, 7, 10])); // 6
+console.log(findSpecialInteger([1, 1])); // 1
+console.log(findSpecialInteger([6700, 8858, 8858, 8858, 8858])); // 8858
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
