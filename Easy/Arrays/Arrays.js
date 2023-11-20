@@ -861,6 +861,85 @@ console.log(findSpecialInteger([1, 2, 2, 6, 6, 6, 6, 7, 10])); // 6
 console.log(findSpecialInteger([1, 1])); // 1
 console.log(findSpecialInteger([6700, 8858, 8858, 8858, 8858])); // 8858
 
+// * 23. Count Hills and Valleys in an Array ---------------------
+// You are given a 0-indexed integer array nums.
+// An index i is part of a hill in nums if the closest non-equal neighbors of i
+// are smaller than nums[i].
+// Similarly, an index i is part of a valley in nums
+// if the closest non-equal neighbors of i are larger than nums[i].
+// Adjacent indices i and j are part of the same hill or valley if nums[i] == nums[j].
+// Note that for an index to be part of a hill or valley,
+// it must have a non-equal neighbor on both the left and right of the index.
+// Return the number of hills and valleys in nums.
+
+// Example:
+// Input: nums = [2,4,1,1,6,5]
+// Output: 3
+// Explanation:
+// At index 0: There is no non-equal neighbor of 2 on the left, so index 0 is neither a hill nor a valley.
+// At index 1: The closest non-equal neighbors of 4 are 2 and 1. Since 4 > 2 and 4 > 1, index 1 is a hill.
+// At index 2: The closest non-equal neighbors of 1 are 4 and 6. Since 1 < 4 and 1 < 6, index 2 is a valley.
+// At index 3: The closest non-equal neighbors of 1 are 4 and 6. Since 1 < 4 and 1 < 6, index 3 is a valley,
+// but note that it is part of the same valley as index 2.
+// At index 4: The closest non-equal neighbors of 6 are 1 and 5. Since 6 > 1 and 6 > 5, index 4 is a hill.
+// At index 5: There is no non-equal neighbor of 5 on the right, so index 5 is neither a hill nor a valley.
+// There are 3 hills and valleys so we return 3.
+
+// O(N + M)
+var countHillValley = function (nums) {
+  let arr = [];
+  let counter = 0;
+
+  for (elem of nums) {
+    if (arr[arr.length - 1] !== elem) {
+      arr.push(elem);
+    }
+  }
+
+  for (let i = 1; i < arr.length; i++) {
+    if (
+      (arr[i] > arr[i - 1] && arr[i] > arr[i + 1]) ||
+      (arr[i] < arr[i - 1] && arr[i] < arr[i + 1])
+    ) {
+      counter++;
+    }
+  }
+
+  return counter;
+};
+
+console.log(countHillValley([2, 4, 1, 1, 6, 5])); // 3
+console.log(countHillValley([6, 6, 5, 5, 4, 1])); // 0
+console.log(countHillValley([21, 21, 21, 2, 2, 2, 2, 21, 21, 45])); // 1
+console.log(countHillValley([5, 7, 7, 1, 7])); // 2
+
+// * 24. Check if All 1's Are at Least Length K Places Away ---------------------
+// Given a binary array nums and an integer k,
+// return true if all 1's are at least k places away from each other,
+// otherwise return false.
+
+// Example
+// Input: nums = [1,0,0,0,1,0,0,1], k = 2
+// Output: true
+// Explanation: Each of the 1s are at least 2 places away from each other.
+
+var kLengthApart = function (nums, k) {
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === 1) {
+      for (let j = i + 1; j <= i + k; j++) {
+        if (nums[j] === 1) {
+          return false;
+        }
+      }
+      i += k;
+    }
+  }
+  return true;
+};
+
+console.log(kLengthApart([1, 0, 0, 0, 1, 0, 0, 1], 2)); // true
+console.log(kLengthApart([1, 0, 0, 1, 0, 1], 2)); // false
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
