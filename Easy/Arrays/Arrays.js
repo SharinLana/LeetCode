@@ -990,20 +990,19 @@ var minimumRightShifts = function (nums) {
   let first = nums[0];
   let counter = 0;
 
-    while (last < first) {
-      nums.unshift(last);
-      nums.pop();
-      last = nums[nums.length - 1];
-      first = nums[0];
-      counter++;
+  while (last < first) {
+    nums.unshift(last);
+    nums.pop();
+    last = nums[nums.length - 1];
+    first = nums[0];
+    counter++;
 
-      if (isSorted(nums)) {
-        return counter;
-      }
+    if (isSorted(nums)) {
+      return counter;
     }
+  }
 
-    if (last > first && !isSorted(nums)) return -1;
-  
+  if (last > first && !isSorted(nums)) return -1;
 };
 
 function isSorted(arr) {
@@ -1023,8 +1022,8 @@ console.log(minimumRightShifts([2, 1, 4])); // -1
 console.log(minimumRightShifts([63, 51, 65, 87, 6, 17, 32, 14, 42, 46])); // -1
 
 // * 27. Minimum Distance to the Target Element ---------------------
-// Given an integer array nums (0-indexed) and two integers target and start, 
-// find an index i such that nums[i] == target and abs(i - start) is minimized. 
+// Given an integer array nums (0-indexed) and two integers target and start,
+// find an index i such that nums[i] == target and abs(i - start) is minimized.
 // Note that abs(x) is the absolute value of x.
 // Return abs(i - start).
 // It is guaranteed that target exists in nums.
@@ -1038,7 +1037,7 @@ var getMinDistance = function (nums, target, start) {
   let arr = [];
 
   for (let i = 0; i < nums.length; i++) {
-    if (nums[i] === target ) {
+    if (nums[i] === target) {
       arr.push(Math.abs(i - start));
     }
   }
@@ -1048,6 +1047,80 @@ var getMinDistance = function (nums, target, start) {
 console.log(getMinDistance([1, 2, 5, 4, 5], 5, 3)); // 1
 console.log(getMinDistance([1], 1, 0)); // 0
 console.log(getMinDistance([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 1, 0)); // 0
+
+// * 28. Maximum Difference Between Increasing Elements ---------------------
+// Given a 0-indexed integer array nums of size n,
+// find the maximum difference between nums[i] and nums[j]
+// (i.e., nums[j] - nums[i]), such that 0 <= i < j < n and nums[i] < nums[j].
+// Return the maximum difference. If no such i and j exists, return -1.
+
+// Example:
+// Input: nums = [7,1,5,4]
+// Output: 4
+// Explanation:
+// The maximum difference occurs with i = 1 and j = 2,
+// nums[j] - nums[i] = 5 - 1 = 4.
+// Note that with i = 1 and j = 0, the difference nums[j] - nums[i] = 7 - 1 = 6,
+// but i > j, so it is not valid.
+
+// O(N) id the array is sorted and O(N^2) if the array is unsorted
+var maximumDifference = function (nums) {
+  let max = -Infinity;
+
+  // If the input array is sorted in descending order,
+  // then there's no chance to find the positive max diff, so return -1
+  let descending = isDescending(nums);
+  if (descending) return -1;
+
+  // If the input array is sorted in ascending order,
+  // then the max difference will be between its 1st and last elements
+  let ascending = isAscending(nums);
+  if (ascending) return nums[nums.length - 1] - nums[0];
+
+  // If the array is unsorted, then use the nested loop
+  // to calculate the max difference
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      let diff = nums[j] - nums[i];
+      max = max > diff ? max : diff;
+    }
+  }
+
+  return max;
+};
+
+function isDescending(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < arr[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function isAscending(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > arr[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(maximumDifference([7, 1, 5, 4])); // 4
+console.log(maximumDifference([9, 4, 3, 2])); // -1
+console.log(maximumDifference([1, 5, 2, 10])); // 9
+console.log(
+  maximumDifference([
+    999, 997, 980, 976, 948, 940, 938, 928, 924, 917, 907, 907, 881, 878, 864,
+    862, 859, 857, 848, 840, 824, 824, 824, 805, 802, 798, 788, 777, 775, 766,
+    755, 748, 735, 732, 727, 705, 700, 697, 693, 679, 676, 644, 634, 624, 599,
+    596, 588, 583, 562, 558, 553, 539, 537, 536, 509, 491, 485, 483, 454, 449,
+    438, 425, 403, 368, 345, 327, 287, 285, 270, 263, 255, 248, 235, 234, 224,
+    221, 201, 189, 187, 183, 179, 168, 155, 153, 150, 144, 107, 102, 102, 87,
+    80, 57, 55, 49, 48, 45, 26, 26, 23, 15,
+  ])
+); // -1
 
 // ! =============== Simulation Problems ===================
 
