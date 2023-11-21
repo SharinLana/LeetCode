@@ -1022,6 +1022,33 @@ console.log(minimumRightShifts([1, 3, 5])); // 0
 console.log(minimumRightShifts([2, 1, 4])); // -1
 console.log(minimumRightShifts([63, 51, 65, 87, 6, 17, 32, 14, 42, 46])); // -1
 
+// * 27. Minimum Distance to the Target Element ---------------------
+// Given an integer array nums (0-indexed) and two integers target and start, 
+// find an index i such that nums[i] == target and abs(i - start) is minimized. 
+// Note that abs(x) is the absolute value of x.
+// Return abs(i - start).
+// It is guaranteed that target exists in nums.
+
+// Example :
+// Input: nums = [1,2,3,4,5], target = 5, start = 3
+// Output: 1
+// Explanation: nums[4] = 5 is the only value equal to target, so the answer is abs(4 - 3) = 1.
+
+var getMinDistance = function (nums, target, start) {
+  let arr = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] === target ) {
+      arr.push(Math.abs(i - start));
+    }
+  }
+  return Math.min(...arr);
+};
+
+console.log(getMinDistance([1, 2, 5, 4, 5], 5, 3)); // 1
+console.log(getMinDistance([1], 1, 0)); // 0
+console.log(getMinDistance([1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 1, 0)); // 0
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
