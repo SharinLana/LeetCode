@@ -940,6 +940,88 @@ var kLengthApart = function (nums, k) {
 console.log(kLengthApart([1, 0, 0, 0, 1, 0, 0, 1], 2)); // true
 console.log(kLengthApart([1, 0, 0, 1, 0, 1], 2)); // false
 
+// * 25. Max Consecutive Ones ---------------------
+// Given a binary array nums, return the maximum number of consecutive 1's in the array.
+
+// Example:
+// Input: nums = [1,1,0,1,1,1]
+// Output: 3
+// Explanation: The first two digits or the last three digits are consecutive 1s.
+// The maximum number of consecutive 1s is 3.
+
+var findMaxConsecutiveOnes = function (nums) {
+  let max = 0;
+  let current = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    // Reset current if value at current index is zero, increment otherwise.
+    current = nums[i] === 0 ? 0 : current + 1;
+
+    // Store current max to max, if current iteration found max consecutive 1s.
+    max = current > max ? current : max;
+  }
+
+  return max;
+};
+
+console.log(findMaxConsecutiveOnes([1, 1, 0, 1, 1, 1])); // 3
+console.log(findMaxConsecutiveOnes([1, 0, 1, 1, 0, 1])); // 2
+
+// * 26. Minimum Right Shifts to Sort the Array ---------------------
+// You are given a 0-indexed array nums of length n containing distinct positive integers.
+// Return the minimum number of right shifts required to sort nums
+// and -1 if this is not possible.
+// A right shift is defined as shifting the element at index i to index (i + 1) % n,
+// for all indices.
+
+// Example:
+// Input: nums = [3,4,5,1,2]
+// Output: 2
+// Explanation:
+// After the first right shift, nums = [2,3,4,5,1].
+// After the second right shift, nums = [1,2,3,4,5].
+// Now nums is sorted; therefore the answer is 2.
+
+var minimumRightShifts = function (nums) {
+  // If the input array is sorted, return 0, if not, start the right move
+  if (isSorted(nums)) return 0;
+
+  let last = nums[nums.length - 1];
+  let first = nums[0];
+  let counter = 0;
+
+    while (last < first) {
+      nums.unshift(last);
+      nums.pop();
+      last = nums[nums.length - 1];
+      first = nums[0];
+      counter++;
+
+      if (isSorted(nums)) {
+        return counter;
+      }
+    }
+
+    if (last > first && !isSorted(nums)) return -1;
+  
+};
+
+function isSorted(arr) {
+  let sorted = true;
+  // Check if the input array is already sorted
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > arr[i + 1]) {
+      sorted = false;
+    }
+  }
+  return sorted;
+}
+
+console.log(minimumRightShifts([3, 4, 5, 1, 2])); // 2
+console.log(minimumRightShifts([1, 3, 5])); // 0
+console.log(minimumRightShifts([2, 1, 4])); // -1
+console.log(minimumRightShifts([63, 51, 65, 87, 6, 17, 32, 14, 42, 46])); // -1
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
