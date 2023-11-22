@@ -587,7 +587,7 @@ var findKDistantIndices = function (nums, key, k) {
 console.log(findKDistantIndices([3, 4, 9, 1, 3, 9, 5], 9, 1)); // [1,2,3,4,5,6]
 console.log(findKDistantIndices([2, 2, 2, 2, 2], 2, 2)); // [0,1,2,3,4]
 
-// * 16. Defuse the Bomb ---------------------
+// * 16. Defuse the Bomb (circular array) ---------------------
 // You have a bomb to defuse, and your time is running out!
 // Your informer will provide you with a circular array code of length of n and a key k.
 
@@ -1121,6 +1121,59 @@ console.log(
     80, 57, 55, 49, 48, 45, 26, 26, 23, 15,
   ])
 ); // -1
+
+// * 29. Distance Between Stops (circular array) ---------------------
+// A bus has n stops numbered from 0 to n - 1 that form a circle.
+// We know the distance between all pairs of neighboring stops
+// where distance[i] is the distance between the stops number i and (i + 1) % n.
+// The bus goes along both directions i.e. clockwise and counterclockwise.
+// Return the shortest distance between the given start and destination stops.
+
+// Example:
+// Input: distance = [1,2,3,4], start = 0, destination = 1
+// Output: 1
+// Explanation: Distance between 0 and 1 is 1 or 9, minimum is 1.
+
+var distanceBetweenBusStops = function (distance, start, destination) {
+  let result = 0;
+  let result2 = 0;
+
+  if (start > destination) {
+    [start, destination] = [destination, start];
+  }
+
+  result = clockWise(distance, start, destination);
+  result2 = counterClockWise(distance, result);
+
+  const output = result > result2 ? result2 : result; // picking the lowest
+  return output;
+};
+
+const clockWise = (distance, start, destination) => {
+  let result = 0;
+  for (let i = start; i < destination; i++) {
+    result += distance[i];
+  }
+
+  return result;
+};
+
+const counterClockWise = (distance, result) => {
+  let sum = 0;
+  let result2;
+
+  for (let j = 0; j < distance.length; j++) {
+    sum += distance[j];
+  }
+
+  result2 = sum - result;
+  return result2;
+};
+
+// console.log(distanceBetweenBusStops([1, 2, 3, 4], 0, 1)); // 1
+// console.log(distanceBetweenBusStops([1, 2, 3, 4], 0, 2)); // 3
+console.log(distanceBetweenBusStops([1, 2, 3, 4], 0, 3)); // 4
+// console.log(distanceBetweenBusStops([7, 10, 1, 12, 11, 14, 5, 0], 7, 2)); // 17
 
 // ! =============== Simulation Problems ===================
 
