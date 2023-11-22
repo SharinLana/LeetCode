@@ -1219,6 +1219,49 @@ console.log(check([3, 4, 5, 1, 2])); // true
 console.log(check([2, 1, 3, 4])); // false
 console.log(check([1, 2, 3])); // true
 
+// * 31. Summary ranges ---------------------
+// You are given a sorted unique integer array nums.
+// A range [a,b] is the set of all integers from a to b (inclusive).
+// Return the smallest sorted list of ranges that cover all the numbers in the array exactly.
+// That is, each element of nums is covered by exactly one of the ranges,
+// and there is no integer x such that x is in one of the ranges but not in nums.
+// Each range [a,b] in the list should be output as:
+// "a->b" if a != b
+// "a" if a == b
+
+// Example:
+// Input: nums = [0,1,2,4,5,7]
+// Output: ["0->2","4->5","7"]
+// Explanation: The ranges are:
+// [0,2] --> "0->2"
+// [4,5] --> "4->5"
+// [7,7] --> "7"
+
+// O(N) 
+var summaryRanges = function (nums) {
+  let result = [];
+  let startNum = nums[0];
+  let endNum;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] + 1 !== nums[i + 1]) {
+      endNum = nums[i];
+
+      if (startNum === endNum) {
+        result.push(`${endNum}`);
+      } else {
+        result.push(`${startNum}->${endNum}`);
+      }
+
+      startNum = nums[i + 1];
+    }
+  }
+  return result;
+};
+
+console.log(summaryRanges([0, 1, 2, 4, 5, 7])); // ["0->2","4->5","7"]
+console.log(summaryRanges([0, 2, 3, 4, 6, 8, 9])); // ["0","2->4","6","8->9"]
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
