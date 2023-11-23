@@ -1237,7 +1237,7 @@ console.log(check([1, 2, 3])); // true
 // [4,5] --> "4->5"
 // [7,7] --> "7"
 
-// O(N) 
+// O(N)
 var summaryRanges = function (nums) {
   let result = [];
   let startNum = nums[0];
@@ -1261,6 +1261,57 @@ var summaryRanges = function (nums) {
 
 console.log(summaryRanges([0, 1, 2, 4, 5, 7])); // ["0->2","4->5","7"]
 console.log(summaryRanges([0, 2, 3, 4, 6, 8, 9])); // ["0","2->4","6","8->9"]
+
+// * 32. Longest Increasing Continuous Subsequence ---------------------
+// Given an unsorted array of integers nums,
+// return the LENGTH of the longest continuous increasing subsequence (i.e. subarray).
+// The subsequence must be strictly increasing.
+
+// A continuous increasing subsequence is defined by two indices l and r (l < r)
+// such that it is [nums[l], nums[l + 1], ..., nums[r - 1], nums[r]]
+// and for each l <= i < r, nums[i] < nums[i + 1].
+
+// Example:
+// Input: nums = [1,3,5,4,7]
+// Output: 3
+// Explanation: The longest continuous increasing subsequence is [1,3,5] with length 3.
+// Even though [1,3,5,7] is an increasing subsequence,
+// it is not continuous as elements 5 and 7 are separated by element 4.
+
+var findLengthOfLCIS = function (nums) {
+  let counter = 0;
+
+  if (isSame(nums)) {
+    return 1;
+  } else {
+    for (let i = 0, j = 1; i < nums.length; i++) {
+      if (nums[i] < nums[i + 1]) {
+        j++;
+      } else {
+        counter = counter < j ? j : counter;
+        j = 1;
+      }
+    }
+  }
+  return counter;
+};
+
+function isSame(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] !== arr[i + 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(findLengthOfLCIS([1, 3, 5, 4, 7])); // 3
+console.log(findLengthOfLCIS([2, 2, 2, 2, 2])); // 1
+console.log(findLengthOfLCIS([1, 3, 5, 7])); // 4
+console.log(findLengthOfLCIS([1, 3, 5, 4, 2, 3, 4])); // 3
+console.log(findLengthOfLCIS([1, 1, 2])); // 2
+
+
 
 // ! =============== Simulation Problems ===================
 
