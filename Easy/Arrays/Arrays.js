@@ -1346,8 +1346,8 @@ var hardestWorker = function (n, logs) {
         employeeId = logs[i + 1][0];
         maxDiff = diff;
       } else if (maxDiff === diff) {
-        employeeId = employeeId < logs[i+1][0] ? employeeId : logs[i+1][0];
-      } 
+        employeeId = employeeId < logs[i + 1][0] ? employeeId : logs[i + 1][0];
+      }
     }
   }
 
@@ -1391,6 +1391,91 @@ console.log(
     [39, 19],
   ])
 ); // 114
+
+// * 34. Find the Maximum Divisibility Score ---------------------
+// You are given two 0-indexed integer arrays nums and divisors.
+
+// The divisibility score of divisors[i] is the number of indices j
+// such that nums[j] is divisible by divisors[i].
+
+// Return the integer divisors[i] with the maximum divisibility score.
+// If there is more than one integer with the maximum score, return the minimum of them.
+
+// Example:
+// Input: nums = [4,7,9,3,9], divisors = [5,2,3]
+// Output: 3
+// Explanation: The divisibility score for every element in divisors is:
+// The divisibility score of divisors[0] is 0 since no number in nums is divisible by 5.
+// The divisibility score of divisors[1] is 1 since nums[0] is divisible by 2.
+// The divisibility score of divisors[2] is 3 since nums[2], nums[3], and nums[4] are divisible by 3.
+// Since divisors[2] has the maximum divisibility score, we return it.
+
+var maxDivScore = function (nums, divisors) {
+  let maxScore = 0;
+  let result = divisors[0];
+
+  for (let d of divisors) {
+    let score = 0;
+
+    for (let num of nums) {
+      if (num % d === 0) {
+        score++;
+      }
+    }
+
+    if (score === maxScore) {
+      result = Math.min(result, d);
+    }
+    if (score > maxScore) {
+      maxScore = score;
+      result = d;
+    }
+  }
+  return result;
+};
+
+console.log(maxDivScore([4, 7, 9, 3, 9], [5, 2, 3])); // 3
+console.log(maxDivScore([20, 14, 21, 10], [5, 7, 5])); // 5
+console.log(maxDivScore([12], [10, 16])); // 10
+console.log(maxDivScore([73, 13, 20, 6], [56, 75, 83, 26, 24, 53, 56, 61])); // 24
+console.log(
+  maxDivScore(
+    [39, 70, 33],
+    [
+      27, 73, 37, 31, 28, 82, 96, 12, 31, 77, 17, 83, 19, 46, 7, 4, 74, 70, 66,
+      73, 25, 50, 79,
+    ]
+  )
+); // 7
+
+// * 35. Binary Prefix Divisible by 5 ---------------------
+// You are given a binary array nums (0-indexed).
+// We define x[i] as the number whose binary representation is the subarray nums[0..i]
+// (from most-significant-bit to least-significant-bit).
+// For example, if nums = [1,0,1], then x[0] = 1, x[1] = 2, and x[2] = 5.
+// Return an array of booleans answer where answer[i] is true if x[i] is divisible by 5.
+
+// Example:
+// Input: nums = [0,1,1]
+// Output: [true,false,false]
+// Explanation: The input numbers in binary are 0, 01, 011; which are 0, 1, and 3 in base-10.
+// Only the first number is divisible by 5, so answer[0] is true.
+
+var prefixesDivBy5 = function (nums) {
+  const answer = new Array(nums.length).fill(false);
+  let cur = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    cur = cur * 2 + nums[i];
+    if (cur % 5 === 0) answer[i] = true;
+    cur %= 5;
+  }
+
+  return answer;
+};
+
+console.log(prefixesDivBy5([0, 1, 1])); // [true,false,false]
+console.log(prefixesDivBy5([1, 1, 1])); // [false,false,false]
 
 // ! =============== Simulation Problems ===================
 
