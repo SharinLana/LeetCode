@@ -182,3 +182,99 @@ var maxScoreIndices = function (nums) {
 console.log(maxScoreIndices([0, 0, 1, 0])); // [2,4]
 console.log(maxScoreIndices([0, 0, 0])); // [3]
 console.log(maxScoreIndices([1, 1])); // [0]
+
+// * 4. Number of Adjacent Elements With the Same Color ---------------------
+// There is a 0-indexed array nums of length n. Initially,
+// all elements are uncolored (has a value of 0).
+// You are given a 2D integer array queries where queries[i] = [indexi, colori].
+// For each query, you color the index indexi with the color colori in the array nums.
+
+// Return an array answer of the same length as queries where answer[i]
+// is the number of adjacent elements with the same color after the ith query.
+
+// More formally, answer[i] is the number of indices j, such that 0 <= j < n - 1
+// and nums[j] == nums[j + 1] and nums[j] != 0 after the ith query.
+
+// Example:
+// Input: n = 4, queries = [[0,2],[1,2],[3,1],[1,1],[2,1]]
+// Output: [0,1,1,0,2]
+// Explanation: Initially array nums = [0,0,0,0], where 0 denotes uncolored elements of the array.
+// - After the 1st query nums = [2,0,0,0]. The count of adjacent elements with the same color is 0.
+// - After the 2nd query nums = [2,2,0,0]. The count of adjacent elements with the same color is 1.
+// - After the 3rd query nums = [2,2,0,1]. The count of adjacent elements with the same color is 1.
+// - After the 4th query nums = [2,1,0,1]. The count of adjacent elements with the same color is 0.
+// - After the 5th query nums = [2,1,1,1]. The count of adjacent elements with the same color is 2.
+
+var colorTheArray = function (n, queries) {
+  let counter = 0;
+  let nums = new Array(n).fill(0);
+  let output = [];
+
+  for (let i = 0; i < queries.length; i++) {
+    let [idx, color] = queries[i];
+    let prev = idx - 1 >= 0 ? nums[idx - 1] : 0;
+    let next = idx + 1 < n ? nums[idx + 1] : 0;
+
+    if (nums[idx] === prev && nums[idx] > 0) counter--;
+    if (nums[idx] === next && nums[idx] > 0) counter--;
+
+    nums[idx] = color;
+
+    if (nums[idx] === prev && nums[idx] > 0) counter++;
+    if (nums[idx] === next && nums[idx] > 0) counter++;
+
+    output[i] = counter;
+    counter = 0;
+  }
+  return output;
+};
+
+console.log(
+  colorTheArray(4, [
+    [0, 2],
+    [1, 2],
+    [3, 1],
+    [1, 1],
+    [2, 1],
+  ])
+); // [0,1,1,0,2]
+console.log(colorTheArray(1, [[0, 100000]])); // [0]
+
+// * 5. Minimum Sum of Mountain Triplets ---------------------
+// You are given a 0-indexed array nums of integers.
+// A triplet of indices (i, j, k) is a mountain if:
+// i < j < k
+// nums[i] < nums[j] and nums[k] < nums[j]
+// Return the minimum possible sum of a mountain triplet of nums.
+// If no such triplet exists, return -1.
+
+// Example:
+// Input: nums = [8,6,1,5,3]
+// Output: 9
+// Explanation: Triplet (2, 3, 4) is a mountain triplet of sum 9 since:
+// - 2 < 3 < 4
+// - nums[2] < nums[3] and nums[4] < nums[3]
+// And the sum of this triplet is nums[2] + nums[3] + nums[4] = 9.
+// It can be shown that there are no mountain triplets with a sum of less than 9.
+
+// This approach is suitable for small arrays only
+var minimumSum = function (nums) {
+  let sum = Infinity;
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      for (let k = j + 1; k < nums.length; k++) {
+        if (nums[i] < nums[j] && nums[j] > nums[k]) {
+          let temp = nums[i] + nums[j] + nums[k];
+          sum = temp < sum ? temp : sum;
+        }
+      }
+    }
+  }
+  return sum === Infinity ? -1 : sum;
+};
+
+console.log(minimumSum([8, 6, 1, 5, 3])); // 9
+console.log(minimumSum([5, 4, 8, 7, 10, 2])); // 13
+console.log(minimumSum([6, 5, 4, 3, 4, 5, 4, 5, 6])); // -1
+console.log(minimumSum([1, 2, 1, 1])); // 4
