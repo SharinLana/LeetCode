@@ -1526,64 +1526,101 @@ console.log(finalValueAfterOperations(["--X", "X++", "X++"])); // 1
 console.log(finalValueAfterOperations(["++X", "++X", "X++"])); // 3
 console.log(finalValueAfterOperations(["X++", "++X", "--X", "X--"])); // 0
 
-// ! =============== Math / Counting Problems ===================
+// * 3. Create Target Array in the Given Order ----------------------------------------------------
+// Given two arrays of integers nums and index. Your task is to create target array under the following rules:
+// Initially target array is empty.
+// From left to right read nums[i] and index[i],
+// insert at index index[i] the value nums[i] in target array.
+// Repeat the previous step until there are no elements to read in nums and index.
+// Return the target array.
+// It is guaranteed that the insertion operations will be valid.
 
-// * 1. Number of Good Pairs ----------------------------------------------------
-// Given an array of integers nums, return the number of good pairs.
-// A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+// Example:
+// Input: nums = [0,1,2,3,4], index = [0,1,2,2,1]
+// Output: [0,4,1,3,2]
+// Explanation:
+// nums       index     target
+// 0            0        [0]
+// 1            1        [0,1]
+// 2            2        [0,1,2]
+// 3            2        [0,1,3,2]
+// 4            1        [0,4,1,3,2]
 
-// O(N^2)
-var numIdenticalPairs = function (nums) {
-  let goodPairCounter = [];
+var createTargetArray = function (nums, index) {
+  let target = [];
 
-  for (let i = 0; i < nums.length; i++) {
-    for (let j = i + 1; j < nums.length; j++) {
-      if (nums[i] == nums[j]) {
-        goodPairCounter.push([i, j]);
-      }
+  for (let i = 0; i < index.length; i++) {
+    if (target[index[i]] !== undefined) {
+      target.splice(index[i], 0, nums[i]);
+    } else {
+      target[index[i]] = nums[i];
     }
   }
-  return goodPairCounter.length;
+  return target;
 };
 
-console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3])); // 4
-console.log(numIdenticalPairs([1, 1, 1, 1])); // 6
-console.log(numIdenticalPairs([1, 2, 3])); // 0
+console.log(createTargetArray([1, 2, 3, 4, 0], [0, 1, 2, 3, 0])); // [0,1,2,3,4]
+console.log(createTargetArray([0, 1, 2, 3, 4], [0, 1, 2, 2, 1])); // [0,4,1,3,2]
+console.log(createTargetArray([0, 1, 0], [0, 1, 0])); // [0,0,1]
 
-// ! =============== Enumeration ===================
+// // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
-// ! =============== Hash Table ====================
+// // * 1. Number of Good Pairs ----------------------------------------------------
+// // Given an array of integers nums, return the number of good pairs.
+// // A pair (i, j) is called good if nums[i] == nums[j] and i < j.
 
-// ! =============== Array of Strings ==============
+// // O(N^2)
+// var numIdenticalPairs = function (nums) {
+//   let goodPairCounter = [];
 
-// ! =============== Array of Strings ==============
+//   for (let i = 0; i < nums.length; i++) {
+//     for (let j = i + 1; j < nums.length; j++) {
+//       if (nums[i] == nums[j]) {
+//         goodPairCounter.push([i, j]);
+//       }
+//     }
+//   }
+//   return goodPairCounter.length;
+// };
 
-// ! =================== Matrix ====================
+// console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3])); // 4
+// console.log(numIdenticalPairs([1, 1, 1, 1])); // 6
+// console.log(numIdenticalPairs([1, 2, 3])); // 0
 
-// ! =============== Two Pointers ==============
+// // ! =============== Enumeration ===================
 
-// ! =============== Sorting ==============
+// // ! =============== Hash Table ====================
 
-// ! =============== Prefix Sum ==============
+// // ! =============== Array of Strings ==============
 
-// ! =============== Bit Manipulation ==============
+// // ! =============== Array of Strings ==============
 
-// ! =============== Greedy Algorithm ==============
+// // ! =================== Matrix ====================
 
-// ! =============== Backtracking ==============
+// // ! =============== Two Pointers ==============
 
-// ! =============== Heap (Priority Queue) ==============
+// // ! =============== Sorting ==============
 
-// ! =============== Search (Binary) ==============
+// // ! =============== Prefix Sum ==============
 
-// ! =============== Stack ==============
+// // ! =============== Bit Manipulation ==============
 
-// ! =============== Dynamic Programming ==============
+// // ! =============== Greedy Algorithm ==============
 
-// ! =============== Divide and Conquer ==============
+// // ! =============== Backtracking ==============
 
-// ! =============== Trees ==============
+// // ! =============== Heap (Priority Queue) ==============
 
-// ! =============== Linked List ==============
+// // ! =============== Search (Binary) ==============
 
-// ! =============== DFS, BFS ==============
+// // ! =============== Stack ==============
+
+// // ! =============== Dynamic Programming ==============
+
+// // ! =============== Divide and Conquer ==============
+
+// // ! =============== Trees ==============
+
+// // ! =============== Linked List ==============
+
+// // ! =============== DFS, BFS ==============
