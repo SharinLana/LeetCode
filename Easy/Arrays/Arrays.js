@@ -1563,6 +1563,73 @@ console.log(createTargetArray([1, 2, 3, 4, 0], [0, 1, 2, 3, 0])); // [0,1,2,3,4]
 console.log(createTargetArray([0, 1, 2, 3, 4], [0, 1, 2, 2, 1])); // [0,4,1,3,2]
 console.log(createTargetArray([0, 1, 0], [0, 1, 0])); // [0,0,1]
 
+// * 4. Count Tested Devices After Test Operations ----------------------------------------------------
+// You are given a 0-indexed integer array batteryPercentages having length n,
+// denoting the battery percentages of n 0-indexed devices.
+// Your task is to test each device i in order from 0 to n - 1,
+// by performing the following test operations:
+
+// If batteryPercentages[i] is greater than 0:
+// Increment the count of tested devices.
+// Decrease the battery percentage of all devices with indices j in the range [i + 1, n - 1] by 1, ensuring their battery percentage never goes below 0, i.e, batteryPercentages[j] = max(0, batteryPercentages[j] - 1).
+// Move to the next device.
+// Otherwise, move to the next device without performing any test.
+// Return an integer denoting the number of devices that will be tested after performing the test operations in order.
+
+// Example:
+// Input: batteryPercentages = [1,1,2,1,3]
+// Output: 3
+// Explanation: Performing the test operations in order starting from device 0:
+// At device 0, batteryPercentages[0] > 0, so there is now 1 tested device, and batteryPercentages becomes [1,0,1,0,2].
+// At device 1, batteryPercentages[1] == 0, so we move to the next device without testing.
+// At device 2, batteryPercentages[2] > 0, so there are now 2 tested devices, and batteryPercentages becomes [1,0,1,0,1].
+// At device 3, batteryPercentages[3] == 0, so we move to the next device without testing.
+// At device 4, batteryPercentages[4] > 0, so there are now 3 tested devices, and batteryPercentages stays the same.
+// So, the answer is 3.
+
+var countTestedDevices = function (batteryPercentages) {
+  let counter = 0;
+
+  for (let i = 0; i < batteryPercentages.length; i++) {
+    if (batteryPercentages[i] > 0) {
+      counter++;
+      for (let j = i + 1; j < batteryPercentages.length; j++)
+        batteryPercentages[j]--;
+    }
+  }
+  return counter;
+};
+
+console.log(countTestedDevices([1, 1, 2, 1, 3])); // 3
+console.log(countTestedDevices([0, 1, 2])); // 2
+
+// * 5. Sum of Squares of Special Elements ----------------------------------------------------
+// You are given a 1-indexed integer array nums of length n.
+// An element nums[i] of nums is called special if i divides n, i.e. n % i == 0.
+// Return the sum of the squares of all special elements of nums.
+
+// Example:
+// Input: nums = [1,2,3,4]
+// Output: 21
+// Explanation: There are exactly 3 special elements in nums:
+// nums[1] since 1 divides 4, nums[2] since 2 divides 4, and nums[4] since 4 divides 4.
+// Hence, the sum of the squares of all special elements of nums is
+// nums[1] * nums[1] + nums[2] * nums[2] + nums[4] * nums[4] = 1 * 1 + 2 * 2 + 4 * 4 = 21.
+
+var sumOfSquares = function (nums) {
+  let sum = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums.length % (i + 1) === 0) {
+      sum += nums[i] ** 2;
+    }
+  }
+  return sum;
+};
+
+console.log(sumOfSquares([1, 2, 3, 4])); // 21
+console.log(sumOfSquares([2, 7, 1, 19, 18, 3])); // 63
+
 // // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
 // // * 1. Number of Good Pairs ----------------------------------------------------
