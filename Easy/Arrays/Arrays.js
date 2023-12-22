@@ -1663,6 +1663,58 @@ var separateDigits = function (nums) {
 console.log(separateDigits([13, 25, 83, 77])); // [1,3,2,5,8,3,7,7]
 console.log(separateDigits([7, 1, 3, 9])); // [7,1,3,9]
 
+// * 7. Apply Operations to an Array ----------------------------------------------------
+// You are given a 0-indexed array nums of size n consisting of non-negative integers.
+// You need to apply n - 1 operations to this array where, in the ith operation (0-indexed),
+// you will apply the following on the ith element of nums:
+// If nums[i] == nums[i + 1], then multiply nums[i] by 2 and set nums[i + 1] to 0.
+// Otherwise, you skip this operation.
+// After performing all the operations, shift all the 0's to the end of the array.
+// For example, the array [1,0,2,0,0,1] after shifting all its 0's to the end, is [1,2,1,0,0,0].
+// Return the resulting array.
+// Note that the operations are applied sequentially, not all at once.
+
+// Example :
+// Input: nums = [1,2,2,1,1,0]
+// Output: [1,4,2,0,0,0]
+// Explanation: We do the following operations:
+// - i = 0: nums[0] and nums[1] are not equal, so we skip this operation.
+// - i = 1: nums[1] and nums[2] are equal, we multiply nums[1] by 2 and change nums[2] to 0. The array becomes [1,4,0,1,1,0].
+// - i = 2: nums[2] and nums[3] are not equal, so we skip this operation.
+// - i = 3: nums[3] and nums[4] are equal, we multiply nums[3] by 2 and change nums[4] to 0. The array becomes [1,4,0,2,0,0].
+// - i = 4: nums[4] and nums[5] are equal, we multiply nums[4] by 2 and change nums[5] to 0. The array becomes [1,4,0,2,0,0].
+// After that, we shift the 0's to the end, which gives the array [1,4,2,0,0,0].
+
+var applyOperations = function (nums) {
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i + 1] && nums[i] == nums[i + 1]) {
+      nums[i] = nums[i] * 2;
+      nums[i + 1] = 0;
+    }
+  }
+
+  const zeros = nums.filter((el) => el === 0);
+  const notZeros = nums.filter((el) => el !== 0);
+
+  return notZeros.concat(zeros);
+};
+
+console.log(applyOperations([1, 2, 2, 1, 1, 0])); // [1,4,2,0,0,0]
+console.log(applyOperations([0, 1])); // [1,0]
+console.log(
+  applyOperations([
+    847, 847, 0, 0, 0, 399, 416, 416, 879, 879, 206, 206, 206, 272,
+  ])
+); // [1694,399,832,1758,412,206,272,0,0,0,0,0,0,0]
+console.log(
+  applyOperations([
+    971, 0, 0, 0, 0, 614, 236, 236, 0, 503, 503, 0, 105, 0, 891, 579, 579, 270,
+    0, 0, 422, 938, 938, 171, 171, 171, 671, 671, 671, 671, 721, 721, 0, 0, 0,
+    0, 0, 0, 524, 524, 970, 361, 20, 20, 863, 847, 847, 0, 490, 17, 159, 965,
+    396, 971, 971, 971, 971, 971, 971, 910,
+  ])
+); // [971,614,472,1006,105,891,1158,270,422,1876,342,171,1342,1342,1442,1048,970,361,40,863,1694,490,17,159,965,396,1942,1942,1942,910,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+
 // // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
 // // * 1. Number of Good Pairs ----------------------------------------------------
