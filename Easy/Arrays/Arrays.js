@@ -1715,6 +1715,51 @@ console.log(
   ])
 ); // [971,614,472,1006,105,891,1158,270,422,1876,342,171,1342,1342,1442,1048,970,361,40,863,1694,490,17,159,965,396,1942,1942,1942,910,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
 
+// * 8. Min Max Game ----------------------------------------------------
+// You are given a 0-indexed integer array nums whose length is a power of 2.
+
+// Apply the following algorithm on nums:
+
+// Let n be the length of nums. If n == 1, end the process.
+// Otherwise, create a new 0-indexed integer array newNums of length n / 2.
+// For every even index i where 0 <= i < n / 2,
+// assign the value of newNums[i] as min(nums[2 * i], nums[2 * i + 1]).
+// For every odd index i where 0 <= i < n / 2,
+// assign the value of newNums[i] as max(nums[2 * i], nums[2 * i + 1]).
+// Replace the array nums with newNums.
+// Repeat the entire process starting from step 1.
+// Return the last number that remains in nums after applying the algorithm.
+
+// Example:
+// Input: nums = [1,3,5,2,4,8,2,2]
+// Output: 1
+// Explanation: The following arrays are the results of applying the algorithm repeatedly.
+// First: nums = [1,5,4,2]
+// Second: nums = [1,4]
+// Third: nums = [1]
+// 1 is the last remaining number, so we return 1.
+
+var minMaxGame = function (nums, newNums = [], i = 0) {
+  // If length === 1, end the process
+  if (nums.length === 1) return nums[0];
+
+  while (nums.length > 0) {
+    if (i % 2 === 0) {
+      newNums.push(Math.min(nums[0], nums[1]));
+    } else {
+      newNums.push(Math.max(nums[0], nums[1]));
+    }
+
+    nums = nums.slice(2);
+    i++;
+  }
+
+  return minMaxGame((nums = newNums), (newNums = []), (i = 0));
+};
+
+console.log(minMaxGame([1, 3, 5, 2, 4, 8, 2, 2])); // 1
+console.log(minMaxGame([3])); // 3
+
 // // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
 // // * 1. Number of Good Pairs ----------------------------------------------------
