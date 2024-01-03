@@ -1477,6 +1477,34 @@ var prefixesDivBy5 = function (nums) {
 console.log(prefixesDivBy5([0, 1, 1])); // [true,false,false]
 console.log(prefixesDivBy5([1, 1, 1])); // [false,false,false]
 
+// * 36. Count Pairs Whose Sum is Less Than Target ----------------------------------------------------
+// Given a 0-indexed integer array nums of length n and an integer target,
+// return the number of pairs (i, j) where 0 <= i < j < n and nums[i] + nums[j] < target.
+
+// Example:
+// Input: nums = [-1,1,2,3,1], target = 2
+// Output: 3
+// Explanation: There are 3 pairs of indices that satisfy the conditions in the statement:
+// - (0, 1) since 0 < 1 and nums[0] + nums[1] = 0 < target
+// - (0, 2) since 0 < 2 and nums[0] + nums[2] = 1 < target
+// - (0, 4) since 0 < 4 and nums[0] + nums[4] = 0 < target
+// Note that (0, 3) is not counted since nums[0] + nums[3] is not strictly less than the target.
+
+// 0(n^2)
+var countPairs = function (nums, target) {
+  let counter = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] < target) counter++;
+    }
+  }
+  return counter;
+};
+
+console.log(countPairs([-1, 1, 2, 3, 1], 2)); // 3
+console.log(countPairs([-6, 2, 5, -2, -7, -1, 3], -2)); // 10
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -1497,6 +1525,39 @@ var buildArray = function (nums) {
 
 console.log(buildArray([0, 2, 1, 5, 3, 4])); // [0, 1, 2, 4, 5, 3]
 console.log(buildArray([5, 0, 1, 2, 3, 4])); //  [4, 5, 0, 1, 2, 3]
+
+// * 36. Number of Employees Who Met the Target ---------------------
+// There are n employees in a company, numbered from 0 to n - 1.
+// Each employee i has worked for hours[i] hours in the company.
+// The company requires each employee to work for at least target hours.
+// You are given a 0-indexed array of non-negative integers hours of length n
+// and a non-negative integer target.
+// Return the integer denoting the number of employees who worked at least target hours.
+
+// Example:
+// Input: hours = [0,1,2,3,4], target = 2
+// Output: 3
+// Explanation: The company wants each employee to work for at least 2 hours.
+// - Employee 0 worked for 0 hours and didn't meet the target.
+// - Employee 1 worked for 1 hours and didn't meet the target.
+// - Employee 2 worked for 2 hours and met the target.
+// - Employee 3 worked for 3 hours and met the target.
+// - Employee 4 worked for 4 hours and met the target.
+// There are 3 employees who met the target.
+
+// 0(n)
+var numberOfEmployeesWhoMetTarget = function (hours, target) {
+  let counter = 0;
+
+  for (let elem of hours) {
+    if (elem >= target) counter++;
+  }
+
+  return counter;
+};
+
+console.log(numberOfEmployeesWhoMetTarget([0, 1, 2, 3, 4], 2)); // 3
+console.log(numberOfEmployeesWhoMetTarget([5, 1, 4, 2, 2], 6)); // 0
 
 // * 2. Final Value of Variable After Performing Operations ----------------------------------------------------
 // There is a programming language with only four operations and one variable X:
@@ -1760,64 +1821,158 @@ var minMaxGame = function (nums, newNums = [], i = 0) {
 console.log(minMaxGame([1, 3, 5, 2, 4, 8, 2, 2])); // 1
 console.log(minMaxGame([3])); // 3
 
-// // ! =============== Math / Counting Problems ===================!==undefinedundefined
+// ! =============== Math / Counting Problems ===================!==undefinedundefined
 
-// // * 1. Number of Good Pairs ----------------------------------------------------
-// // Given an array of integers nums, return the number of good pairs.
-// // A pair (i, j) is called good if nums[i] == nums[j] and i < j.
+// * 1. Number of Good Pairs ----------------------------------------------------
+// Given an array of integers nums, return the number of good pairs.
+// A pair (i, j) is called good if nums[i] == nums[j] and i < j.
 
-// // O(N^2)
-// var numIdenticalPairs = function (nums) {
-//   let goodPairCounter = [];
+// O(N^2)
+var numIdenticalPairs = function (nums) {
+  let goodPairCounter = [];
 
-//   for (let i = 0; i < nums.length; i++) {
-//     for (let j = i + 1; j < nums.length; j++) {
-//       if (nums[i] == nums[j]) {
-//         goodPairCounter.push([i, j]);
-//       }
-//     }
-//   }
-//   return goodPairCounter.length;
-// };
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] == nums[j]) {
+        goodPairCounter.push([i, j]);
+      }
+    }
+  }
+  return goodPairCounter.length;
+};
 
-// console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3])); // 4
-// console.log(numIdenticalPairs([1, 1, 1, 1])); // 6
-// console.log(numIdenticalPairs([1, 2, 3])); // 0
+console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3])); // 4
+console.log(numIdenticalPairs([1, 1, 1, 1])); // 6
+console.log(numIdenticalPairs([1, 2, 3])); // 0
 
-// // ! =============== Enumeration ===================
+// ! =============== Array of Strings ===================
 
-// // ! =============== Hash Table ====================
+// * 1. Find Words Containing Character ----------------------------------------------------
+// You are given a 0-indexed array of strings words and a character x.
+// Return an array of indices representing the words that contain the character x.
+// Note that the returned array may be in any order.
 
-// // ! =============== Array of Strings ==============
+// Example:
+// Input: words = ["leet","code"], x = "e"
+// Output: [0,1]
+// Explanation: "e" occurs in both words: "leet", and "code". Hence, we return indices 0 and 1.
 
-// // ! =============== Array of Strings ==============
+// 0(2N)
+var findWordsContaining = function (words, x) {
+  let output = [];
 
-// // ! =================== Matrix ====================
+  for (let i = 0; i < words.length; i++) {
+    if (words[i].includes(x)) {
+      output.push(i);
+    }
+  }
 
-// // ! =============== Two Pointers ==============
+  return output;
+};
 
-// // ! =============== Sorting ==============
+console.log(findWordsContaining(["leet", "code"], "e")); // [0,1]
+console.log(findWordsContaining(["abc", "bcd", "aaaa", "cbc"], "a")); // [0,2]
+console.log(findWordsContaining(["abc", "bcd", "aaaa", "cbc"], "z")); // []
 
-// // ! =============== Prefix Sum ==============
+// ! =============== Enumeration ===================
 
-// // ! =============== Bit Manipulation ==============
+// ! =============== Hash Table ====================
 
-// // ! =============== Greedy Algorithm ==============
+// * 1. How Many Numbers Are Smaller Than the Current Number ---------------------------------
+// Given the array nums, for each nums[i] find out
+// how many numbers in the array are smaller than it. T
+// hat is, for each nums[i] you have to count the number
+// of valid j's such that j != i and nums[j] < nums[i].
 
-// // ! =============== Backtracking ==============
+// Return the answer in an array.
 
-// // ! =============== Heap (Priority Queue) ==============
+// Example:
+// Input: nums = [8,1,2,2,3]
+// Output: [4,0,1,1,3]
+// Explanation:
+// For nums[0]=8 there exist four smaller numbers than it (1, 2, 2 and 3).
+// For nums[1]=1 does not exist any smaller number than it.
+// For nums[2]=2 there exist one smaller number than it (1).
+// For nums[3]=2 there exist one smaller number than it (1).
+// For nums[4]=3 there exist three smaller numbers than it (1, 2 and 2).
 
-// // ! =============== Search (Binary) ==============
+// 0(N^2)
+var smallerNumbersThanCurrent = function (nums) {
+  let counter = 0;
+  let output = [];
 
-// // ! =============== Stack ==============
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < nums.length; j++) {
+      if (j !== i) {
+        if (nums[j] < nums[i]) {
+          counter++;
+        }
+      }
+    }
 
-// // ! =============== Dynamic Programming ==============
+    output.push(counter);
+    counter = 0;
+  }
+  return output;
+};
 
-// // ! =============== Divide and Conquer ==============
+console.log(smallerNumbersThanCurrent([8, 1, 2, 2, 3])); // [4,0,1,1,3]
+console.log(smallerNumbersThanCurrent([6, 5, 4, 8])); // [2,1,0,3]
+console.log(smallerNumbersThanCurrent([7, 7, 7, 7])); // [0,0,0,0]
 
-// // ! =============== Trees ==============
+// ! =================== Matrix ====================
 
-// // ! =============== Linked List ==============
+// ! =============== Two Pointers ==============
 
-// // ! =============== DFS, BFS ==============
+// ! =============== Sorting ==============
+
+// ! =============== Prefix Sum ==============
+
+// * 1. Running Sum of 1d Array ---------------------------------
+// Given an array nums. We define a running sum of an array
+// as runningSum[i] = sum(nums[0]…nums[i]).
+// Return the running sum of nums.
+
+// Example:
+// Input: nums = [1,2,3,4]
+// Output: [1,3,6,10]
+// Explanation: Running sum is obtained as follows: [1, 1+2, 1+2+3, 1+2+3+4].
+
+// O(n)
+var runningSum = function (nums) {
+  let sum = 0;
+  let i = 0;
+
+  while (i < nums.length) {
+    sum += nums[i];
+    nums[i] = sum;
+    i++;
+  }
+  return nums;
+};
+
+console.log(runningSum([1, 2, 3, 4])); // [1,3,6,10]
+console.log(runningSum([1, 1, 1, 1, 1])); // [1,2,3,4,5]
+console.log(runningSum([3, 1, 2, 10, 1])); // [3,4,6,16,17]
+
+// ! =============== Bit Manipulation ==============
+
+// ! =============== Greedy Algorithm ==============
+
+// ! =============== Backtracking ==============
+
+// ! =============== Heap (Priority Queue) ==============
+
+// ! =============== Search (Binary) ==============
+
+// ! =============== Stack ==============
+
+// ! =============== Dynamic Programming ==============
+
+// ! =============== Divide and Conquer ==============
+
+// ! =============== Trees ==============
+
+// ! =============== Linked List ==============
+
+// ! =============== DFS, BFS ==============
