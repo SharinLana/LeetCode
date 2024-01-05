@@ -1939,6 +1939,81 @@ console.log(arrayStringsAreEqual(["ab", "c"], ["a", "bc"])); // true
 console.log(arrayStringsAreEqual(["a", "cb"], ["ab", "c"])); // false
 console.log(arrayStringsAreEqual(["abc", "d", "defg"], ["abcddefg"])); // true
 
+// * 4. Count Items Matching a Rule ------------------------------------------
+// You are given an array items, where each items[i] = [typei, colori, namei]
+// describes the type, color, and name of the ith item.
+// You are also given a rule represented by two strings, ruleKey and ruleValue.
+// The ith item is said to match the rule if one of the following is true:
+
+// ruleKey == "type" and ruleValue == typei.
+// ruleKey == "color" and ruleValue == colori.
+// ruleKey == "name" and ruleValue == namei.
+// Return the number of items that match the given rule.
+
+// Example:
+// Input: items = [["phone","blue","pixel"],["computer","silver","lenovo"],
+// ["phone","gold","iphone"]], ruleKey = "color", ruleValue = "silver"
+// Output: 1
+// Explanation: There is only one item matching the given rule,
+// which is ["computer","silver","lenovo"].
+
+var countMatches = function (items, ruleKey, ruleValue) {
+  let i = 0;
+  let count = 0;
+
+  while (i < items.length) {
+    if (ruleKey === "type") {
+      validate(items[i], 0, ruleValue) ? count++ : count;
+    } else if (ruleKey === "color") {
+      validate(items[i], 1, ruleValue) ? count++ : count;
+    } else if (ruleKey === "name") {
+      validate(items[i], 2, ruleValue) ? count++ : count;
+    } else {
+      return 0;
+    }
+    i++;
+  }
+  return count;
+};
+
+const validate = (arr, idx, value) => {
+  return arr[idx] === value ? true : false;
+};
+
+console.log(
+  countMatches(
+    [
+      ["phone", "blue", "pixel"],
+      ["computer", "silver", "lenovo"],
+      ["phone", "gold", "iphone"],
+    ],
+    "color",
+    "silver"
+  )
+); // 1
+console.log(
+  countMatches(
+    [
+      ["phone", "blue", "pixel"],
+      ["computer", "silver", "phone"],
+      ["phone", "gold", "iphone"],
+    ],
+    "type",
+    "phone"
+  )
+); // 2
+console.log(
+  countMatches(
+    [
+      ["ii", "iiiiiii", "ii"],
+      ["iiiiiii", "iiiiiii", "ii"],
+      ["ii", "iiiiiii", "iiiiiii"],
+    ],
+    "color",
+    "ii"
+  )
+);
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
