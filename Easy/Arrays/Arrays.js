@@ -1874,6 +1874,48 @@ console.log(findWordsContaining(["leet", "code"], "e")); // [0,1]
 console.log(findWordsContaining(["abc", "bcd", "aaaa", "cbc"], "a")); // [0,2]
 console.log(findWordsContaining(["abc", "bcd", "aaaa", "cbc"], "z")); // []
 
+// * 2. Maximum Number of Words Found in Sentences ------------------------------------------
+// A sentence is a list of words that are separated by a single space
+// with no leading or trailing spaces.
+// You are given an array of strings sentences,
+// where each sentences[i] represents a single sentence.
+// Return the maximum number of words that appear in a single sentence.
+
+// Example:
+// Input: sentences = ["alice and bob love leetcode", "i think so too",
+// "this is great thanks very much"]
+// Output: 6
+// Explanation:
+// - The first sentence, "alice and bob love leetcode", has 5 words in total.
+// - The second sentence, "i think so too", has 4 words in total.
+// - The third sentence, "this is great thanks very much", has 6 words in total.
+// Thus, the maximum number of words in a single sentence comes
+// from the third sentence, which has 6 words.
+
+var mostWordsFound = function (sentences) {
+  let max = 0;
+  let i = 0;
+
+  while (i < sentences.length) {
+    let numOfWords = sentences[i].split(" ").length;
+    max = Math.max(max, numOfWords);
+    i++;
+  }
+
+  return max;
+};
+
+console.log(
+  mostWordsFound([
+    "alice and bob love leetcode",
+    "i think so too",
+    "this is great thanks very much",
+  ])
+); // 6
+console.log(
+  mostWordsFound(["please wait", "continue to fight", "continue to win"])
+); // 3
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
@@ -1955,13 +1997,190 @@ console.log(runningSum([1, 2, 3, 4])); // [1,3,6,10]
 console.log(runningSum([1, 1, 1, 1, 1])); // [1,2,3,4,5]
 console.log(runningSum([3, 1, 2, 10, 1])); // [3,4,6,16,17]
 
+// * 2. Left and Right Sum Differences ---------------------------------
+// Given a 0-indexed integer array nums, find a 0-indexed integer array answer where:
+// answer.length == nums.length.
+// answer[i] = |leftSum[i] - rightSum[i]|.
+// Where:
+// leftSum[i] is the sum of elements to the left of the index i in the array nums.
+// If there is no such element, leftSum[i] = 0.
+// rightSum[i] is the sum of elements to the right of the index i in the array nums.
+// If there is no such element, rightSum[i] = 0.
+// Return the array answer.
+
+// Example:
+// Input: nums = [10,4,8,3]
+// Output: [15,1,11,22]
+// Explanation: The array leftSum is [0,10,14,22] and the array rightSum is [15,11,3,0].
+// The array answer is [|0 - 15|,|10 - 11|,|14 - 3|,|22 - 0|] = [15,1,11,22].
+
+var leftRightDifference = function (nums) {
+  // 1. create 2 empty arrays rightSum and leftSum
+  // 2. loop through the nums and fill out the empty arrays with the sum of elements
+  // 3. create an empty array result
+  // 4. loop through the left array and calculate the result elements using the given formula
+  // 5. return the result
+
+  let leftArr = [];
+  let leftSum = 0;
+  let rightArr = [];
+  let rightSum = 0;
+  let result = [];
+
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      rightSum += nums[j];
+    }
+    rightArr.push(rightSum);
+    rightSum = 0;
+
+    for (let k = i - 1; k < i; k++) {
+      if (nums[k] === undefined) nums[k] = 0;
+      leftSum += nums[k];
+    }
+    leftArr.push(leftSum);
+  }
+
+  for (let i = 0; i < leftArr.length; i++) {
+    result.push(Math.abs(leftArr[i] - rightArr[i]));
+  }
+  return result;
+};
+
+console.log(leftRightDifference([10, 4, 8, 3])); // [15,1,11,22]
+console.log(leftRightDifference([1])); // [0]
+
 // ! =============== Bit Manipulation ==============
+
+// * 1. Sum of Values at Indices With K Set Bits -----------------------------------
+// You are given a 0-indexed integer array nums and an integer k.
+// Return an integer that denotes the sum of elements in nums
+// whose corresponding indices have exactly k set bits in their binary representation.
+// The set bits in an integer are the 1's present when it is written in binary.
+// For example, the binary representation of 21 is 10101, which has 3 set bits.
+
+// Example:
+// Input: nums = [5,10,1,5,2], k = 1
+// Output: 13
+// Explanation: The binary representation of the indices are:
+// 0 = 0002
+// 1 = 0012
+// 2 = 0102
+// 3 = 0112
+// 4 = 1002
+// Indices 1, 2, and 4 have k = 1 set bits in their binary representation.
+// Hence, the answer is nums[1] + nums[2] + nums[4] = 13.
+
+// O(2N)
+var sumIndicesWithKSetBits = function (nums, k) {
+  // 1. Transform the indices to binary (binary = index.toString(2))
+  // 2. split --> create a counter variable --> count the 1s
+  // 3. Create a sum variable
+  // 4. if the index has the exact number of 1s, then get the element and add it to the sum
+  // 5. Nullify the counter after each binary iteration
+  // 6. Return the sum
+  let sum = 0;
+  let counter = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    let binary = i.toString(2).split("");
+
+    for (let char of binary) {
+      if (char === "1") counter++;
+    }
+    if (counter === k) sum += nums[i];
+    counter = 0;
+  }
+  return sum;
+};
+
+console.log(sumIndicesWithKSetBits([5, 10, 1, 5, 2], 1)); // 13
+console.log(sumIndicesWithKSetBits([4, 3, 2, 1], 2)); // 1
+
+// * 2. Decode XORed Array -----------------------------------
+// There is a hidden integer array arr that consists of n non-negative integers.
+// It was encoded into another integer array encoded of length n - 1,
+// such that encoded[i] = arr[i] XOR arr[i + 1].
+// For example, if arr = [1,0,2,1], then encoded = [1,2,3].
+// You are given the encoded array. You are also given an integer first,
+// that is the first element of arr, i.e. arr[0].
+// Return the original array arr. It can be proved that the answer exists and is unique.
+
+// Example:
+// Input: encoded = [1,2,3], first = 1
+// Output: [1,0,2,1]
+// Explanation: If arr = [1,0,2,1], then first = 1 and encoded = [1 XOR 0, 0 XOR 2, 2 XOR 1] = [1,2,3]
+
+var decode = function (encoded, first) {
+  // 1. Create an empty array to store the result
+  // 2. Push the "first" into the empty array
+  // 3. Loop through the "encoded" and calculate the XOR for each number
+  // by comparing it to the last number in the empty array
+  // 4. Push the result into an empty array.
+  // 5. Return the result array
+
+  let arr = [];
+  arr.push(first);
+
+  for (let elem of encoded) {
+    arr.push(arr[arr.length - 1] ^ elem); // ^ xor operator in JS
+  }
+  return arr;
+};
+
+console.log(decode([1, 2, 3], 1)); // [1,0,2,1]
+console.log(decode([6, 2, 7, 3], 4)); // [4,2,0,7,4]
 
 // ! =============== Greedy Algorithm ==============
 
 // ! =============== Backtracking ==============
 
 // ! =============== Heap (Priority Queue) ==============
+
+// * 1. Minimum Number Game -----------------------------------
+// You are given a 0-indexed integer array nums of even length
+// and there is also an empty array arr.
+// Alice and Bob decided to play a game
+// where in every round Alice and Bob will do one move.
+// The rules of the game are as follows:
+
+// Every round, first Alice will remove the minimum element from nums,
+// and then Bob does the same.
+// Now, first Bob will append the removed element in the array arr,
+// and then Alice does the same.
+// The game continues until nums becomes empty.
+// Return the resulting array arr.
+
+// Example:
+// Input: nums = [5,4,2,3]
+// Output: [3,2,5,4]
+// Explanation: In round one, first Alice removes 2 and then Bob removes 3.
+// Then in arr firstly Bob appends 3 and then Alice appends 2. So arr = [3,2].
+// At the begining of round two, nums = [5,4].
+// Now, first Alice removes 4 and then Bob removes 5.
+// Then both append in arr which becomes [3,2,5,4].
+
+var numberGame = function (nums) {
+  let result = [];
+
+  while (nums.length > 0) {
+    let aliceMinNum = getMin(nums);
+    let bobMinNum = getMin(nums);
+    result.push(bobMinNum);
+    result.push(aliceMinNum);
+  }
+  return result;
+};
+
+const getMin = (arr) => {
+  let minNum = Math.min(...arr);
+  let idx = arr.indexOf(minNum);
+  arr.splice(idx, 1);
+  return minNum;
+};
+
+console.log(numberGame([5, 4, 2, 3])); // [3,2,5,4]
+console.log(numberGame([2, 5])); // [5,2]
 
 // ! =============== Search (Binary) ==============
 
