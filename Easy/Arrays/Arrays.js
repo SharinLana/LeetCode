@@ -2014,6 +2014,59 @@ console.log(
   )
 );
 
+// * 5. Shuffle String ------------------------------------------
+// You are given a string s and an integer array indices of the same length.
+// The string s will be shuffled such that the character
+// at the ith position moves to indices[i] in the shuffled string.
+// Return the shuffled string.
+
+// Example:
+// Input: s = "codeleet", indices = [4,5,6,7,0,2,1,3]
+// Output: "leetcode"
+// Explanation: As shown, "codeleet" becomes "leetcode" after shuffling.
+
+// O(N)
+var restoreString = function (s, indices) {
+  let result = [];
+
+  for (let i = 0; i < indices.length; i++) {
+    result[indices[i]] = s[i]
+  }
+
+  return result.join("");
+};
+
+console.log(restoreString("codeleet", [4, 5, 6, 7, 0, 2, 1, 3])); // "leetcode"
+console.log(restoreString("abc", [0, 1, 2])); // "abc"
+
+// * 6. Truncate Sentence ------------------------------------------
+// A sentence is a list of words that are separated by a single space 
+// with no leading or trailing spaces. Each of the words consists 
+// of only uppercase and lowercase English letters (no punctuation).
+
+// For example, "Hello World", "HELLO", and "hello world hello world" are all sentences.
+// You are given a sentence s​​​​​​ and an integer k​​​​​​. 
+// You want to truncate s​​​​​​ such that it contains only the first k​​​​​​ words. 
+// Return s​​​​​​ after truncating it.
+
+// Example:
+// Input: s = "Hello how are you Contestant", k = 4
+// Output: "Hello how are you"
+// Explanation:
+// The words in s are ["Hello", "how" "are", "you", "Contestant"].
+// The first 4 words are ["Hello", "how", "are", "you"].
+// Hence, you should return "Hello how are you".
+
+// O(N) because of the slice method
+var truncateSentence = function (s, k) {
+  let arr = s.split(" ");
+  return arr.slice(0, k).join(" ");
+};
+
+console.log(truncateSentence("Hello how are you Contestant", 4)); // "Hello how are you"
+console.log(truncateSentence("What is the solution to this problem", 4)); // "What is the solution"
+console.log(truncateSentence("chopper is not a tanuki", 5)); // "chopper is not a tanuki"
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
@@ -2293,3 +2346,4 @@ console.log(numberGame([2, 5])); // [5,2]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
+
