@@ -1845,6 +1845,37 @@ console.log(numIdenticalPairs([1, 2, 3, 1, 1, 3])); // 4
 console.log(numIdenticalPairs([1, 1, 1, 1])); // 6
 console.log(numIdenticalPairs([1, 2, 3])); // 0
 
+// * 2. Difference Between Element Sum and digit Sum of an Array -----------------------------------
+// You are given a positive integer array nums.
+// The element sum is the sum of all the elements in nums.
+// The digit sum is the sum of all the digits (not necessarily distinct) that appear in nums.
+// Return the absolute difference between the element sum and digit sum of nums.
+// Note that the absolute difference between two integers x and y is defined as |x - y|.
+
+// Example:
+// Input: nums = [1,15,6,3]
+// Output: 9
+// Explanation:
+// The element sum of nums is 1 + 15 + 6 + 3 = 25.
+// The digit sum of nums is 1 + 1 + 5 + 6 + 3 = 16.
+// The absolute difference between the element sum and digit sum is |25 - 16| = 9.
+
+// O(N)
+var differenceOfSum = function (nums) {
+  // find the sum of all elements:
+  let sum = nums.reduce((acc, elem) => (acc += elem), 0);
+  // find the sum of digits
+  let sumOfDigits = nums
+    .join("")
+    .split("")
+    .reduce((acc, elem) => (acc += Number(elem)), 0);
+
+  return Math.abs(sum - sumOfDigits);
+};
+
+console.log(differenceOfSum([1, 15, 6, 3])); // 9
+console.log(differenceOfSum([1, 2, 3, 4])); // 0
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
@@ -2030,7 +2061,7 @@ var restoreString = function (s, indices) {
   let result = [];
 
   for (let i = 0; i < indices.length; i++) {
-    result[indices[i]] = s[i]
+    result[indices[i]] = s[i];
   }
 
   return result.join("");
@@ -2040,13 +2071,13 @@ console.log(restoreString("codeleet", [4, 5, 6, 7, 0, 2, 1, 3])); // "leetcode"
 console.log(restoreString("abc", [0, 1, 2])); // "abc"
 
 // * 6. Truncate Sentence ------------------------------------------
-// A sentence is a list of words that are separated by a single space 
-// with no leading or trailing spaces. Each of the words consists 
+// A sentence is a list of words that are separated by a single space
+// with no leading or trailing spaces. Each of the words consists
 // of only uppercase and lowercase English letters (no punctuation).
 
 // For example, "Hello World", "HELLO", and "hello world hello world" are all sentences.
-// You are given a sentence s​​​​​​ and an integer k​​​​​​. 
-// You want to truncate s​​​​​​ such that it contains only the first k​​​​​​ words. 
+// You are given a sentence s​​​​​​ and an integer k​​​​​​.
+// You want to truncate s​​​​​​ such that it contains only the first k​​​​​​ words.
 // Return s​​​​​​ after truncating it.
 
 // Example:
@@ -2116,6 +2147,36 @@ console.log(smallerNumbersThanCurrent([7, 7, 7, 7])); // [0,0,0,0]
 // ! =================== Matrix ====================
 
 // ! =============== Two Pointers ==============
+
+// * 1. Number of Arithmetic Triplets ------------------------------------------
+// You are given a 0-indexed, strictly increasing integer array nums
+// and a positive integer diff. A triplet (i, j, k) is an arithmetic triplet
+// if the following conditions are met:
+// i < j < k,
+// nums[j] - nums[i] == diff, and
+// nums[k] - nums[j] == diff.
+// Return the number of unique arithmetic triplets.
+
+// Example:
+// Input: nums = [0,1,4,6,7,10], diff = 3
+// Output: 2
+// Explanation:
+// (1, 2, 4) is an arithmetic triplet because both 7 - 4 == 3 and 4 - 1 == 3.
+// (2, 4, 5) is an arithmetic triplet because both 10 - 7 == 3 and 7 - 4 == 3.
+
+var arithmeticTriplets = function (nums, diff) {
+  let counter = 0;
+  let diff2 = diff * 2;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums.includes(nums[i] + diff) && nums.includes(nums[i] + diff2))
+      counter++;
+  }
+  return counter;
+};
+
+console.log(arithmeticTriplets([0, 1, 4, 6, 7, 10], 3)); // 2
+console.log(arithmeticTriplets([4, 5, 6, 7, 8, 9], 2)); // 2
 
 // ! =============== Sorting ==============
 
@@ -2346,4 +2407,3 @@ console.log(numberGame([2, 5])); // [5,2]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
-
