@@ -2144,6 +2144,43 @@ console.log(smallerNumbersThanCurrent([8, 1, 2, 2, 3])); // [4,0,1,1,3]
 console.log(smallerNumbersThanCurrent([6, 5, 4, 8])); // [2,1,0,3]
 console.log(smallerNumbersThanCurrent([7, 7, 7, 7])); // [0,0,0,0]
 
+// * 2. Count Number of Pairs With Absolute Difference K ------------------------------------------
+// Given an integer array nums and an integer k,
+// return the number of pairs (i, j) where i < j such that |nums[i] - nums[j]| == k.
+// The value of |x| is defined as:
+
+// x if x >= 0.
+// -x if x < 0.
+
+// Example:
+// Input: nums = [1,2,2,1], k = 1
+// Output: 4
+// Explanation: The pairs with an absolute difference of 1 are:
+// - [1,2,2,1]
+// - [1,2,2,1]
+// - [1,2,2,1]
+// - [1,2,2,1]
+
+var countKDifference = function (nums, k) {
+  let count = 0;
+  let hashTable = {};
+
+  for (let num of nums) {
+    if (hashTable[num]) count += hashTable[num];
+
+    hashTable[num + k] ? (hashTable[num + k] += 1) : (hashTable[num + k] = 1);
+    hashTable[num - k] ? (hashTable[num - k] += 1) : (hashTable[num - k] = 1);
+  }
+  return count;
+};
+
+console.log("countKDifference: " + countKDifference([1, 2, 2, 1], 1)); // 4
+console.log("countKDifference: " + countKDifference([1, 3], 3)); // 0
+console.log("countKDifference: " + countKDifference([3, 2, 1, 5, 4], 2)); // 3
+console.log(
+  "countKDifference: " + countKDifference([10, 2, 10, 9, 1, 6, 8, 9, 2, 8], 5)
+); // 1
+
 // ! =================== Matrix ====================
 
 // ! =============== Two Pointers ==============
