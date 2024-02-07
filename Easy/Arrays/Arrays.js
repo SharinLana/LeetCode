@@ -1915,6 +1915,53 @@ console.log(sumOddLengthSubarrays([1, 4, 2, 5, 3])); // 58
 console.log(sumOddLengthSubarrays([1, 2])); // 3
 console.log(sumOddLengthSubarrays([10, 11, 12])); // 66
 
+// * 4. Maximum Product Difference Between 2 Pairs -----------------------------------
+// The product difference between two pairs (a, b) and (c, d) is defined as (a * b) - (c * d).
+// For example, the product difference between (5, 6) and (2, 7) is (5 * 6) - (2 * 7) = 16.
+// Given an integer array nums, choose four distinct indices w, x, y, and z
+// such that the product difference between pairs (nums[w], nums[x]) and (nums[y], nums[z]) is maximized.
+// Return the maximum such product difference.
+
+// Example:
+// Input: nums = [5,6,2,7,4]
+// Output: 34
+// Explanation: We can choose indices 1 and 3 for the first pair (6, 7)
+// and indices 2 and 4 for the second pair (2, 4).
+// The product difference is (6 * 7) - (2 * 4) = 34.
+
+var maxProductDifference = function (nums) {
+  // Finding the biggest elements and removing them from the input array
+  const { biggest: biggestOne, arr: arrOne } = calculateMax(nums);
+  const { biggest: biggestTwo, arr: arrTwo } = calculateMax(arrOne);
+
+  // Finding the smallest elements and removing them from the input array
+  const { smallest: smallestOne, arr: arrThree } = calculateMin(arrTwo);
+  const { smallest: smallestTwo } = calculateMin(arrThree);
+
+  let diff = biggestOne * biggestTwo - smallestOne * smallestTwo;
+
+  return diff;
+};
+
+const calculateMax = (arr) => {
+  let biggest = Math.max.apply(null, arr);
+  let indexOfBiggest = arr.indexOf(biggest);
+  // Removing  elem from the nums
+  arr.splice(indexOfBiggest, 1);
+  return { biggest, arr };
+};
+
+const calculateMin = (arr) => {
+  let smallest = Math.min.apply(null, arr);
+  let indexOfSmallest = arr.indexOf(smallest);
+  // Removing  elem from the nums
+  arr.splice(indexOfSmallest, 1);
+  return { smallest, arr };
+};
+
+console.log(maxProductDifference([5, 6, 2, 7, 4])); // 34
+console.log(maxProductDifference([4, 2, 5, 9, 7, 4, 8])); // 64
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
