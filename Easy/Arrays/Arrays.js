@@ -2184,6 +2184,43 @@ console.log(truncateSentence("Hello how are you Contestant", 4)); // "Hello how 
 console.log(truncateSentence("What is the solution to this problem", 4)); // "What is the solution"
 console.log(truncateSentence("chopper is not a tanuki", 5)); // "chopper is not a tanuki"
 
+// * 7. Check if a string is an Acronym of Words ------------------------------------------
+// Given an array of strings words and a string s, determine if s is an acronym of words.
+
+// The string s is considered an acronym of words
+// if it can be formed by concatenating the first character of each string in words in order.
+// For example, "ab" can be formed from ["apple", "banana"],
+// but it can't be formed from ["bear", "aardvark"].
+// Return true if s is an acronym of words, and false otherwise.
+
+// Example:
+// Input: words = ["alice","bob","charlie"], s = "abc"
+// Output: true
+// Explanation: The first character in the words "alice", "bob",
+// and "charlie" are 'a', 'b', and 'c', respectively. Hence, s = "abc" is the acronym.
+
+var isAcronym = function (words, s) {
+  if (words.length !== s.length) return false;
+  let i = 0;
+
+  while(i < words.length) {
+    if (words[i][0] === s[i]) {
+      i++;
+      continue;
+    } else {
+      return false;
+    }
+  }
+  return true;
+};
+
+console.log("isAcronym: " + isAcronym(["alice", "bob", "charlie"], "abc")); // true
+console.log("isAcronym: " + isAcronym(["an", "apple"], "a")); // false
+console.log(
+  "isAcronym: " + isAcronym(["never", "gonna", "give", "up", "on", "you"], "ngguoy")
+); // true
+console.log("isAcronym: " + isAcronym(["a", "b", "c"], "abcd")); // false
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
