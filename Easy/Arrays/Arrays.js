@@ -2987,6 +2987,34 @@ var decode = function (encoded, first) {
 console.log(decode([1, 2, 3], 1)); // [1,0,2,1]
 console.log(decode([6, 2, 7, 3], 4)); // [4,2,0,7,4]
 
+// * 3. Single Number -----------------------------------------
+// Given a non-empty array of integers nums, every element appears twice except for one. 
+// Find that single one.
+// You must implement a solution with a linear runtime complexity and use only constant extra space.
+
+// Example:
+
+// Input: nums = [2,2,1]
+// Output: 1
+
+const singleNumber = function (nums) {
+  let hashTable = {};
+
+  for (let elem of nums) {
+    hashTable[elem] ? (hashTable[elem] += 1) : hashTable[elem] = 1;
+  }
+
+  for (let key in hashTable) {
+    if (hashTable[key] === 1) return key;
+  }
+};
+
+
+
+console.log(singleNumber([2, 2, 1])); // 1
+console.log(singleNumber([4, 1, 2, 1, 2])); // 4
+console.log(singleNumber([1])); // 1
+
 // ! =============== Greedy Algorithm ==============
 
 // ! =============== Backtracking ==============
