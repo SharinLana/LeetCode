@@ -2580,7 +2580,43 @@ console.log(
 ); // [-2,-1,0,2,3]
 
 // * 6. Two Out of Three ------------------------------------------
+// Given three integer arrays nums1, nums2, and nums3,
+// return a distinct array containing all the values that are present
+// in at least two out of the three arrays.
+// You may return the values in any order.
 
+// Example:
+
+// Input: nums1 = [1,1,3,2], nums2 = [2,3], nums3 = [3]
+// Output: [3,2]
+// Explanation: The values that are present in at least two arrays are:
+// - 3, in all three arrays.
+// - 2, in nums1 and nums2.
+
+let twoOutOfThree = function (nums1, nums2, nums3) {
+  let argumentsArray = Array.from(arguments);
+  let hashTable = {};
+  let result = [];
+
+  for (let elem of argumentsArray) {
+    elem = new Set(elem);
+
+    for (let subElem of elem) {
+      hashTable[subElem] ? hashTable[subElem] += 1 : hashTable[subElem] = 1;
+    }
+  }
+
+  for (let key in hashTable) {
+    if (hashTable[key] > 1) {
+      result.push(+key);
+    }
+  }
+  return result;
+};
+
+console.log(twoOutOfThree([1, 1, 3, 2], [2, 3], [3])); // [3,2]
+console.log(twoOutOfThree([3, 1], [2, 3], [1, 2])); // [2,3,1]
+console.log(twoOutOfThree([1, 2, 2], [4, 3, 3], [5])); // []
 
 // ! =================== Matrix ====================
 
