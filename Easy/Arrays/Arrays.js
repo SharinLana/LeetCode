@@ -2618,6 +2618,45 @@ console.log(twoOutOfThree([1, 1, 3, 2], [2, 3], [3])); // [3,2]
 console.log(twoOutOfThree([3, 1], [2, 3], [1, 2])); // [2,3,1]
 console.log(twoOutOfThree([1, 2, 2], [4, 3, 3], [5])); // []
 
+// * 7. Points That Intersect With Cars ------------------------------------------
+// You are given a 0-indexed 2D integer array nums representing the coordinates 
+// of the cars parking on a number line. 
+// For any index i, nums[i] = [starti, endi] 
+// where start i is the starting point of the ith car 
+// and end i is the ending point of the ith car.
+// Return the number of integer points on the line that are covered with any part of a car.
+
+// Example:
+
+// Input: nums = [[3,6],[1,5],[4,7]]
+// Output: 7
+// Explanation: All the points from 1 to 7 intersect at least one car, therefore the answer would be 7.
+
+const numberOfPoints = function (nums) {
+  let result = new Set();
+
+  for (let elem of nums) {
+    for (let i = elem[0]; i <= elem[1]; i++) {
+      result.add(i);
+    }
+  }
+  return result.size;
+};
+
+console.log(
+  numberOfPoints([
+    [3, 6],
+    [1, 5],
+    [4, 7],
+  ])
+); //
+console.log(
+  numberOfPoints([
+    [1, 3],
+    [5, 8],
+  ])
+); //
+
 // ! =================== Matrix ====================
 
 // ! =============== Two Pointers ==============
