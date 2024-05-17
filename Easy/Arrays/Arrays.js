@@ -2021,6 +2021,31 @@ console.log(
     ])
 ); // 5
 
+// * 6. Find Unique Integers Sum up to Zero -----------------------------------
+// Given an integer n, return any array containing n unique integers such that they add up to 0.
+
+// Example:
+
+// Input: n = 5
+// Output: [-7,-1,1,3,4]
+// Explanation: These arrays also are accepted [-5,-1,1,2,3] , [-3,-1,2,-2,4].
+
+let sumZero = function (n) {
+  let result = [];
+  let sum = 0;
+
+  for (let i = n-1; i >= 1; i--) {
+    result.push(-i);
+    sum += -i;
+  }
+  result.push(Math.abs(sum));
+  return result;
+};
+
+console.log(sumZero(5)); // [-4, -3, -2, -1, 10]
+console.log(sumZero(3)); // [-2, -1, 3]
+console.log(sumZero(1)); // [0]
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
@@ -2589,6 +2614,22 @@ console.log(arithmeticTriplets([0, 1, 4, 6, 7, 10], 3)); // 2
 console.log(arithmeticTriplets([4, 5, 6, 7, 8, 9], 2)); // 2
 
 // ! =============== Sorting ==============
+
+// * 1. Find Target Indices after Sorting Array ---------------------------------
+// You are given a 0-indexed integer array nums and a target element target.
+// A target index is an index i such that nums[i] == target.
+// Return a list of the target indices of nums after sorting nums in non-decreasing order. 
+// If there are no target indices, return an empty list. 
+// The returned list must be sorted in increasing order.
+
+// Example:
+
+// Input: nums = [1,2,5,2,3], target = 2
+// Output: [1,2]
+// Explanation: After sorting, nums is [1,2,2,3,5].
+// The indices where nums[i] == 2 are 1 and 2.
+
+
 
 // ! =============== Prefix Sum ==============
 
