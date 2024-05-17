@@ -2602,7 +2602,7 @@ let twoOutOfThree = function (nums1, nums2, nums3) {
     elem = new Set(elem);
 
     for (let subElem of elem) {
-      hashTable[subElem] ? hashTable[subElem] += 1 : hashTable[subElem] = 1;
+      hashTable[subElem] ? (hashTable[subElem] += 1) : (hashTable[subElem] = 1);
     }
   }
 
@@ -2619,10 +2619,10 @@ console.log(twoOutOfThree([3, 1], [2, 3], [1, 2])); // [2,3,1]
 console.log(twoOutOfThree([1, 2, 2], [4, 3, 3], [5])); // []
 
 // * 7. Points That Intersect With Cars ------------------------------------------
-// You are given a 0-indexed 2D integer array nums representing the coordinates 
-// of the cars parking on a number line. 
-// For any index i, nums[i] = [starti, endi] 
-// where start i is the starting point of the ith car 
+// You are given a 0-indexed 2D integer array nums representing the coordinates
+// of the cars parking on a number line.
+// For any index i, nums[i] = [starti, endi]
+// where start i is the starting point of the ith car
 // and end i is the ending point of the ith car.
 // Return the number of integer points on the line that are covered with any part of a car.
 
@@ -2968,6 +2968,48 @@ console.log(numberGame([2, 5])); // [5,2]
 // ! =============== Stack ==============
 
 // ! =============== Dynamic Programming ==============
+
+// * 1. Pascal's Triangle -----------------------------------
+// Given an integer numRows, return the first numRows of Pascal's triangle.
+// In Pascal's triangle, each number is the sum of the two numbers directly above it.
+
+// Example:
+
+// Input: numRows = 5
+// Output: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+
+const generate = function (numRows) {
+  // Initialize the result array to store Pascal's triangle
+  let result = [];
+
+  // Iterate over each row of the triangle
+  for (let i = 0; i < numRows; i++) {
+    let row = [];
+
+    // Set the first and last elements of each row to 1
+    row[0] = 1; // First element
+    row[i] = 1; // Last element (index equals the row number)
+
+    // Iterate over each element in the row (except the first and last)
+    // to calculate its value based on the previous row
+    for (let j = 1; j < i; j++) {
+      // Calculating the value of the current elements
+      // by defining the value of elements in the previous row
+      const leftVal = result[i - 1][j - 1];
+      const rightVal = result[i - 1][j];
+      row[j] = leftVal + rightVal;
+    }
+
+    // Push the newly generated row into the Pascal's triangle
+    result.push(row);
+  }
+
+  // Return the generated Pascal's triangle
+  return result;
+};
+
+console.log(generate(5)); // [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+console.log(generate(1)); // [[1]]
 
 // ! =============== Divide and Conquer ==============
 
