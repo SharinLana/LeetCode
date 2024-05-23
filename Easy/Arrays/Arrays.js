@@ -2310,14 +2310,14 @@ console.log("isAcronym: " + isAcronym(["a", "b", "c"], "abcd")); // false
 // The value of an alphanumeric string can be defined as:
 // The numeric representation of the string in base 10, if it comprises of digits only.
 // The length of the string, otherwise.
-// Given an array strs of alphanumeric strings, 
+// Given an array strs of alphanumeric strings,
 // return the maximum value of any string in strs.
 
 // Example 1:
 
 // Input: strs = ["alic3","bob","3","4","00000"]
 // Output: 5
-// Explanation: 
+// Explanation:
 // - "alic3" consists of both letters and digits, so its value is its length, i.e. 5.
 // - "bob" consists only of letters, so its value is also its length, i.e. 3.
 // - "3" consists only of digits, so its value is its numeric equivalent, i.e. 3.
@@ -2329,14 +2329,14 @@ console.log("isAcronym: " + isAcronym(["a", "b", "c"], "abcd")); // false
 
 // Input: strs = ["1","01","001","0001"]
 // Output: 1
-// Explanation: 
+// Explanation:
 // Each string in the array has value 1. Hence, we return 1.
 
 const maximumValue = function (strs) {
   let maxValue = 0;
 
   for (let i = 0; i < strs.length; i++) {
-    if (isNaN(+(strs[i]))) {
+    if (isNaN(+strs[i])) {
       maxValue = Math.max(maxValue, strs[i].length);
     } else {
       maxValue = Math.max(maxValue, +strs[i]);
@@ -2740,8 +2740,8 @@ const mergeArrays = function (nums1, nums2) {
   // Transform the hashTable into the 2D array:
   let result = [];
 
-  for (let key in  hashTable) {
-    result.push([+key,hashTable[key]]);
+  for (let key in hashTable) {
+    result.push([+key, hashTable[key]]);
   }
 
   return result;
@@ -2774,6 +2774,46 @@ console.log(
     ]
   )
 ); // [[1,3],[2,4],[3,6],[4,3],[5,5]]
+
+// * 9. Make Two Arrays Equal by Reversing Subarrays ------------------------------------------
+// You are given two integer arrays of equal length target and arr.
+// In one step, you can select any non-empty subarray of arr and reverse it.
+// You are allowed to make any number of steps.
+// Return true if you can make arr equal to target or false otherwise.
+
+// Example:
+
+// Input: target = [1,2,3,4], arr = [2,4,1,3]
+// Output: true
+// Explanation: You can follow the next steps to convert arr to target:
+// 1- Reverse subarray [2,4,1], arr becomes [1,4,2,3]
+// 2- Reverse subarray [4,2], arr becomes [1,2,4,3]
+// 3- Reverse subarray [4,3], arr becomes [1,2,3,4]
+// There are multiple ways to convert arr to target, this is not the only way to do so.
+
+const canBeEqual = function (target, arr) {
+  let hashTable1 = {};
+  let hashTable2 = {};
+
+  for (let elem of target) {
+    hashTable1[elem] ? (hashTable1[elem] += 1) : (hashTable1[elem] = 1);
+  }
+
+  for (let elem of arr) {
+    hashTable2[elem] ? (hashTable2[elem] += 1) : (hashTable2[elem] = 1);
+  }
+
+  for (let key in hashTable1) {
+    if (!hashTable2.hasOwnProperty(key) || hashTable2[key] !== hashTable1[key])
+      return false;
+  }
+  return true;
+};
+
+console.log(canBeEqual([1, 2, 3, 4], [2, 4, 1, 3])); // true
+console.log(canBeEqual([7], [7])); // true
+console.log(canBeEqual([3, 7, 9], [3, 7, 11])); // false
+console.log(canBeEqual([5, 5, 2, 2], [6, 6, 1, 1])); // false
 
 // ! =================== Matrix ====================
 
@@ -3031,7 +3071,7 @@ console.log(decode([1, 2, 3], 1)); // [1,0,2,1]
 console.log(decode([6, 2, 7, 3], 4)); // [4,2,0,7,4]
 
 // * 3. Single Number -----------------------------------------
-// Given a non-empty array of integers nums, every element appears twice except for one. 
+// Given a non-empty array of integers nums, every element appears twice except for one.
 // Find that single one.
 // You must implement a solution with a linear runtime complexity and use only constant extra space.
 
@@ -3044,15 +3084,13 @@ const singleNumber = function (nums) {
   let hashTable = {};
 
   for (let elem of nums) {
-    hashTable[elem] ? (hashTable[elem] += 1) : hashTable[elem] = 1;
+    hashTable[elem] ? (hashTable[elem] += 1) : (hashTable[elem] = 1);
   }
 
   for (let key in hashTable) {
     if (hashTable[key] === 1) return key;
   }
 };
-
-
 
 console.log(singleNumber([2, 2, 1])); // 1
 console.log(singleNumber([4, 1, 2, 1, 2])); // 4
