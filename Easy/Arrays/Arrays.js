@@ -2046,6 +2046,47 @@ console.log(sumZero(5)); // [-4, -3, -2, -1, 10]
 console.log(sumZero(3)); // [-2, -1, 3]
 console.log(sumZero(1)); // [0]
 
+// * 7. Maximum Count of Positive Integer and Negative Integer -----------------------------------
+// Given an array nums sorted in non-decreasing order,
+// return the maximum between the number of positive integers
+// and the number of negative integers.
+
+// In other words, if the number of positive integers in nums
+// is pos and the number of negative integers is neg,
+// then return the maximum of pos and neg.
+// Note that 0 is neither positive nor negative.
+
+// Example 1:
+// Input: nums = [-2,-1,-1,1,2,3]
+// Output: 3
+// Explanation: There are 3 positive integers and 3 negative integers.
+// The maximum count among them is 3.
+
+// Example 2:
+// Input: nums = [5,20,66,1314]
+// Output: 4
+// Explanation: There are 4 positive integers and 0 negative integers.
+// The maximum count among them is 4.
+
+const maximumCount = function (nums) {
+  let pos = 0;
+  let neg = 0;
+
+  for (let elem of nums) {
+    if (elem !== 0 && elem < 0) {
+      neg++;
+    } else if (elem !== 0 && elem > 0) {
+      pos++;
+    }
+  }
+
+  return Math.max(pos, neg);
+};
+
+console.log(maximumCount([-2, -1, -1, 1, 2, 3])); // 3
+console.log(maximumCount([-3, -2, -1, 0, 0, 1, 2])); // 3
+console.log(maximumCount([5, 20, 66, 1314])); // 4
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
