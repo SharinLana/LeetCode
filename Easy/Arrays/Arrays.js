@@ -2817,6 +2817,45 @@ console.log(canBeEqual([5, 5, 2, 2], [6, 6, 1, 1])); // false
 
 // ! =================== Matrix ====================
 
+// * 1. Matrix Cells in Distance Order ------------------------------------------
+// You are given four integers row, cols, rCenter, and cCenter.
+// There is a rows x cols matrix and you are on the cell
+// with the coordinates (rCenter, cCenter).
+
+// Return the coordinates of all cells in the matrix,
+// sorted by their distance from (rCenter, cCenter)
+// from the smallest distance to the largest distance.
+// You may return the answer in any order that satisfies this condition.
+
+// The distance between two cells (r1, c1) and (r2, c2) is |r1 - r2| + |c1 - c2|.
+
+// Example:
+
+// Input: rows = 1, cols = 2, rCenter = 0, cCenter = 0
+// Output: [[0,0],[0,1]]
+// Explanation: The distances from (0, 0) to other cells are: [0,1]
+
+const allCellsDistOrder = function (rows, cols, rCenter, cCenter) {
+  const buckets = [];
+  const result = [];
+
+  for (let i = 0; i < rows; ++i) {
+    for (let j = 0; j < cols; ++j) {
+      const dis = Math.abs(i - rCenter) + Math.abs(j - cCenter);
+      if (buckets[dis] === undefined) buckets[dis] = [];
+      buckets[dis].push([i, j]);
+    }
+  }
+  for (const bucket of buckets) {
+    result.push(...bucket);
+  }
+  return result;
+};
+
+console.log(allCellsDistOrder(1, 2, 0, 0)); // [[0,0],[0,1]]
+console.log(allCellsDistOrder(2, 2, 0, 1)); // [[0,1],[0,0],[1,1],[1,0]]
+console.log(allCellsDistOrder(2, 3, 1, 2)); // [[1,2],[0,2],[1,1],[0,1],[1,0],[0,0]]
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
