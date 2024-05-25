@@ -2087,6 +2087,44 @@ console.log(maximumCount([-2, -1, -1, 1, 2, 3])); // 3
 console.log(maximumCount([-3, -2, -1, 0, 0, 1, 2])); // 3
 console.log(maximumCount([5, 20, 66, 1314])); // 4
 
+// * 8. Smallest Range I -----------------------------------
+// You are given an integer array nums and an integer k.
+// In one operation, you can choose any index i where 0 <= i < nums.length 
+// and change nums[i] to nums[i] + x where x is an integer from the range [-k, k]. 
+// You can apply this operation at most once for each index i.
+// The score of nums is the difference between the maximum and minimum elements in nums.
+// Return the minimum score of nums after applying the mentioned operation 
+// at most once for each index in it.
+
+// You just need to add k to min value of the array 
+// and subtract k from max value of the array 
+// and finally subtract those values to find the difference. 
+// If the difference is negative return zero else return the difference value
+
+// Example 1:
+// Input: nums = [1], k = 0
+// Output: 0
+// Explanation: The score is max(nums) - min(nums) = 1 - 1 = 0.
+
+// Example 2:
+// Input: nums = [0,10], k = 2
+// Output: 6
+// Explanation: Change nums to be [2, 8]. The score is max(nums) - min(nums) = 8 - 2 = 6.
+
+const smallestRangeI = function (nums, k) {
+  let sorted = nums.sort((a, b) => a - b);
+  let smallest = sorted[0];
+  let biggest = sorted[sorted.length - 1];
+
+  let result = (biggest - k) - (smallest + k);
+
+  return result < 0 ? 0 : result;
+};
+
+console.log(smallestRangeI([1], 0)); // 0
+console.log(smallestRangeI([0, 10], 2)); // 6
+console.log(smallestRangeI([1, 3, 6], 3)); // 0
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
