@@ -2089,16 +2089,16 @@ console.log(maximumCount([5, 20, 66, 1314])); // 4
 
 // * 8. Smallest Range I -----------------------------------
 // You are given an integer array nums and an integer k.
-// In one operation, you can choose any index i where 0 <= i < nums.length 
-// and change nums[i] to nums[i] + x where x is an integer from the range [-k, k]. 
+// In one operation, you can choose any index i where 0 <= i < nums.length
+// and change nums[i] to nums[i] + x where x is an integer from the range [-k, k].
 // You can apply this operation at most once for each index i.
 // The score of nums is the difference between the maximum and minimum elements in nums.
-// Return the minimum score of nums after applying the mentioned operation 
+// Return the minimum score of nums after applying the mentioned operation
 // at most once for each index in it.
 
-// You just need to add k to min value of the array 
-// and subtract k from max value of the array 
-// and finally subtract those values to find the difference. 
+// You just need to add k to min value of the array
+// and subtract k from max value of the array
+// and finally subtract those values to find the difference.
 // If the difference is negative return zero else return the difference value
 
 // Example 1:
@@ -2116,7 +2116,7 @@ const smallestRangeI = function (nums, k) {
   let smallest = sorted[0];
   let biggest = sorted[sorted.length - 1];
 
-  let result = (biggest - k) - (smallest + k);
+  let result = biggest - k - (smallest + k);
 
   return result < 0 ? 0 : result;
 };
@@ -2937,8 +2937,8 @@ console.log(allCellsDistOrder(2, 3, 1, 2)); // [[1,2],[0,2],[1,1],[0,1],[1,0],[0
 
 // * 2. Find Champion I ------------------------------------------
 // There are n teams numbered from 0 to n - 1 in a tournament.
-// Given a 0-indexed 2D boolean matrix grid of size n * n. 
-// For all i, j that 0 <= i, j <= n - 1 and i != j team i is stronger than team j if grid[i][j] == 1, 
+// Given a 0-indexed 2D boolean matrix grid of size n * n.
+// For all i, j that 0 <= i, j <= n - 1 and i != j team i is stronger than team j if grid[i][j] == 1,
 // otherwise, team j is stronger than team i.
 // Team a will be the champion of the tournament if there is no team b that is stronger than team a.
 
@@ -2960,7 +2960,7 @@ console.log(allCellsDistOrder(2, 3, 1, 2)); // [[1,2],[0,2],[1,1],[0,1],[1,0],[0
 
 const findChampion = function (grid) {
   let score = 0;
-  let hashTable = {}
+  let hashTable = {};
 
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
@@ -2971,10 +2971,13 @@ const findChampion = function (grid) {
     hashTable[i] = score;
     score = 0;
   }
-  
+
   // Get a key with the max value from the hashTable
-  const max = Object.keys(hashTable).reduce((acc, key) => Math.max(acc, hashTable[key]), -Infinity);
-  const team = Object.keys(hashTable).filter(key => hashTable[key] === max);
+  const max = Object.keys(hashTable).reduce(
+    (acc, key) => Math.max(acc, hashTable[key]),
+    -Infinity
+  );
+  const team = Object.keys(hashTable).filter((key) => hashTable[key] === max);
   return Number(team[0]);
 };
 
@@ -2991,6 +2994,54 @@ console.log(
     [0, 0, 0],
   ])
 ); // 1
+
+// * 3. (766). Toeplitz Matrix ------------------------------------------
+// Given an m x n matrix, return true if the matrix is Toeplitz.
+// Otherwise, return false.
+// A matrix is Toeplitz if every diagonal from top-left
+// to bottom-right has the same elements.
+
+// Example 1:
+// Input: matrix = [[1,2,3,4],[5,1,2,3],[9,5,1,2]]
+// Output: true
+// Explanation:
+// In the above grid, the diagonals are:
+// "[9]", "[5, 5]", "[1, 1, 1]", "[2, 2, 2]", "[3, 3]", "[4]".
+// In each diagonal all elements are the same, so the answer is True.
+
+// Example 2:
+// Input: matrix = [[1,2],[2,2]]
+// Output: false
+// Explanation:
+// The diagonal "[1, 2]" has different elements.
+
+let isToeplitzMatrix = function (matrix) {
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[i].length; j++) {
+      if (i < matrix.length - 1 && j < matrix[i].length - 1) {
+        // console.log(matrix[i][j], matrix[i+1][j+1]);
+        if (matrix[i][j] !== matrix[i + 1][j + 1]) {
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+};
+
+console.log(
+  isToeplitzMatrix([
+    [1, 2, 3, 4],
+    [5, 1, 2, 3],
+    [9, 5, 1, 2],
+  ])
+); // true
+console.log(
+  isToeplitzMatrix([
+    [1, 2],
+    [2, 2],
+  ])
+); // false
 
 // ! =============== Two Pointers ==============
 
@@ -3274,27 +3325,27 @@ console.log(singleNumber([1])); // 1
 // * 4. Check if Bitwise OR Has Trailing Zeros -----------------------------------
 // You are given an array of positive integers nums.
 // You have to check if it is possible to select two or more elements in the array
-// such that the bitwise OR of the selected elements 
+// such that the bitwise OR of the selected elements
 // has at least one trailing zero in its binary representation.
 
-// For example, the binary representation of 5, 
-// which is "101", does not have any trailing zeros, 
-// whereas the binary representation of 4, which is "100", 
+// For example, the binary representation of 5,
+// which is "101", does not have any trailing zeros,
+// whereas the binary representation of 4, which is "100",
 // has two trailing zeros.
 
-// Return true if it is possible to select two or more elements 
+// Return true if it is possible to select two or more elements
 // whose bitwise OR has trailing zeros, return false otherwise.
 
 // Example:
 
 // Input: nums = [1,2,3,4,5]
 // Output: true
-// Explanation: If we select the elements 2 and 4, their bitwise OR is 6, 
+// Explanation: If we select the elements 2 and 4, their bitwise OR is 6,
 // which has the binary representation "110" with one trailing zero.
 
 const hasTrailingZeros = function (nums) {
   for (let i = 0; i < nums.length; i++) {
-    for (let j = i+1; j < nums.length; j++) {
+    for (let j = i + 1; j < nums.length; j++) {
       let binaryOR = (nums[i] | nums[j]).toString(2);
 
       if (binaryOR[binaryOR.length - 1] === "0") return true;
