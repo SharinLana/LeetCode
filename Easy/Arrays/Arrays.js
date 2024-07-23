@@ -2894,6 +2894,62 @@ console.log(canBeEqual([7], [7])); // true
 console.log(canBeEqual([3, 7, 9], [3, 7, 11])); // false
 console.log(canBeEqual([5, 5, 2, 2], [6, 6, 1, 1])); // false
 
+// * 10 (500). Keyboard Row ------------------------------------------
+// Given an array of strings words, return the words
+// that can be typed using letters of the alphabet on only one row
+// of American keyboard like the image below.
+
+// In the American keyboard:
+// the first row consists of the characters "qwertyuiop",
+// the second row consists of the characters "asdfghjkl", and
+// the third row consists of the characters "zxcvbnm".
+
+// Example 1:
+// Input: words = ["Hello","Alaska","Dad","Peace"]
+// Output: ["Alaska","Dad"]
+
+// Example 2:
+// Input: words = ["omk"]
+// Output: []
+
+// Example 3:
+// Input: words = ["adsdf","sfd"]
+// Output: ["adsdf","sfd"]
+
+let findWords = function (words) {
+  let hashTbl = {
+    row1: "qwertyuiop",
+    row2: "asdfghjkl",
+    row3: "zxcvbnm",
+  };
+  let result = [];
+
+  for (let word of words) {
+    for (let key in hashTbl) {
+      if (hashTbl[key].includes(word[0].toLowerCase())) {
+        let response = compareStrings(hashTbl[key], word.toLowerCase());
+        if (response) {
+          result.push(word);
+        }
+      }
+    }
+  }
+  return result;
+};
+
+const compareStrings = (keyboardRow, word) => {
+  for (let letter of word) {
+    if (!keyboardRow.includes(letter)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log(findWords(["Hello", "Alaska", "Dad", "Peace"])); // ["Alaska","Dad"]
+console.log(findWords(["omk"])); // []
+console.log(findWords(["adsdf", "sfd"])); // ["adsdf","sfd"]
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
@@ -3241,7 +3297,7 @@ console.log(
 
 // * 6. (867). Transpose Matrix ------------------------------------------
 // Given a 2D integer array matrix, return the transpose of matrix.
-// The transpose of a matrix is the matrix flipped over its main diagonal, 
+// The transpose of a matrix is the matrix flipped over its main diagonal,
 // switching the matrix's row and column indices.
 
 // Example 1:
