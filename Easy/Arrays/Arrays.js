@@ -2431,26 +2431,25 @@ console.log(maximumValue(["3glko", "1"])); // 5
 // * . (2506) Count Pairs Of Similar Strings ------------------------------------------
 // You are given a 0-indexed string array words.
 // Two strings are similar if they consist of the same characters.
-// For example, "abca" and "cba" are similar since both consist of characters 
+// For example, "abca" and "cba" are similar since both consist of characters
 // 'a', 'b', and 'c'.
-// However, "abacba" and "bcfd" are not similar since they do not consist 
+// However, "abacba" and "bcfd" are not similar since they do not consist
 // of the same characters.
-// Return the number of pairs (i, j) such that 0 <= i < j <= word.length - 1 
+// Return the number of pairs (i, j) such that 0 <= i < j <= word.length - 1
 // and the two strings words[i] and words[j] are similar.
-
 
 // Example:
 // Input: words = ["aba","aabb","abcd","bac","aabc"]
 // Output: 2
 // Explanation: There are 2 pairs that satisfy the conditions:
-// - i = 0 and j = 1 : both words[0] and words[1] only consist of characters 'a' and 'b'. 
-// - i = 3 and j = 4 : both words[3] and words[4] only consist of characters 'a', 'b', and 'c'. 
+// - i = 0 and j = 1 : both words[0] and words[1] only consist of characters 'a' and 'b'.
+// - i = 3 and j = 4 : both words[3] and words[4] only consist of characters 'a', 'b', and 'c'.
 
 let similarPairs = function (words) {
   let counter = 0;
   for (let i = 0; i < words.length; i++) {
-    for (let j = i+1; j < words.length; j++) {
-      ifTheSame(words[i], words[j]) ? counter +=1 : counter;
+    for (let j = i + 1; j < words.length; j++) {
+      ifTheSame(words[i], words[j]) ? (counter += 1) : counter;
     }
   }
   return counter;
@@ -2463,9 +2462,9 @@ const ifTheSame = (word1, word2) => {
   for (let char of word2) {
     if (!word1.includes(char)) return false;
   }
-  
+
   return true;
-}
+};
 
 console.log(similarPairs(["aba", "aabb", "abcd", "bac", "aabc"])); // 2
 console.log(similarPairs(["aabb", "ab", "ba"])); // 3
@@ -2987,11 +2986,65 @@ const compareStrings = (keyboardRow, word) => {
     }
   }
   return true;
-}
+};
 
 console.log(findWords(["Hello", "Alaska", "Dad", "Peace"])); // ["Alaska","Dad"]
 console.log(findWords(["omk"])); // []
 console.log(findWords(["adsdf", "sfd"])); // ["adsdf","sfd"]
+
+// * 11 (2248). Intersection of Multiple Arrays ------------------------------------------
+// Given a 2D integer array nums where nums[i] is a non-empty array
+// of distinct positive integers, return the list of integers that are present
+// in each array of nums sorted in ascending order.
+
+// Example 1:
+// Input: nums = [[3,1,2,4,5],[1,2,3,4],[3,4,5,6]]
+// Output: [3,4]
+// Explanation:
+// The only integers present in each of nums[0] = [3,1,2,4,5],
+// nums[1] = [1,2,3,4], and nums[2] = [3,4,5,6] are 3 and 4,
+// so we return [3,4].
+
+// Example 2:
+// Input: nums = [[1,2,3],[4,5,6]]
+// Output: []
+// Explanation:
+// There does not exist any integer present both in nums[0] and nums[1],
+// so we return an empty list [].
+
+let intersection = function (nums) {
+  let hashTable = {};
+  let result = [];
+
+  for (let subArr of nums) {
+    for (let i = 0; i < subArr.length; i++) {
+      hashTable[subArr[i]]
+        ? (hashTable[subArr[i]] += 1)
+        : (hashTable[subArr[i]] = 1);
+    }
+  }
+
+  for (let key in hashTable) {
+    if (hashTable[key] === nums.length) {
+      result.push(key);
+    }
+  }
+  return result.sort((a, b) => a - b);
+};
+
+console.log(
+  intersection([
+    [3, 1, 2, 4, 5],
+    [1, 2, 3, 4],
+    [3, 4, 5, 6],
+  ])
+); // [3,4]
+console.log(
+  intersection([
+    [1, 2, 3],
+    [4, 5, 6],
+  ])
+); // []
 
 // ! =================== Matrix ====================
 
