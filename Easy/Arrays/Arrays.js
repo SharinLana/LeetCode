@@ -3047,16 +3047,16 @@ console.log(
 ); // []
 
 // * 12 (575). Distribute Candies ------------------------------------------
-// Alice has n candies, where the ith candy is of type candyType[i]. 
+// Alice has n candies, where the ith candy is of type candyType[i].
 // Alice noticed that she started to gain weight, so she visited a doctor.
 
-// The doctor advised Alice to only eat n / 2 of the candies she has 
-// (n is always even). Alice likes her candies very much, 
-// and she wants to eat the maximum number of different types of candies 
+// The doctor advised Alice to only eat n / 2 of the candies she has
+// (n is always even). Alice likes her candies very much,
+// and she wants to eat the maximum number of different types of candies
 // while still following the doctor's advice.
 
-// Given the integer array candyType of length n, 
-// return the maximum number of different types of candies she can eat 
+// Given the integer array candyType of length n,
+// return the maximum number of different types of candies she can eat
 // if she only eats n / 2 of them.
 
 // Example 1:
@@ -3067,14 +3067,14 @@ console.log(
 // Example 2:
 // Input: candyType = [1,1,2,3]
 // Output: 2
-// Explanation: Alice can only eat 4 / 2 = 2 candies. 
-// Whether she eats types [1,2], [1,3], or [2,3], 
+// Explanation: Alice can only eat 4 / 2 = 2 candies.
+// Whether she eats types [1,2], [1,3], or [2,3],
 // she still can only eat 2 different types.
 
 let distributeCandies = function (candyType) {
   let uniqueTypes = new Set(candyType);
   // let halfPortion = candyType.length / 2;
-  
+
   if (candyType.length / 2 === uniqueTypes.size) {
     return uniqueTypes.size;
   } else {
@@ -3089,6 +3089,71 @@ let distributeCandies = function (candyType) {
 console.log(distributeCandies([1, 1, 2, 2, 3, 3])); // 3
 console.log(distributeCandies([1, 1, 2, 3])); // 2
 console.log(distributeCandies([6, 6, 6, 6])); // 1
+
+// * 13 (929). Unique Email Addresses ------------------------------------------
+// Every valid email consists of a local name and a domain name, separated by the '@' sign.
+// Besides lowercase letters, the email may contain one or more '.' or '+'.
+
+// For example, in "alice@leetcode.com", "alice" is the local name,
+// and "leetcode.com" is the domain name.
+// If you add periods '.' between some characters in the local name part of an email address,
+// mail sent there will be forwarded to the same address without dots in the local name.
+// Note that this rule does not apply to domain names.
+
+// For example, "alice.z@leetcode.com" and "alicez@leetcode.com" forward to the same email address.
+// If you add a plus '+' in the local name, everything after the first plus sign will be ignored.
+// This allows certain emails to be filtered. Note that this rule does not apply to domain names.
+
+// For example, "m.y+name@email.com" will be forwarded to "my@email.com".
+// It is possible to use both of these rules at the same time.
+
+// Given an array of strings emails where we send one email to each emails[i], return the number of different addresses that actually receive mails.
+
+// Example 1:
+// Input: emails = ["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"]
+// Output: 2
+// Explanation: "testemail@leetcode.com" and "testemail@lee.tcode.com" actually receive mails.
+
+// Example 2:
+// Input: emails = ["a@leetcode.com","b@leetcode.com","c@leetcode.com"]
+// Output: 3
+
+let numUniqueEmails = function (emails) {
+  let result = [];
+
+  for (let email of emails) {
+    // Find the local name of the email
+    let localName = email.split("@")[0];
+    // Find the + symbol
+    let plusSymbolIdx = localName.indexOf("+");
+    // Modify the local name by removing everything after the + symbol 
+    if (plusSymbolIdx !== -1) {
+      localName = localName.slice(0, plusSymbolIdx);
+    }
+    // Remove all the "." characters
+    localName = localName.split(".").join("");
+    // Restore the full email name
+    email = localName + "@" + email.split("@")[1];
+    // Save the unique email in the result array
+    if (!result.includes(email)) result.push(email);
+  }
+  // Return the length of the result array
+  return result.length;
+};
+
+console.log(
+  numUniqueEmails([
+    "test.email+alex@leetcode.com",
+    "test.e.mail+bob.cathy@leetcode.com",
+    "testemail+david@lee.tcode.com",
+  ])
+); // 2
+console.log(
+  numUniqueEmails(["a@leetcode.com", "b@leetcode.com", "c@leetcode.com"])
+); // 3
+console.log(
+  numUniqueEmails(["test.email+alex@leetcode.com", "test.email@leetcode.com"])
+); // 1
 
 // ! =================== Matrix ====================
 
