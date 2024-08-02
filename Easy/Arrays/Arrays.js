@@ -1821,6 +1821,76 @@ var minMaxGame = function (nums, newNums = [], i = 0) {
 console.log(minMaxGame([1, 3, 5, 2, 4, 8, 2, 2])); // 1
 console.log(minMaxGame([3])); // 3
 
+// * 9 (2899). Last Visited Integers ----------------------------------------------------
+// Given an integer array nums where nums[i] is either a positive integer or -1.
+// We need to find for each -1 the respective positive integer,
+// which we call the last visited integer.
+
+// To achieve this goal, let's define two empty arrays: seen and ans.
+
+// Start iterating from the beginning of the array nums.
+
+// If a positive integer is encountered, prepend it to the front of seen.
+// If -1 is encountered, let k be the number of consecutive -1s seen so far (including the current -1),
+// If k is less than or equal to the length of seen, append the k-th element of seen to ans.
+// If k is strictly greater than the length of seen, append -1 to ans.
+// Return the array ans.
+
+// Example 1:
+// Input: nums = [1,2,-1,-1,-1]
+// Output: [2,1,-1]
+// Explanation:
+// Start with seen = [] and ans = [].
+
+// Process nums[0]: The first element in nums is 1. We prepend it to the front of seen. Now, seen == [1].
+// Process nums[1]: The next element is 2. We prepend it to the front of seen. Now, seen == [2, 1].
+// Process nums[2]: The next element is -1. This is the first occurrence of -1, so k == 1. We look for the first element in seen. We append 2 to ans. Now, ans == [2].
+// Process nums[3]: Another -1. This is the second consecutive -1, so k == 2. The second element in seen is 1, so we append 1 to ans. Now, ans == [2, 1].
+// Process nums[4]: Another -1, the third in a row, making k = 3. However, seen only has two elements ([2, 1]). Since k is greater than the number of elements in seen, we append -1 to ans. Finally, ans == [2, 1, -1].
+
+// Example 2:
+// Input: nums = [1,-1,2,-1,-1]
+// Output: [1,2,1]
+// Explanation:
+// Start with seen = [] and ans = [].
+
+// Process nums[0]: The first element in nums is 1. We prepend it to the front of seen. Now, seen == [1].
+// Process nums[1]: The next element is -1. This is the first occurrence of -1, so k == 1. We look for the first element in seen, which is 1. Append 1 to ans. Now, ans == [1].
+// Process nums[2]: The next element is 2. Prepend this to the front of seen. Now, seen == [2, 1].
+// Process nums[3]: The next element is -1. This -1 is not consecutive to the first -1 since 2 was in between. Thus, k resets to 1. The first element in seen is 2, so append 2 to ans. Now, ans == [1, 2].
+// Process nums[4]: Another -1. This is consecutive to the previous -1, so k == 2. The second element in seen is 1, append 1 to ans. Finally, ans == [1, 2, 1].
+
+let lastVisitedIntegers = function (nums) {
+  let seen = [];
+  let ans = []; 
+  let counter = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > 0) {
+      seen.unshift(nums[i]);
+    } else {
+      if (counter < seen.length) {
+        ans.push(seen[counter]);
+      } else {
+        ans.push(-1);
+      }
+
+      if (nums[i+1] === -1) {
+        counter++;
+      } else {
+        counter = 0;
+      }
+    }
+  }
+  return ans;
+  // console.log("ANS");
+  // console.log(ans);
+};
+
+console.log(lastVisitedIntegers([1, -1, 2, -1, -1])); // [1,2,1]
+console.log(lastVisitedIntegers([1, 2, -1, -1, -1])); // [2,1,-1]
+console.log(lastVisitedIntegers([-1, -1, -1, 52, -1])); // [-1,-1,-1,52]
+
 // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
 // * 1. Number of Good Pairs ----------------------------------------------------
@@ -3126,7 +3196,7 @@ let numUniqueEmails = function (emails) {
     let localName = email.split("@")[0];
     // Find the + symbol
     let plusSymbolIdx = localName.indexOf("+");
-    // Modify the local name by removing everything after the + symbol 
+    // Modify the local name by removing everything after the + symbol
     if (plusSymbolIdx !== -1) {
       localName = localName.slice(0, plusSymbolIdx);
     }
@@ -3161,9 +3231,9 @@ console.log(
 // Implement MyHashSet class:
 // void add(key) Inserts the value key into the HashSet.
 // bool contains(key) Returns whether the value key exists in the HashSet or not.
-// void remove(key) Removes the value key in the HashSet. 
+// void remove(key) Removes the value key in the HashSet.
 // If key does not exist in the HashSet, do nothing.
- 
+
 // Example 1:
 // Input
 // ["MyHashSet", "add", "add", "contains", "contains", "add", "contains", "remove", "contains"]
@@ -3186,7 +3256,7 @@ var MyHashSet = function () {
 };
 
 MyHashSet.prototype.add = function (key) {
-    this.hashSet.add(key);
+  this.hashSet.add(key);
 };
 
 MyHashSet.prototype.remove = function (key) {
@@ -3196,7 +3266,6 @@ MyHashSet.prototype.remove = function (key) {
 MyHashSet.prototype.contains = function (key) {
   return this.hashSet.has(key);
 };
-
 
 // ! =================== Matrix ====================
 
