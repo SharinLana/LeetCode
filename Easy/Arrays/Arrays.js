@@ -1505,6 +1505,38 @@ var countPairs = function (nums, target) {
 console.log(countPairs([-1, 1, 2, 3, 1], 2)); // 3
 console.log(countPairs([-6, 2, 5, -2, -7, -1, 3], -2)); // 10
 
+// * 37. (283) Move Zeroes ----------------------------------------------------
+// Given an integer array nums, 
+// move all 0's to the end of it 
+// while maintaining the relative order of the non-zero elements.
+// Note that you must do this in-place without making a copy of the array.
+
+ 
+// Example 1:
+// Input: nums = [0,1,0,3,12]
+// Output: [1,3,12,0,0]
+
+// Example 2:
+// Input: nums = [0]
+// Output: [0]
+
+let moveZeroes = function (nums) {
+  let j = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      [nums[j], nums[i]] = [nums[i], nums[j]];
+      j++;
+    }
+  }
+  return nums;
+};
+
+console.log(moveZeroes([0, 1, 0, 3, 12])); // [1,3,12,0,0]
+console.log(moveZeroes([0])); // [0]
+console.log(moveZeroes([0, 0, 1])); // [1,0,0]
+
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -1526,7 +1558,7 @@ var buildArray = function (nums) {
 console.log(buildArray([0, 2, 1, 5, 3, 4])); // [0, 1, 2, 4, 5, 3]
 console.log(buildArray([5, 0, 1, 2, 3, 4])); //  [4, 5, 0, 1, 2, 3]
 
-// * 36. Number of Employees Who Met the Target ---------------------
+// * 2. Number of Employees Who Met the Target ---------------------
 // There are n employees in a company, numbered from 0 to n - 1.
 // Each employee i has worked for hours[i] hours in the company.
 // The company requires each employee to work for at least target hours.
@@ -1883,8 +1915,6 @@ let lastVisitedIntegers = function (nums) {
     }
   }
   return ans;
-  // console.log("ANS");
-  // console.log(ans);
 };
 
 console.log(lastVisitedIntegers([1, -1, 2, -1, -1])); // [1,2,1]
