@@ -1506,12 +1506,11 @@ console.log(countPairs([-1, 1, 2, 3, 1], 2)); // 3
 console.log(countPairs([-6, 2, 5, -2, -7, -1, 3], -2)); // 10
 
 // * 37. (283) Move Zeroes ----------------------------------------------------
-// Given an integer array nums, 
-// move all 0's to the end of it 
+// Given an integer array nums,
+// move all 0's to the end of it
 // while maintaining the relative order of the non-zero elements.
 // Note that you must do this in-place without making a copy of the array.
 
- 
 // Example 1:
 // Input: nums = [0,1,0,3,12]
 // Output: [1,3,12,0,0]
@@ -1535,7 +1534,6 @@ let moveZeroes = function (nums) {
 console.log(moveZeroes([0, 1, 0, 3, 12])); // [1,3,12,0,0]
 console.log(moveZeroes([0])); // [0]
 console.log(moveZeroes([0, 0, 1])); // [1,0,0]
-
 
 // ! =============== Simulation Problems ===================
 
@@ -1894,7 +1892,7 @@ console.log(minMaxGame([3])); // 3
 
 let lastVisitedIntegers = function (nums) {
   let seen = [];
-  let ans = []; 
+  let ans = [];
   let counter = 0;
 
   for (let i = 0; i < nums.length; i++) {
@@ -1907,7 +1905,7 @@ let lastVisitedIntegers = function (nums) {
         ans.push(-1);
       }
 
-      if (nums[i+1] === -1) {
+      if (nums[i + 1] === -1) {
         counter++;
       } else {
         counter = 0;
@@ -2569,6 +2567,51 @@ const ifTheSame = (word1, word2) => {
 console.log(similarPairs(["aba", "aabb", "abcd", "bac", "aabc"])); // 2
 console.log(similarPairs(["aabb", "ab", "ba"])); // 3
 console.log(similarPairs(["nba", "cba", "dba"])); // 0
+
+// * 10. (1408)  String Matching in an Array ------------------------------------------
+// Given an array of string words, return all strings in words
+// that is a substring of another word. You can return the answer in any order.
+// A substring is a contiguous sequence of characters within a string
+
+// Example 1:
+// Input: words = ["mass","as","hero","superhero"]
+// Output: ["as","hero"]
+// Explanation: "as" is substring of "mass" and "hero" is substring of "superhero".
+// ["hero","as"] is also a valid answer.
+
+// Example 2:
+// Input: words = ["leetcode","et","code"]
+// Output: ["et","code"]
+// Explanation: "et", "code" are substring of "leetcode".
+
+// Example 3:
+// Input: words = ["blue","green","bu"]
+// Output: []
+// Explanation: No string of words is substring of another string.
+
+let stringMatching = function (words) {
+  let result = [];
+  words = words.sort((a, b) => b.length - a.length);
+  console.log("SORTED WORDS");
+  console.log(words);
+  for (let i = 0; i < words.length; i++) {
+    let current = words[i];
+    for (let j = i + 1; j < words.length; j++) {
+      if (current.includes(words[j])) {
+        if (!result.includes(words[j])) result.push(words[j]);
+      }
+    }
+  }
+
+  // return result;
+  console.log("RESULT");
+  console.log(result);
+};
+
+// console.log(stringMatching(["mass", "as", "hero", "superhero"])); // ["as","hero"]
+// console.log(stringMatching(["leetcode", "et", "code"])); // ["et","code"]
+// console.log(stringMatching(["blue", "green", "bu"])); // []
+console.log(stringMatching(["leetcoder", "leetcode", "od", "hamlet", "am"])); // ["leetcode","od","am"]
 
 // ! =============== Enumeration ===================
 
@@ -3680,19 +3723,18 @@ console.log(
 ); // [[1,4],[2,5],[3,6]]
 
 // * 7. (566). Reshape the Matrix ------------------------------------------
-// In MATLAB, there is a handy function called reshape 
-// which can reshape an m x n matrix into a new one with a different size r x c 
+// In MATLAB, there is a handy function called reshape
+// which can reshape an m x n matrix into a new one with a different size r x c
 // keeping its original data.
 
-// You are given an m x n matrix mat and two integers r and c representing 
+// You are given an m x n matrix mat and two integers r and c representing
 // the number of rows and the number of columns of the wanted reshaped matrix.
 
-// The reshaped matrix should be filled with all the elements of the original matrix 
+// The reshaped matrix should be filled with all the elements of the original matrix
 // in the same row-traversing order as they were.
 
-// If the reshape operation with given parameters is possible and legal, 
+// If the reshape operation with given parameters is possible and legal,
 // output the new reshaped matrix; Otherwise, output the original matrix.
-
 
 // Example 1:
 // Input: mat = [[1,2],[3,4]], r = 1, c = 4
@@ -3708,7 +3750,7 @@ let matrixReshape = function (mat, r, c) {
   if (r * c !== totalNumberOfCells) return mat;
 
   let flattenedMat = mat.flat();
-  let result = Array.from({length: r}, () => Array.from({length: c}));
+  let result = Array.from({ length: r }, () => Array.from({ length: c }));
 
   for (let i = 0; i < result.length; i++) {
     for (let j = 0; j < result[i].length; j++) {
@@ -3720,16 +3762,24 @@ let matrixReshape = function (mat, r, c) {
 };
 
 console.log(
-  matrixReshape([
-    [1, 2],
-    [3, 4],
-  ], 1, 4)
+  matrixReshape(
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    1,
+    4
+  )
 ); // [[1,2,3,4]]
 console.log(
-  matrixReshape([
-    [1, 2],
-    [3, 4],
-  ], 2, 4)
+  matrixReshape(
+    [
+      [1, 2],
+      [3, 4],
+    ],
+    2,
+    4
+  )
 ); // [[1,2],[3,4]]
 console.log(
   matrixReshape(
@@ -4162,14 +4212,13 @@ console.log(generate(1)); // [[1]]
 // * 1. (303). Range Sum Query - Immutable -----------------------------------
 // Given an integer array nums, handle multiple queries of the following type:
 
-// Calculate the sum of the elements of nums between indices left and right inclusive 
+// Calculate the sum of the elements of nums between indices left and right inclusive
 // where left <= right.
 // Implement the NumArray class:
 
 // NumArray(int[] nums) Initializes the object with the integer array nums.
-// int sumRange(int left, int right) Returns the sum of the elements of nums 
+// int sumRange(int left, int right) Returns the sum of the elements of nums
 // between indices left and right inclusive (i.e. nums[left] + nums[left + 1] + ... + nums[right]).
- 
 
 // Example 1:
 // Input
@@ -4189,10 +4238,9 @@ let NumArray = function (nums) {
 };
 
 NumArray.prototype.sumRange = function (left, right) {
-  let slicedArr = this.nums.slice(left, right+1);
-  return slicedArr.reduce((acc, el) => acc += el, 0);
+  let slicedArr = this.nums.slice(left, right + 1);
+  return slicedArr.reduce((acc, el) => (acc += el), 0);
 };
-
 
 // ! =============== Divide and Conquer ==============
 
