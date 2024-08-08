@@ -2528,7 +2528,7 @@ console.log(maximumValue(["alic3", "bob", "3", "4", "00000"])); // 5
 console.log(maximumValue(["1", "01", "001", "0001"])); // 1
 console.log(maximumValue(["3glko", "1"])); // 5
 
-// * . (2506) Count Pairs Of Similar Strings ------------------------------------------
+// * 9. (2506) Count Pairs Of Similar Strings ------------------------------------------
 // You are given a 0-indexed string array words.
 // Two strings are similar if they consist of the same characters.
 // For example, "abca" and "cba" are similar since both consist of characters
@@ -4156,6 +4156,43 @@ const generate = function (numRows) {
 
 console.log(generate(5)); // [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 console.log(generate(1)); // [[1]]
+
+// ! =============== Design ==============
+
+// * 1. (303). Range Sum Query - Immutable -----------------------------------
+// Given an integer array nums, handle multiple queries of the following type:
+
+// Calculate the sum of the elements of nums between indices left and right inclusive 
+// where left <= right.
+// Implement the NumArray class:
+
+// NumArray(int[] nums) Initializes the object with the integer array nums.
+// int sumRange(int left, int right) Returns the sum of the elements of nums 
+// between indices left and right inclusive (i.e. nums[left] + nums[left + 1] + ... + nums[right]).
+ 
+
+// Example 1:
+// Input
+// ["NumArray", "sumRange", "sumRange", "sumRange"]
+// [[[-2, 0, 3, -5, 2, -1]], [0, 2], [2, 5], [0, 5]]
+// Output
+// [null, 1, -1, -3]
+
+// Explanation
+// NumArray numArray = new NumArray([-2, 0, 3, -5, 2, -1]);
+// numArray.sumRange(0, 2); // return (-2) + 0 + 3 = 1
+// numArray.sumRange(2, 5); // return 3 + (-5) + 2 + (-1) = -1
+// numArray.sumRange(0, 5); // return (-2) + 0 + 3 + (-5) + 2 + (-1) = -3
+
+let NumArray = function (nums) {
+  this.nums = nums;
+};
+
+NumArray.prototype.sumRange = function (left, right) {
+  let slicedArr = this.nums.slice(left, right+1);
+  return slicedArr.reduce((acc, el) => acc += el, 0);
+};
+
 
 // ! =============== Divide and Conquer ==============
 
