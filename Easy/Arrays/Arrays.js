@@ -3298,47 +3298,32 @@ console.log(
   numUniqueEmails(["test.email+alex@leetcode.com", "test.email@leetcode.com"])
 ); // 1
 
-// * 14 (705). Design HashSet ------------------------------------------
-// Design a HashSet without using any built-in hash table libraries.
 
-// Implement MyHashSet class:
-// void add(key) Inserts the value key into the HashSet.
-// bool contains(key) Returns whether the value key exists in the HashSet or not.
-// void remove(key) Removes the value key in the HashSet.
-// If key does not exist in the HashSet, do nothing.
+// * 14 (169). Majority Element ------------------------------------------
+// Given an array nums of size n, return the majority element.
+// The majority element is the element that appears more than ⌊n / 2⌋ times. 
+// You may assume that the majority element always exists in the array.
 
 // Example 1:
-// Input
-// ["MyHashSet", "add", "add", "contains", "contains", "add", "contains", "remove", "contains"]
-// [[], [1], [2], [1], [3], [2], [2], [2], [2]]
-// Output
-// [null, null, null, true, false, null, true, null, false]
+// Input: nums = [3,2,3]
+// Output: 3
 
-// Explanation:
-// MyHashSet myHashSet = new MyHashSet();
-// myHashSet.add(1);      // set = [1]
-// myHashSet.add(2);      // set = [1, 2]
-// myHashSet.contains(1); // return True
-// myHashSet.contains(3); // return False, (not found)
-// myHashSet.add(2);      // set = [1, 2]
-// myHashSet.contains(2); // return True
-// myHashSet.remove(2);   // set = [1]
-// myHashSet.contains(2); // return False, (already removed)
-var MyHashSet = function () {
-  this.hashSet = new Set([]);
+// Example 2:
+// Input: nums = [2,2,1,1,1,2,2]
+// Output: 2
+
+let majorityElement = function(nums) {
+    let hashTable = {};
+
+    for (let num of nums) {
+      hashTable[num] ? hashTable[num] += 1 : hashTable[num] = 1;
+      if (hashTable[num] > (nums.length / 2)) return num;
+    }
 };
 
-MyHashSet.prototype.add = function (key) {
-  this.hashSet.add(key);
-};
+console.log(majorityElement([3, 2, 3])); // 3
+console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // 2
 
-MyHashSet.prototype.remove = function (key) {
-  this.hashSet.delete(key);
-};
-
-MyHashSet.prototype.contains = function (key) {
-  return this.hashSet.has(key);
-};
 
 // ! =================== Matrix ====================
 
@@ -4240,6 +4225,48 @@ let NumArray = function (nums) {
 NumArray.prototype.sumRange = function (left, right) {
   let slicedArr = this.nums.slice(left, right + 1);
   return slicedArr.reduce((acc, el) => (acc += el), 0);
+};
+
+// * 2. (705). Design HashSet ------------------------------------------
+// Design a HashSet without using any built-in hash table libraries.
+
+// Implement MyHashSet class:
+// void add(key) Inserts the value key into the HashSet.
+// bool contains(key) Returns whether the value key exists in the HashSet or not.
+// void remove(key) Removes the value key in the HashSet.
+// If key does not exist in the HashSet, do nothing.
+
+// Example 1:
+// Input
+// ["MyHashSet", "add", "add", "contains", "contains", "add", "contains", "remove", "contains"]
+// [[], [1], [2], [1], [3], [2], [2], [2], [2]]
+// Output
+// [null, null, null, true, false, null, true, null, false]
+
+// Explanation:
+// MyHashSet myHashSet = new MyHashSet();
+// myHashSet.add(1);      // set = [1]
+// myHashSet.add(2);      // set = [1, 2]
+// myHashSet.contains(1); // return True
+// myHashSet.contains(3); // return False, (not found)
+// myHashSet.add(2);      // set = [1, 2]
+// myHashSet.contains(2); // return True
+// myHashSet.remove(2);   // set = [1]
+// myHashSet.contains(2); // return False, (already removed)
+var MyHashSet = function () {
+  this.hashSet = new Set([]);
+};
+
+MyHashSet.prototype.add = function (key) {
+  this.hashSet.add(key);
+};
+
+MyHashSet.prototype.remove = function (key) {
+  this.hashSet.delete(key);
+};
+
+MyHashSet.prototype.contains = function (key) {
+  return this.hashSet.has(key);
 };
 
 // ! =============== Divide and Conquer ==============
