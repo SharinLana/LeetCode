@@ -3375,6 +3375,7 @@ console.log(majorityElement([3, 2, 3])); // 3
 console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // 2
 
 
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
@@ -3889,6 +3890,35 @@ let targetIndices = function (nums, target) {
 console.log(targetIndices([1, 2, 5, 2, 3], 2)); //
 console.log(targetIndices([1, 2, 5, 2, 3], 3)); //
 console.log(targetIndices([1, 2, 5, 2, 3], 5)); //
+
+// * 2. (217). Contains Duplicate ---------------------------------
+// Given an integer array nums, return true 
+// if any value appears at least twice in the array, 
+// and return false if every element is distinct.
+
+
+// Example 1:
+// Input: nums = [1,2,3,1]
+// Output: true
+
+// Example 2:
+// Input: nums = [1,2,3,4]
+// Output: false
+
+let containsDuplicate = function (nums) {
+  let sortedNums = nums.sort((a, b) => a - b);
+
+  for (let i = 0; i < sortedNums.length-1; i++) {
+    if (sortedNums[i] === sortedNums[i+1]) return true;
+  }
+
+  return false;
+};
+
+console.log(containsDuplicate([1, 2, 3, 1])); // true
+console.log(containsDuplicate([1, 2, 3, 4])); // false
+console.log(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])); // true
+
 
 // ! =============== Prefix Sum ==============
 
