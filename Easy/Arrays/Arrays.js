@@ -2614,13 +2614,13 @@ console.log(stringMatching(["leetcoder", "leetcode", "od", "hamlet", "am"])); //
 // You are given a 0-indexed string array words.
 // Let's define a boolean function isPrefixAndSuffix that takes two strings, str1 and str2:
 
-// isPrefixAndSuffix(str1, str2) returns true if str1 is both a prefix and a suffix of str2, 
+// isPrefixAndSuffix(str1, str2) returns true if str1 is both a prefix and a suffix of str2,
 // and false otherwise.
-// For example, isPrefixAndSuffix("aba", "ababa") is true 
-// because "aba" is a prefix of "ababa" and also a suffix, 
+// For example, isPrefixAndSuffix("aba", "ababa") is true
+// because "aba" is a prefix of "ababa" and also a suffix,
 // but isPrefixAndSuffix("abc", "abcd") is false.
 
-// Return an integer denoting the number of index pairs (i, j) such that i < j, 
+// Return an integer denoting the number of index pairs (i, j) such that i < j,
 // and isPrefixAndSuffix(words[i], words[j]) is true.
 
 // Example 1:
@@ -2641,22 +2641,22 @@ console.log(stringMatching(["leetcoder", "leetcode", "od", "hamlet", "am"])); //
 // i = 2 and j = 3 because isPrefixAndSuffix("ma", "mama") is true.
 // Therefore, the answer is 2.
 
-let countPrefixSuffixPairs = function(words) {
-    let pairs = 0;
+let countPrefixSuffixPairs = function (words) {
+  let pairs = 0;
 
-    for (let i = 0; i < words.length; i++) {
-      let current = words[i];
-      for (let  j = i + 1; j < words.length; j++) {
-        let prefix = words[j].slice(0, current.length);
-        let suffix = words[j].slice(-current.length);
+  for (let i = 0; i < words.length; i++) {
+    let current = words[i];
+    for (let j = i + 1; j < words.length; j++) {
+      let prefix = words[j].slice(0, current.length);
+      let suffix = words[j].slice(-current.length);
 
-        if (current === prefix && current === suffix) {
-          pairs++;
-        }
+      if (current === prefix && current === suffix) {
+        pairs++;
       }
     }
+  }
 
-    return pairs;
+  return pairs;
 };
 
 console.log(countPrefixSuffixPairs(["a", "aba", "ababa", "aa"])); // 4
@@ -3348,10 +3348,9 @@ console.log(
   numUniqueEmails(["test.email+alex@leetcode.com", "test.email@leetcode.com"])
 ); // 1
 
-
 // * 14 (169). Majority Element ------------------------------------------
 // Given an array nums of size n, return the majority element.
-// The majority element is the element that appears more than ⌊n / 2⌋ times. 
+// The majority element is the element that appears more than ⌊n / 2⌋ times.
 // You may assume that the majority element always exists in the array.
 
 // Example 1:
@@ -3362,19 +3361,17 @@ console.log(
 // Input: nums = [2,2,1,1,1,2,2]
 // Output: 2
 
-let majorityElement = function(nums) {
-    let hashTable = {};
+let majorityElement = function (nums) {
+  let hashTable = {};
 
-    for (let num of nums) {
-      hashTable[num] ? hashTable[num] += 1 : hashTable[num] = 1;
-      if (hashTable[num] > (nums.length / 2)) return num;
-    }
+  for (let num of nums) {
+    hashTable[num] ? (hashTable[num] += 1) : (hashTable[num] = 1);
+    if (hashTable[num] > nums.length / 2) return num;
+  }
 };
 
 console.log(majorityElement([3, 2, 3])); // 3
 console.log(majorityElement([2, 2, 1, 1, 1, 2, 2])); // 2
-
-
 
 // ! =================== Matrix ====================
 
@@ -3828,6 +3825,86 @@ console.log(
   )
 );
 
+// * 8. (2946). Matrix Similarity After Cyclic Shifts ------------------------------------------
+
+// You are given an m x n integer matrix mat and an integer k. The matrix rows are 0-indexed.
+// The following proccess happens k times:
+// Even-indexed rows (0, 2, 4, ...) are cyclically shifted to the left.
+
+// Odd-indexed rows (1, 3, 5, ...) are cyclically shifted to the right.
+// Return true if the final modified matrix after k steps is identical to the original matrix, and false otherwise.
+
+// Example 1:
+// Input: mat = [[1,2,3],[4,5,6],[7,8,9]], k = 4
+// Output: false
+// Explanation:
+// In each step left shift is applied to rows 0 and 2 (even indices), and right shift to row 1 (odd index).
+
+// Example 2:
+// Input: mat = [[1,2,1,2],[5,5,5,5],[6,3,6,3]], k = 2
+// Output: true
+
+let areSimilar = function (mat, k) {
+  for (let row of mat) {
+    let newRow;
+
+    if (k === row.length || k === 0) {
+      return true;
+    } else if (k > row.length) {
+      k = k % row.length;
+    }
+
+    newRow = shiftNums(row, k);
+    if (newRow.join("") !== row.join("")) return false;
+  }
+  return true;
+};
+
+const shiftNums = (arr, idx) => {
+  let result = arr.slice(idx).concat(arr.slice(0, idx));
+  return result;
+};
+
+console.log(
+  areSimilar(
+    [
+      [1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9],
+    ],
+    4
+  )
+); // false
+console.log(
+  areSimilar(
+    [
+      [1, 2, 1, 2],
+      [5, 5, 5, 5],
+      [6, 3, 6, 3],
+    ],
+    2
+  )
+); // true
+console.log(
+  areSimilar(
+    [
+      [2, 2],
+      [2, 2],
+    ],
+    3
+  )
+); // true
+
+console.log(
+  areSimilar([
+    [4, 6],
+    [10, 1],
+    [8, 8],
+    [10, 9],
+    [9, 10],
+  ], 9)
+); // false
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
@@ -3892,10 +3969,9 @@ console.log(targetIndices([1, 2, 5, 2, 3], 3)); //
 console.log(targetIndices([1, 2, 5, 2, 3], 5)); //
 
 // * 2. (217). Contains Duplicate ---------------------------------
-// Given an integer array nums, return true 
-// if any value appears at least twice in the array, 
+// Given an integer array nums, return true
+// if any value appears at least twice in the array,
 // and return false if every element is distinct.
-
 
 // Example 1:
 // Input: nums = [1,2,3,1]
@@ -3908,8 +3984,8 @@ console.log(targetIndices([1, 2, 5, 2, 3], 5)); //
 let containsDuplicate = function (nums) {
   let sortedNums = nums.sort((a, b) => a - b);
 
-  for (let i = 0; i < sortedNums.length-1; i++) {
-    if (sortedNums[i] === sortedNums[i+1]) return true;
+  for (let i = 0; i < sortedNums.length - 1; i++) {
+    if (sortedNums[i] === sortedNums[i + 1]) return true;
   }
 
   return false;
@@ -3918,7 +3994,6 @@ let containsDuplicate = function (nums) {
 console.log(containsDuplicate([1, 2, 3, 1])); // true
 console.log(containsDuplicate([1, 2, 3, 4])); // false
 console.log(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])); // true
-
 
 // ! =============== Prefix Sum ==============
 
