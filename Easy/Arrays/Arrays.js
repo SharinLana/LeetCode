@@ -3982,6 +3982,117 @@ console.log(
   )
 ); // false
 
+// * 9. (1275). Find Winner on a Tic Tac Toe Game ------------------------------------------
+// Tic-tac-toe is played by two players A and B on a 3 x 3 grid. The rules of Tic-Tac-Toe are:
+
+// Players take turns placing characters into empty squares ' '.
+// The first player A always places 'X' characters,
+// while the second player B always places 'O' characters.
+// 'X' and 'O' characters are always placed into empty squares, never on filled ones.
+// The game ends when there are three of the same (non-empty) character filling any row,
+// column, or diagonal.
+// The game also ends if all squares are non-empty.
+// No more moves can be played if the game is over.
+// Given a 2D integer array moves where moves[i] = [rowi, coli] indicates
+// that the ith move will be played on grid[rowi][coli].
+// Return the winner of the game if it exists (A or B).
+// In case the game ends in a draw return "Draw".
+// If there are still movements to play return "Pending".
+
+// You can assume that moves is valid (i.e., it follows the rules of Tic-Tac-Toe),
+// the grid is initially empty, and A will play first.
+
+// Example 1:
+// Input: moves = [[0,0],[2,0],[1,1],[2,1],[2,2]]
+// Output: "A"
+// Explanation: A wins, they always play first.
+
+// Example 2:
+// Input: moves = [[0,0],[1,1],[0,1],[0,2],[1,0],[2,0]]
+// Output: "B"
+// Explanation: B wins.
+
+// Example 3:
+// Input: moves = [[0,0],[1,1],[2,0],[1,0],[1,2],[2,1],[0,1],[0,2],[2,2]]
+// Output: "Draw"
+// Explanation: The game ends in a draw since there are no moves to make.
+
+let tictactoe = function (moves) {
+  let rows = [0, 0, 0];
+  let cols = [0, 0, 0];
+  let diagonal = 0;
+  let antiDiagonal = 0;
+  let currentPlayer = 0; // if it's a player A. then it's 1, and player B = -1
+
+  for (let [row, column] of moves) {
+    // Define, who is playing during the current move; A (1) or B (-1)
+    let value = currentPlayer % 2 === 0 ? 1 : -1;
+    rows[row] += value; // sum up each step of the currentPlayer
+    cols[column] += value;
+
+    // If row === column, we are on the main diagonal
+    if (row === column) {
+      diagonal += value;
+    }
+
+    // If row + column === 2, we are on the anti diagonal
+    if (row + column === 2) {
+      antiDiagonal += value;
+    }
+
+    // Check if we have a result already
+    if ([rows[row], cols[column], antiDiagonal, diagonal].includes(3)) {
+      return "A"
+    } else if ([rows[row], cols[column], antiDiagonal, diagonal].includes(-3)) {
+      return "B"
+    }
+
+    // Proceed to the next player
+    currentPlayer++;
+  }
+
+  // Handling the "Pending" case: if we don't have the winner by now
+  // and there are empty cells in the table then it's a "Pending" case
+  if (currentPlayer < 9) {
+    return "Pending"
+  }
+
+  return "Draw"
+};
+
+console.log(
+  tictactoe([
+    [0, 0],
+    [2, 0],
+    [1, 1],
+    [2, 1],
+    [2, 2],
+  ])
+); // "A"
+console.log(
+  tictactoe([
+    [0, 0],
+    [1, 1],
+    [0, 1],
+    [0, 2],
+    [1, 0],
+    [2, 0],
+  ])
+); // "B"
+console.log(
+  tictactoe([
+    [0, 0],
+    [1, 1],
+    [2, 0],
+    [1, 0],
+    [1, 2],
+    [2, 1],
+    [0, 1],
+    [0, 2],
+    [2, 2],
+  ])
+); // "Draw"
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
