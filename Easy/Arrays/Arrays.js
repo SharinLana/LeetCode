@@ -1535,6 +1535,53 @@ console.log(moveZeroes([0, 1, 0, 3, 12])); // [1,3,12,0,0]
 console.log(moveZeroes([0])); // [0]
 console.log(moveZeroes([0, 0, 1])); // [1,0,0]
 
+// * 38. (26) Remove Duplicates from Sorted Array ----------------------------------------------------
+// Given an integer array nums sorted in non-decreasing order,
+// remove the duplicates in-place such that each unique element appears only once.
+// The relative order of the elements should be kept the same.
+// Then return the number of unique elements in nums.
+
+// Consider the number of unique elements of nums to be k,
+// to get accepted, you need to do the following things:
+
+// Change the array nums such that the first k elements of nums contain the unique elements in the order they were present in nums initially. The remaining elements of nums are not important as well as the size of nums.
+// Return k.
+
+// Example 1:
+// Input: nums = [1,1,2]
+// Output: 2, nums = [1,2,_]
+// Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+// It does not matter what you leave beyond the returned k (hence they are underscores).
+
+// Example 2:
+// Input: nums = [0,0,1,1,1,2,2,3,3,4]
+// Output: 5, nums = [0,1,2,3,4,_,_,_,_,_]
+// Explanation: Your function should return k = 5, with the first five elements of nums being 0, 1, 2, 3, and 4 respectively.
+// It does not matter what you leave beyond the returned k (hence they are underscores).
+
+const removeDuplicates = function (nums) {
+  let current, next;
+  let i = 0;
+  let j = 1;
+
+  while (j < nums.length) {
+    current = nums[i];
+    next = nums[j];
+
+    if (next === current) {
+      nums.splice(j, 1);
+    } else {
+      i = j;
+      j++;
+    }
+  }
+
+  return nums.length;
+};
+
+console.log(removeDuplicates([1, 1, 2])); // 2
+console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -1555,6 +1602,8 @@ var buildArray = function (nums) {
 
 console.log(buildArray([0, 2, 1, 5, 3, 4])); // [0, 1, 2, 4, 5, 3]
 console.log(buildArray([5, 0, 1, 2, 3, 4])); //  [4, 5, 0, 1, 2, 3]
+
+// * 38. (26) Remove Duplicates from Sorted Array ----------------------------------------------------
 
 // * 2. Number of Employees Who Met the Target ---------------------
 // There are n employees in a company, numbered from 0 to n - 1.
@@ -2738,14 +2787,14 @@ console.log(findRestaurant(["happy", "sad", "good"], ["sad", "happy", "good"]));
 console.log(findRestaurant(["S", "TEXP", "BK", "KFC"], ["KFC", "BK", "S"])); // ["S"]
 
 // * 13. (2446). Determine if Two Events Have Conflict  ------------------------------------------
-// You are given two arrays of strings that represent two inclusive events 
+// You are given two arrays of strings that represent two inclusive events
 // that happened on the same day, event1 and event2, where:
 
 // event1 = [startTime1, endTime1] and
 // event2 = [startTime2, endTime2].
 // Event times are valid 24 hours format in the form of HH:MM.
 
-// A conflict happens when two events have some non-empty intersection 
+// A conflict happens when two events have some non-empty intersection
 // (i.e., some moment is common to both events).
 
 // Return true if there is a conflict between two events. Otherwise, return false.
@@ -2773,7 +2822,7 @@ const haveConflict = function (event1, event2) {
   let b = newArray1[1];
   let c = newArray2[0];
   let d = newArray2[1];
-  
+
   if ((c >= a && c <= b) || (a >= c && a <= d)) return true;
   return false;
 };
@@ -2787,7 +2836,7 @@ const transformArray = (arr) => {
   }
 
   return result;
-}
+};
 
 console.log(haveConflict(["01:15", "02:00"], ["02:00", "03:00"])); // true
 console.log(haveConflict(["01:00", "02:00"], ["01:20", "03:00"])); // true
@@ -4098,9 +4147,9 @@ let tictactoe = function (moves) {
 
     // Check if we have a result already
     if ([rows[row], cols[column], antiDiagonal, diagonal].includes(3)) {
-      return "A"
+      return "A";
     } else if ([rows[row], cols[column], antiDiagonal, diagonal].includes(-3)) {
-      return "B"
+      return "B";
     }
 
     // Proceed to the next player
@@ -4110,10 +4159,10 @@ let tictactoe = function (moves) {
   // Handling the "Pending" case: if we don't have the winner by now
   // and there are empty cells in the table then it's a "Pending" case
   if (currentPlayer < 9) {
-    return "Pending"
+    return "Pending";
   }
 
-  return "Draw"
+  return "Draw";
 };
 
 console.log(
