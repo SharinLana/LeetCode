@@ -1623,6 +1623,42 @@ const removeElement = function (nums, val) {
 console.log(removeElement([3, 2, 2, 3], 3)); // 2
 console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
 
+// * 40. (35) Search Insert Position ----------------------------------------------------
+// Given a sorted array of distinct integers and a target value, 
+// return the index if the target is found. 
+// If not, return the index where it would be if it were inserted in order.
+
+// You must write an algorithm with O(log n) runtime complexity.
+
+// Example 1:
+// Input: nums = [1,3,5,6], target = 5
+// Output: 2
+
+// Example 2:
+// Input: nums = [1,3,5,6], target = 2
+// Output: 1
+
+// Example 3:
+// Input: nums = [1,3,5,6], target = 7
+// Output: 4
+
+var searchInsert = function (nums, target) {
+  if (nums.includes(target)) {
+    return nums.indexOf(target);
+  } else {
+    for (let i = 0; i < nums.length; i++) {
+      if (nums[i] < target && (nums[i+1] > target || nums[i+1] === undefined)) {
+        return i+1;
+      } else if (nums[i] > target && nums[i-1] === undefined) {
+        return i;
+      }
+    }
+  }
+};
+
+console.log(searchInsert([1, 3, 5, 6], 5)); // 2
+console.log(searchInsert([1, 3, 5, 6], 2)); // 1
+console.log(searchInsert([1, 3, 5, 6], 7)); // 4
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
