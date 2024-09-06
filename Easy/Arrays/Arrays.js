@@ -4900,6 +4900,50 @@ const generate = function (numRows) {
 console.log(generate(5)); // [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
 console.log(generate(1)); // [[1]]
 
+// * 2. Pascal's Triangle II -----------------------------------
+// Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+// In Pascal's triangle, each number is the sum of the two numbers directly above it as shown:
+
+// Example 1:
+// Input: rowIndex = 3
+// Output: [1,3,3,1]
+
+// Example 2:
+// Input: rowIndex = 0
+// Output: [1]
+
+// Example 3:
+// Input: rowIndex = 1
+// Output: [1,1]
+
+const getRow = function (rowIndex) {
+  let result = [];
+  let counter = 0;
+
+  for (let i = 0; i < rowIndex + 1; i++) {
+    let row = [];
+    // Filling out first and last elements
+    row[0] = 1;
+    row[i] = 1;
+
+    // Filling out numbers in the middle of a row
+    for (let j = 1; j < i; j++) {
+      let leftVal = result[i - 1][j - 1];
+      let rightVal = result[i - 1][j];
+      row[j] = leftVal + rightVal;
+    }
+
+    result.push(row);
+    counter++;
+  }
+
+  if (counter === rowIndex + 1) return result[rowIndex];
+};
+
+console.log(getRow(3)); // [1,3,3,1]
+console.log(getRow(0)); // [1]
+console.log(getRow(1)); // [1, 1]
+
 // ! =============== Design ==============
 
 // * 1. (303). Range Sum Query - Immutable -----------------------------------
