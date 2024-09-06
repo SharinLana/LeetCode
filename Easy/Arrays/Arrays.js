@@ -1583,16 +1583,16 @@ console.log(removeDuplicates([1, 1, 2])); // 2
 console.log(removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4])); // 5
 
 // * 39. (27) Remove Element ----------------------------------------------------
-// Given an integer array nums and an integer val, 
-// remove all occurrences of val in nums in-place. 
-// The order of the elements may be changed. 
+// Given an integer array nums and an integer val,
+// remove all occurrences of val in nums in-place.
+// The order of the elements may be changed.
 // Then return the number of elements in nums which are not equal to val.
 
-// Consider the number of elements in nums which are not equal to val be k, 
+// Consider the number of elements in nums which are not equal to val be k,
 // to get accepted, you need to do the following things:
 
-// Change the array nums such that the first k elements of nums contain the elements 
-// which are not equal to val. The remaining elements of nums are not important 
+// Change the array nums such that the first k elements of nums contain the elements
+// which are not equal to val. The remaining elements of nums are not important
 // as well as the size of nums.
 // Return k.
 
@@ -1624,8 +1624,8 @@ console.log(removeElement([3, 2, 2, 3], 3)); // 2
 console.log(removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2)); // 5
 
 // * 40. (35) Search Insert Position ----------------------------------------------------
-// Given a sorted array of distinct integers and a target value, 
-// return the index if the target is found. 
+// Given a sorted array of distinct integers and a target value,
+// return the index if the target is found.
 // If not, return the index where it would be if it were inserted in order.
 
 // You must write an algorithm with O(log n) runtime complexity.
@@ -1647,9 +1647,12 @@ var searchInsert = function (nums, target) {
     return nums.indexOf(target);
   } else {
     for (let i = 0; i < nums.length; i++) {
-      if (nums[i] < target && (nums[i+1] > target || nums[i+1] === undefined)) {
-        return i+1;
-      } else if (nums[i] > target && nums[i-1] === undefined) {
+      if (
+        nums[i] < target &&
+        (nums[i + 1] > target || nums[i + 1] === undefined)
+      ) {
+        return i + 1;
+      } else if (nums[i] > target && nums[i - 1] === undefined) {
         return i;
       }
     }
@@ -1661,9 +1664,9 @@ console.log(searchInsert([1, 3, 5, 6], 2)); // 1
 console.log(searchInsert([1, 3, 5, 6], 7)); // 4
 
 // * 41. (66) Plus One ----------------------------------------------------
-// You are given a large integer represented as an integer array digits, 
-// where each digits[i] is the ith digit of the integer. 
-// The digits are ordered from most significant to least significant in left-to-right order. 
+// You are given a large integer represented as an integer array digits,
+// where each digits[i] is the ith digit of the integer.
+// The digits are ordered from most significant to least significant in left-to-right order.
 // The large integer does not contain any leading 0's.
 // Increment the large integer by one and return the resulting array of digits.
 
@@ -1688,19 +1691,18 @@ console.log(searchInsert([1, 3, 5, 6], 7)); // 4
 // Incrementing by one gives 9 + 1 = 10.
 // Thus, the result should be [1,0].
 
-const plusOne = function(digits) {
-    let stringNum = digits.join("");
-    let incrementedNumber = (BigInt(stringNum) + BigInt(1)); // BigInt to handle a string with more that 16 digits
-    let convertedToStringArray = incrementedNumber.toString().split("");
-    
-    return convertedToStringArray.map(Number);
+const plusOne = function (digits) {
+  let stringNum = digits.join("");
+  let incrementedNumber = BigInt(stringNum) + BigInt(1); // BigInt to handle a string with more that 16 digits
+  let convertedToStringArray = incrementedNumber.toString().split("");
+
+  return convertedToStringArray.map(Number);
 };
 
 console.log(plusOne([1, 2, 3])); // [1,2,4]
 console.log(plusOne([4, 3, 2, 1])); // [4,3,2,2]
 console.log(plusOne([9])); // [1,0]
 console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3])); // [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,4]
-
 
 // ! =============== Simulation Problems ===================
 
@@ -4407,6 +4409,51 @@ let containsDuplicate = function (nums) {
 console.log(containsDuplicate([1, 2, 3, 1])); // true
 console.log(containsDuplicate([1, 2, 3, 4])); // false
 console.log(containsDuplicate([1, 1, 1, 3, 3, 4, 3, 2, 4, 2])); // true
+
+// * 3. (88). Merge Sorted Array ---------------------------------
+// You are given two integer arrays nums1 and nums2, sorted in non-decreasing order,
+// and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+// Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+// The final sorted array should not be returned by the function,
+//  but instead be stored inside the array nums1.
+//  To accommodate this, nums1 has a length of m + n,
+//  where the first m elements denote the elements that should be merged,
+//  and the last n elements are set to 0 and should be ignored.
+//  nums2 has a length of n.
+
+// Example 1:
+// Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+// Output: [1,2,2,3,5,6]
+// Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+// The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+// Example 2:
+// Input: nums1 = [1], m = 1, nums2 = [], n = 0
+// Output: [1]
+// Explanation: The arrays we are merging are [1] and [].
+// The result of the merge is [1].
+
+// Example 3:
+// Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+// Output: [1]
+// Explanation: The arrays we are merging are [] and [1].
+// The result of the merge is [1].
+// Note that because m = 0, there are no elements in nums1.
+// The 0 is only there to ensure the merge result can fit in nums1.
+
+const merge = function (nums1, m, nums2, n) {
+  for (let i = 0; i < n; i++) {
+    nums1[m] = nums2[i];
+    m++;
+  }
+  return nums1.sort((a, b) => a - b);
+};
+
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3)); // [1,2,2,3,5,6]
+console.log(merge([1], 1, [], 0)); // [1]
+console.log(merge([0], 0, [1], 1)); // [1]
 
 // ! =============== Prefix Sum ==============
 
