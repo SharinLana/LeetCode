@@ -1704,6 +1704,42 @@ console.log(plusOne([4, 3, 2, 1])); // [4,3,2,2]
 console.log(plusOne([9])); // [1,0]
 console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3])); // [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,4]
 
+// * 42. (448) Find All Numbers Disappeared in an Array ----------------------------------------------------
+// Given an array nums of n integers where nums[i] is in the range [1, n],
+// return an array of all the integers in the range [1, n] that do not appear in nums.
+
+// Example 1:
+// Input: nums = [4,3,2,7,8,2,3,1]
+// Output: [5,6]
+
+// Example 2:
+// Input: nums = [1,1]
+// Output: [2]
+
+let findDisappearedNumbers = function (nums) {
+  let sortedNoDuplicates = Array.from(new Set(nums.sort((a,b) => a - b)));
+  let result = [];
+
+  if (sortedNoDuplicates.length !== nums.length) {
+    for (let i = 0; i < nums.length; i++) {
+      if (sortedNoDuplicates[i] !== i+1) {
+        result.push(i + 1);
+        // Add the missing number to sortedNoDuplicates to keep checking 
+        // the rest of the numbers
+        sortedNoDuplicates.splice(i, 0, i + 1);
+      }
+    }
+  }
+
+  return result;
+};
+
+console.log(findDisappearedNumbers([4, 3, 2, 7, 8, 2, 3, 1])); // [5,6]
+console.log(findDisappearedNumbers([1, 1])); // [2]
+console.log(findDisappearedNumbers([2, 2])); // [1]
+console.log(findDisappearedNumbers([2, 1])); // []
+console.log(findDisappearedNumbers([1, 1, 2, 2])); // [3, 4]
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -4495,7 +4531,7 @@ console.log(merge([1], 1, [], 0)); // [1]
 console.log(merge([0], 0, [1], 1)); // [1]
 
 // * 4. (88). Third Maximum Number ---------------------------------
-// Given an integer array nums, return the third distinct maximum number in this array. 
+// Given an integer array nums, return the third distinct maximum number in this array.
 // If the third maximum does not exist, return the maximum number.
 
 // Example 1:
@@ -4522,14 +4558,14 @@ console.log(merge([0], 0, [1], 1)); // [1]
 // The second distinct maximum is 2 (both 2's are counted together since they have the same value).
 // The third distinct maximum is 1.
 
-let thirdMax = function(nums) {
-    let sortedDistinctNums = Array.from(new Set(nums)).sort((a,b) => b - a);
-    
-    if (sortedDistinctNums[2] !== undefined) {
-      return sortedDistinctNums[2]
-    } else {
-      return Math.max.apply(null, sortedDistinctNums);
-    }
+let thirdMax = function (nums) {
+  let sortedDistinctNums = Array.from(new Set(nums)).sort((a, b) => b - a);
+
+  if (sortedDistinctNums[2] !== undefined) {
+    return sortedDistinctNums[2];
+  } else {
+    return Math.max.apply(null, sortedDistinctNums);
+  }
 };
 
 console.log(thirdMax([3, 2, 1])); // 1
