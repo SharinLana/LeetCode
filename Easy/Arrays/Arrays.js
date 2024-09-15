@@ -1717,14 +1717,14 @@ console.log(plusOne([6, 1, 4, 5, 3, 9, 0, 1, 9, 5, 1, 8, 6, 7, 0, 5, 5, 4, 3]));
 // Output: [2]
 
 let findDisappearedNumbers = function (nums) {
-  let sortedNoDuplicates = Array.from(new Set(nums.sort((a,b) => a - b)));
+  let sortedNoDuplicates = Array.from(new Set(nums.sort((a, b) => a - b)));
   let result = [];
 
   if (sortedNoDuplicates.length !== nums.length) {
     for (let i = 0; i < nums.length; i++) {
-      if (sortedNoDuplicates[i] !== i+1) {
+      if (sortedNoDuplicates[i] !== i + 1) {
         result.push(i + 1);
-        // Add the missing number to sortedNoDuplicates to keep checking 
+        // Add the missing number to sortedNoDuplicates to keep checking
         // the rest of the numbers
         sortedNoDuplicates.splice(i, 0, i + 1);
       }
@@ -4355,6 +4355,71 @@ console.log(
     [2, 2],
   ])
 ); // "Draw"
+
+// * 10. (463). Island Perimeter ------------------------------------------
+// You are given row x col grid representing a map where grid[i][j] = 1
+// represents land and grid[i][j] = 0 represents water.
+
+// Grid cells are connected horizontally/vertically (not diagonally).
+// The grid is completely surrounded by water,
+// and there is exactly one island (i.e., one or more connected land cells).
+
+// The island doesn't have "lakes", meaning the water inside isn't connected
+// o the water around the island. One cell is a square with side length 1.
+// The grid is rectangular, width and height don't exceed 100.
+// Determine the perimeter of the island.
+
+// Example 1:
+// Input: grid = [[0,1,0,0],[1,1,1,0],[0,1,0,0],[1,1,0,0]]
+// Output: 16
+// Explanation: The perimeter is the 16 yellow stripes in the image above.
+
+// Example 2:
+// Input: grid = [[1]]
+// Output: 4
+
+// Example 3:
+// Input: grid = [[1,0]]
+// Output: 4
+
+const islandPerimeter = function (grid) {
+  let counter = 0;
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === 1) {
+        // Counting top and bottom segments
+        if (i === 0) counter++;
+        if (i === grid.length - 1) counter++;
+
+        // Counting side segments
+        if (j === 0) counter++;
+        if (j === grid[i].length - 1) counter++;
+        
+        // Counting top and bottom segments that connected to 0's
+        if (i - 1 !== -1 && grid[i - 1][j] === 0) counter++;
+        if (i + 1 !== grid.length && grid[i + 1][j] === 0) counter++;
+
+        // Counting right and left segments on the open sides of 1's
+        if (grid[i][j - 1] === 0) counter++;
+        if (grid[i][j + 1] === 0) counter++;
+      }
+    }
+  }
+
+  return counter;
+};
+
+console.log(
+  islandPerimeter([
+    [0, 1, 0, 0],
+    [1, 1, 1, 0],
+    [0, 1, 0, 0],
+    [1, 1, 0, 0],
+  ])
+); // 16
+console.log(islandPerimeter([[1]])); // 4
+console.log(islandPerimeter([[1, 0]])); // 4
 
 // ! =============== Two Pointers ==============
 
