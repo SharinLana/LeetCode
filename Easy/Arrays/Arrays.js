@@ -4792,6 +4792,38 @@ const findRelativeRanks = function (score) {
 console.log(findRelativeRanks([5, 4, 3, 2, 1])); // ["Gold Medal","Silver Medal","Bronze Medal","4","5"]
 console.log(findRelativeRanks([10, 3, 8, 9, 4])); // ["Gold Medal","5","Bronze Medal","Silver Medal","4"]
 
+// * 6. (561). Array Partition ---------------------------------
+// Given an integer array nums of 2n integers, group these integers into n pairs
+// (a1, b1), (a2, b2), ..., (an, bn) such that the sum of min(ai, bi) for all i is maximized.
+// Return the maximized sum.
+
+// Example 1:
+// Input: nums = [1,4,3,2]
+// Output: 4
+// Explanation: All possible pairings (ignoring the ordering of elements) are:
+// 1. (1, 4), (2, 3) -> min(1, 4) + min(2, 3) = 1 + 2 = 3
+// 2. (1, 3), (2, 4) -> min(1, 3) + min(2, 4) = 1 + 2 = 3
+// 3. (1, 2), (3, 4) -> min(1, 2) + min(3, 4) = 1 + 3 = 4
+// So the maximum possible sum is 4.
+
+// Example 2:
+// Input: nums = [6,2,6,5,1,2]
+// Output: 9
+// Explanation: The optimal pairing is (2, 1), (2, 5), (6, 6). min(2, 1) + min(2, 5) + min(6, 6) = 1 + 2 + 6 = 9.
+
+const arrayPairSum = function (nums) {
+  let sorted = nums.sort((a, b) => a - b);
+  let result = 0;
+
+  for (let i = 0, j = 1; j < sorted.length; i += 2, j += 2) {
+    result += Math.min(sorted[i], sorted[j]);
+  }
+  return result;
+};
+
+console.log(arrayPairSum([1, 4, 3, 2])); // 4
+console.log(arrayPairSum([6, 2, 6, 5, 1, 2])); // 9
+
 // ! =============== Prefix Sum ==============
 
 // * 1. Running Sum of 1d Array ---------------------------------
