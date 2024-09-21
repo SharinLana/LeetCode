@@ -4528,6 +4528,87 @@ console.log(
 console.log(islandPerimeter([[1]])); // 4
 console.log(islandPerimeter([[1, 0]])); // 4
 
+// * 11. (598). Range Addition II ------------------------------------------
+// You are given an m x n matrix M initialized with all 0's
+// and an array of operations ops,
+// where ops[i] = [ai, bi] means M[x][y] should be incremented by one
+// for all 0 <= x < ai and 0 <= y < bi.
+
+// Count and return the number of maximum integers in the matrix
+// after performing all the operations.
+
+// Example 1:
+// Input: m = 3, n = 3, ops = [[2,2],[3,3]]
+// Output: 4
+// Explanation: The maximum integer in M is 2, and there are four of it in M. So return 4.
+
+// Example 2:
+// Input: m = 3, n = 3, ops = [[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3],[2,2],[3,3],[3,3],[3,3]]
+// Output: 4
+
+// Example 3:
+// Input: m = 3, n = 3, ops = []
+// Output: 9
+
+var maxCount = function (m, n, ops) {
+  // You have to find the smallest x in the range and the smallest y
+  // and get their product
+  let smallestX = Infinity;
+  let smallestY = Infinity;
+
+  if (!ops.length) {
+    return m * n;
+  } else {
+    ops.map(arr => {
+      smallestX = Math.min(smallestX, arr[0]);
+      smallestY = Math.min(smallestY, arr[1]);
+    })
+      
+    return smallestX * smallestY;
+  }
+};
+
+console.log(
+  maxCount(3, 3, [
+    [2, 2],
+    [3, 3],
+  ])
+); // 4
+console.log(
+  maxCount(3, 3, [
+    [2, 2],
+    [3, 3],
+    [3, 3],
+    [3, 3],
+    [2, 2],
+    [3, 3],
+    [3, 3],
+    [3, 3],
+    [2, 2],
+    [3, 3],
+    [3, 3],
+    [3, 3],
+  ])
+); // 4
+console.log(maxCount(3, 3, [])); // 9
+console.log(
+  maxCount(26, 17, [
+    [20, 10],
+    [26, 11],
+    [2, 11],
+    [4, 16],
+    [2, 3],
+    [23, 13],
+    [7, 15],
+    [11, 11],
+    [25, 13],
+    [11, 13],
+    [13, 11],
+    [13, 16],
+    [26, 17],
+  ])
+); // 6
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
