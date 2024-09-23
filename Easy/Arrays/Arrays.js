@@ -4905,7 +4905,39 @@ const arrayPairSum = function (nums) {
 console.log(arrayPairSum([1, 4, 3, 2])); // 4
 console.log(arrayPairSum([6, 2, 6, 5, 1, 2])); // 9
 
+// * 7. (628). Maximum Product of Three Numbers ---------------------------------
+// Given an integer array nums, find three numbers whose product is maximum
+// and return the maximum product.
 
+// Example 1:
+// Input: nums = [1,2,3]
+// Output: 6
+
+// Example 2:
+// Input: nums = [1,2,3,4]
+// Output: 24
+
+// Example 3:
+// Input: nums = [-1,-2,-3]
+// Output: -6
+
+const maximumProduct = function (nums) {
+  let sorted = nums.sort((a,b) => a - b);
+  // If the array is filled with only negative or only positive integers
+  let product1 =
+    sorted[sorted.length - 1] *
+    sorted[sorted.length - 2] *
+    sorted[sorted.length - 3];
+  // If the array is filled with mixed integers: positive and negative
+  let product2 = sorted[0] * sorted[1] * sorted[sorted.length - 1];
+
+  return product1 > product2 ? product1 : product2;
+};
+
+console.log(maximumProduct([1, 2, 3])); // 6
+console.log(maximumProduct([1, 2, 3, 4])); // 24
+console.log(maximumProduct([-1, -2, -3])); // -6
+console.log(maximumProduct([-100, -98, -1, 2, 3, 4])); // 39200
 
 // ! =============== Prefix Sum ==============
 
