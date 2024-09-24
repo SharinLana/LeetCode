@@ -1740,6 +1740,44 @@ console.log(findDisappearedNumbers([2, 2])); // [1]
 console.log(findDisappearedNumbers([2, 1])); // []
 console.log(findDisappearedNumbers([1, 1, 2, 2])); // [3, 4]
 
+// * 43. (643) Maximum Average Subarray I ----------------------------------------------------
+// You are given an integer array nums consisting of n elements, and an integer k.
+// Find a contiguous subarray whose length is equal to k that has the maximum average value
+// and return this value. Any answer with a calculation error less than 10-5 will be accepted.
+
+// Example 1:
+// Input: nums = [1,12,-5,-6,50,3], k = 4
+// Output: 12.75000
+// Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75
+
+// Example 2:
+// Input: nums = [5], k = 1
+// Output: 5.00000
+
+const findMaxAverage = function (nums, k) {
+  if (k === 1) return nums.sort((a, b) => a - b).pop();
+
+  let start = 0;
+  let end = k;
+  // Calculate sum of the first k elements:
+  let sum = nums.slice(0, k).reduce((acc, el) => acc + el, 0);
+  let temp = sum;
+
+  // Start adding to the temp the next element from the array
+  // and subtracting the first one and compare the result to the sum
+  while (end < nums.length) {
+    temp = temp - nums[start++] + nums[end++];
+    sum = Math.max(sum, temp);
+  }
+
+  return sum / k;
+};
+
+console.log(findMaxAverage([1,12,-5,-6,50,3], 4)); // 12.75000
+console.log(findMaxAverage([5], 1)); // 5.00000
+console.log(findMaxAverage([0, 1, 1, 3, 3], 4)); // 2.00000
+console.log(findMaxAverage([4, 2, 1, 3, 3], 2)); // 3.00000
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -4922,7 +4960,7 @@ console.log(arrayPairSum([6, 2, 6, 5, 1, 2])); // 9
 // Output: -6
 
 const maximumProduct = function (nums) {
-  let sorted = nums.sort((a,b) => a - b);
+  let sorted = nums.sort((a, b) => a - b);
   // If the array is filled with only negative or only positive integers
   let product1 =
     sorted[sorted.length - 1] *
