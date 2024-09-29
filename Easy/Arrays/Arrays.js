@@ -3855,8 +3855,6 @@ const nextGreaterElement = function (nums1, nums2) {
 console.log(nextGreaterElement([4, 1, 2], [1, 3, 4, 2])); // [-1,3,-1]
 console.log(nextGreaterElement([2, 4], [1, 2, 3, 4])); // [3,-1]
 
-
-
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
@@ -4649,6 +4647,77 @@ console.log(
   ])
 ); // 6
 
+// * 12. (661). Image Smoother ------------------------------------------
+// An image smoother is a filter of the size 3 x 3 that can be applied to each cell of an image
+// by rounding down the average of the cell and the eight surrounding cells
+// (i.e., the average of the nine cells in the blue smoother).
+// If one or more of the surrounding cells of a cell is not present,
+// we do not consider it in the average (i.e., the average of the four cells in the red smoother).
+
+// Given an m x n integer matrix img representing the grayscale of an image,
+// return the image after applying the smoother on each cell of it.
+
+// Example 1:
+// Input: img = [[1,1,1],[1,0,1],[1,1,1]]
+// Output: [[0,0,0],[0,0,0],[0,0,0]]
+// Explanation:
+// For the points (0,0), (0,2), (2,0), (2,2): floor(3/4) = floor(0.75) = 0
+// For the points (0,1), (1,0), (1,2), (2,1): floor(5/6) = floor(0.83333333) = 0
+// For the point (1,1): floor(8/9) = floor(0.88888889) = 0
+
+// Example 2:
+// Input: img = [[100,200,100],[200,50,200],[100,200,100]]
+// Output: [[137,141,137],[141,138,141],[137,141,137]]
+// Explanation:
+// For the points (0,0), (0,2), (2,0), (2,2): floor((100+200+200+50)/4) = floor(137.5) = 137
+// For the points (0,1), (1,0), (1,2), (2,1): floor((200+200+50+200+100+100)/6) = floor(141.666667) = 141
+// For the point (1,1): floor((50+200+200+200+200+100+100+100+100)/9) = floor(138.888889) = 138
+
+const imageSmoother = function (img) {
+  let result = [];
+
+  for (let i = 0; i < img.length; i++) {
+    result[i] = [];
+    for (let j = 0; j < img[i].length; j++) {
+      const numbers = [
+        img[i - 1]?.[j - 1],
+        img[i - 1]?.[j],
+        img[i - 1]?.[j + 1],
+        img[i]?.[j - 1],
+        img[i]?.[j],
+        img[i]?.[j + 1],
+        img[i + 1]?.[j - 1],
+        img[i + 1]?.[j],
+        img[i + 1]?.[j + 1],
+      ];
+
+      const filtered = numbers.filter((el) => el !== undefined);
+      const avg = Math.floor(
+        filtered.reduce((acc, el) => acc + el, 0) / filtered.length
+      );
+
+      result[i][j] = avg;
+    }
+  }
+
+  return result;
+};
+
+console.log(
+  imageSmoother([
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+  ])
+); // [[0,0,0],[0,0,0],[0,0,0]]
+console.log(
+  imageSmoother([
+    [100, 200, 100],
+    [200, 50, 200],
+    [100, 200, 100],
+  ])
+); // [[137,141,137],[141,138,141],[137,141,137]]
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
@@ -5002,7 +5071,7 @@ const findErrorNums = function (nums) {
   let result = [];
 
   for (let i = 0; i < sorted.length; i++) {
-    if (sorted[i] === sorted[i+1]) {
+    if (sorted[i] === sorted[i + 1]) {
       // push the duplicated number into the result array
       result.push(sorted[i]);
       // check the missing number in the range from 1 to sorted[i]
