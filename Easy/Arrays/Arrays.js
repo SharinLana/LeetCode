@@ -2214,6 +2214,58 @@ console.log(findPoisonedDuration([1, 4], 2)); // 4
 console.log(findPoisonedDuration([1, 2], 2)); // 3
 console.log(findPoisonedDuration([1, 2, 3, 4, 5, 6, 7, 8, 9], 5)); // 13
 
+// * 11. (682). Baseball Game ----------------------------------------------------
+// You are keeping the scores for a baseball game with strange rules.
+// At the beginning of the game, you start with an empty record.
+
+// You are given a list of strings operations, where operations[i]
+// is the ith operation you must apply to the record and is one of the following:
+
+// An integer x.
+// Record a new score of x.
+// '+'.
+// Record a new score that is the sum of the previous two scores.
+// 'D'.
+// Record a new score that is the double of the previous score.
+// 'C'.
+// Invalidate the previous score, removing it from the record.
+// Return the sum of all the scores on the record after applying all the operations.
+
+// The test cases are generated such that the answer and all intermediate calculations fit
+// in a 32-bit integer and that all operations are valid.
+
+// Example 1:
+// Input: ops = ["5","2","C","D","+"]
+// Output: 30
+// Explanation:
+// "5" - Add 5 to the record, record is now [5].
+// "2" - Add 2 to the record, record is now [5, 2].
+// "C" - Invalidate and remove the previous score, record is now [5].
+// "D" - Add 2 * 5 = 10 to the record, record is now [5, 10].
+// "+" - Add 5 + 10 = 15 to the record, record is now [5, 10, 15].
+// The total sum is 5 + 10 + 15 = 30.
+
+const calPoints = function (operations) {
+  let result = [];
+
+  for (let i = 0; i < operations.length; i++) {
+    if (isNaN(operations[i])) {
+      if (operations[i] === "C") result.pop();
+      if (operations[i] === "D") result.push(result[result.length - 1] * 2);
+      if (operations[i] === "+")
+        result.push(result[result.length - 1] + result[result.length - 2]);
+    } else {
+      result.push(+operations[i]);
+    }
+  }
+
+  return result.reduce((acc, el) => acc + el, 0);
+};
+
+console.log(calPoints(["5", "2", "C", "D", "+"])); // 30
+console.log(calPoints(["5", "-2", "4", "C", "D", "9", "+", "+"])); // 27
+console.log(calPoints(["1", "C"])); // 0
+
 // ! =============== Math / Counting Problems ===================!==undefinedundefined
 
 // * 1. Number of Good Pairs ----------------------------------------------------
