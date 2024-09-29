@@ -1773,7 +1773,7 @@ const findMaxAverage = function (nums, k) {
   return sum / k;
 };
 
-console.log(findMaxAverage([1,12,-5,-6,50,3], 4)); // 12.75000
+console.log(findMaxAverage([1, 12, -5, -6, 50, 3], 4)); // 12.75000
 console.log(findMaxAverage([5], 1)); // 5.00000
 console.log(findMaxAverage([0, 1, 1, 3, 3], 4)); // 2.00000
 console.log(findMaxAverage([4, 2, 1, 3, 3], 2)); // 3.00000
@@ -3855,6 +3855,8 @@ const nextGreaterElement = function (nums1, nums2) {
 console.log(nextGreaterElement([4, 1, 2], [1, 3, 4, 2])); // [-1,3,-1]
 console.log(nextGreaterElement([2, 4], [1, 2, 3, 4])); // [3,-1]
 
+
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
@@ -4976,6 +4978,56 @@ console.log(maximumProduct([1, 2, 3])); // 6
 console.log(maximumProduct([1, 2, 3, 4])); // 24
 console.log(maximumProduct([-1, -2, -3])); // -6
 console.log(maximumProduct([-100, -98, -1, 2, 3, 4])); // 39200
+
+// * 8. (645). Set Mismatch ------------------------------------------
+// You have a set of integers s, which originally contains all the numbers from 1 to n.
+// Unfortunately, due to some error, one of the numbers in s got duplicated
+// to another number in the set,
+// which results in repetition of one number and loss of another number.
+// You are given an integer array nums representing the data status of this set after the error.
+
+// Find the number that occurs twice and the number that is missing and return them
+// in the form of an array.
+
+// Example 1:
+// Input: nums = [1,2,2,4]
+// Output: [2,3]
+
+// Example 2:
+// Input: nums = [1,1]
+// Output: [1,2]
+
+const findErrorNums = function (nums) {
+  let sorted = nums.sort((a, b) => a - b);
+  let result = [];
+
+  for (let i = 0; i < sorted.length; i++) {
+    if (sorted[i] === sorted[i+1]) {
+      // push the duplicated number into the result array
+      result.push(sorted[i]);
+      // check the missing number in the range from 1 to sorted[i]
+      for (let j = 1; j < sorted[i]; j++) {
+        if (!sorted.includes(j)) {
+          result.push(j);
+        }
+      }
+      //  check the missing number in the range from sorted[i] to the sorted.length
+      for (let k = sorted[i]; k <= sorted.length; k++) {
+        if (!sorted.includes(k)) {
+          result.push(k);
+        }
+      }
+    }
+  }
+
+  return result;
+};
+
+console.log(findErrorNums([1, 2, 2, 4])); // [2,3]
+console.log(findErrorNums([1, 1])); // [1, 2]
+console.log(findErrorNums([2, 2])); // [2, 1]
+console.log(findErrorNums([3, 2, 3, 4, 6, 5])); // [3,1]
+console.log(findErrorNums([1, 2, 3, 3, 5])); // [3, 4]
 
 // ! =============== Prefix Sum ==============
 
