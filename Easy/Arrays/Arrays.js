@@ -3907,6 +3907,53 @@ const nextGreaterElement = function (nums1, nums2) {
 console.log(nextGreaterElement([4, 1, 2], [1, 3, 4, 2])); // [-1,3,-1]
 console.log(nextGreaterElement([2, 4], [1, 2, 3, 4])); // [3,-1]
 
+// * 16. (697). Degree of an Array ------------------------------------------
+// Given a non-empty array of non-negative integers nums, the degree of this array is defined
+// as the maximum frequency of any one of its elements.
+// Your task is to find the smallest possible length of a (contiguous) subarray of nums,
+// that has the same degree as nums.
+
+// Example 1:
+// Input: nums = [1,2,2,3,1]
+// Output: 2
+// Explanation:
+// The input array has a degree of 2 because both elements 1 and 2 appear twice.
+// Of the subarrays that have the same degree:
+// [1, 2, 2, 3, 1], [1, 2, 2, 3], [2, 2, 3, 1], [1, 2, 2], [2, 2, 3], [2, 2]
+// The shortest length is 2. So return 2.
+
+const findShortestSubArray = function (nums) {
+  let hashTable = {};
+  // store the elements in the hashTable
+  for (let elem of nums) {
+    hashTable[elem] ? (hashTable[elem] += 1) : (hashTable[elem] = 1);
+  }
+  // get the biggest values from the hashTable
+  const maxVal = Object.keys(hashTable).reduce(
+    (acc, key) => Math.max(acc, hashTable[key]),
+    -Infinity
+  );
+  const keysWithMaxValue = Object.keys(hashTable).filter(
+    (key) => hashTable[key] === maxVal
+  );
+
+  // find the first and last elements with such values in nums
+  // and calculate the minLength of that subarray
+  let startIdx, endIdx;
+  let minLength = Infinity;
+
+  for (let i = 0; i < keysWithMaxValue.length; i++) {
+    startIdx = nums.indexOf(+keysWithMaxValue[i]);
+    endIdx = nums.lastIndexOf(+keysWithMaxValue[i]);
+    minLength = Math.min(minLength, endIdx - startIdx + 1);
+  }
+
+  return minLength;
+};
+
+console.log(findShortestSubArray([1, 2, 2, 3, 1])); // 2
+console.log(findShortestSubArray([1, 2, 2, 3, 1, 4, 2])); // 6
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
