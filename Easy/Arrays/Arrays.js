@@ -1778,6 +1778,54 @@ console.log(findMaxAverage([5], 1)); // 5.00000
 console.log(findMaxAverage([0, 1, 1, 3, 3], 4)); // 2.00000
 console.log(findMaxAverage([4, 2, 1, 3, 3], 2)); // 3.00000
 
+// * 44. (717) Maximum Average Subarray I ----------------------------------------------------
+// We have two special characters:
+
+// The first character can be represented by one bit 0.
+// The second character can be represented by two bits (10 or 11).
+// Given a binary array bits that ends with 0, return true if the last character
+// must be a one-bit character.
+
+// Example 1:
+// Input: bits = [1,0,0]
+// Output: true
+// Explanation: The only way to decode it is two-bit character and one-bit character.
+// So the last character is one-bit character.
+
+// Example 2:
+// Input: bits = [1,1,1,0]
+// Output: false
+// Explanation: The only way to decode it is two-bit character and two-bit character.
+// So the last character is not one-bit character.
+
+const isOneBitCharacter = function (bits) {
+  if (bits.length === 1) {
+    return true;
+  }
+  if (bits.length === 0) {
+    return false;
+  }
+
+  for (let i = 0; i < bits.length; i++) {
+    // if there's 1, then cut the segment from the beginning of the array to i+1 
+    // and start checking the rest of the array for 1's
+    if (bits[i] === 1) {
+      return isOneBitCharacter(bits.slice(i + 2));
+    } else {
+      // if only 0's are in the array
+      if (!bits.includes(1)) {
+        return true
+      }
+    }
+  }
+};
+
+console.log(isOneBitCharacter([1, 0, 0])); // true
+console.log(isOneBitCharacter([1, 1, 1, 0])); // false
+console.log(isOneBitCharacter([0, 0])); // true
+console.log(isOneBitCharacter([1, 0])); // false
+console.log(isOneBitCharacter([1, 0, 1, 0, 0])); // true
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
