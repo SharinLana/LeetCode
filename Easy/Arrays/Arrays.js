@@ -5390,13 +5390,13 @@ const pivotIndex = function (nums) {
 
   for (let i = 0; i < nums.length; i++) {
     if (i > 0) {
-      leftSum = nums.slice(0, i).reduce((acc, el) => acc + el, 0);
+      leftSum = calculateSum(nums.slice(0, i));
     } else {
       leftSum = 0;
     }
 
     if (i < nums.length - 1) {
-      rightSum = nums.slice(i + 1).reduce((acc, el) => acc + el, 0);
+      rightSum = calculateSum(nums.slice(i + 1));
     } else {
       rightSum = 0;
     }
@@ -5408,6 +5408,10 @@ const pivotIndex = function (nums) {
 
   return -1;
 };
+
+const calculateSum = (arr) => {
+  return arr.reduce((acc, el) => acc + el, 0);
+}
 
 console.log(pivotIndex([1, 7, 3, 6, 5, 6])); // 3
 console.log(pivotIndex([1, 2, 3])); // -1
