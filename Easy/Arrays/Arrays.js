@@ -4865,6 +4865,110 @@ console.log(
   ])
 ); // [[137,141,137],[141,138,141],[137,141,137]]
 
+// * 13. (733). Food Fill ------------------------------------------
+// You are given an image represented by an m x n grid of integers image,
+// where image[i][j] represents the pixel value of the image.
+// You are also given three integers sr, sc, and color.
+// Your task is to perform a flood fill on the image starting from the pixel image[sr][sc].
+
+// To perform a flood fill:
+// Begin with the starting pixel and change its color to color.
+// Perform the same process for each pixel that is directly adjacent
+// (pixels that share a side with the original pixel, either horizontally or vertically)
+// and shares the same color as the starting pixel.
+// Keep repeating this process by checking neighboring pixels of the updated pixels
+// and modifying their color if it matches the original color of the starting pixel.
+// The process stops when there are no more adjacent pixels of the original color to update.
+// Return the modified image after performing the flood fill.
+
+// Example 1:
+// Input: image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, color = 2
+// Output: [[2,2,2],[2,2,0],[2,0,1]]
+// Explanation:
+// From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel),
+// all pixels connected by a path of the same color as the starting pixel
+// (i.e., the blue pixels) are colored with the new color.
+// Note the bottom corner is not colored 2,
+// because it is not horizontally or vertically connected to the starting pixel.
+
+// Example 2:
+// Input: image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, color = 0
+// Output: [[0,0,0],[0,0,0]]
+// Explanation:
+// The starting pixel is already colored with 0,
+// which is the same as the target color.
+// Therefore, no changes are made to the image.
+
+const floodFill = function (image, sr, sc, color) {
+  if (image[sr][sc] === color) {
+    return image;
+  } else {
+    let oldColor = image[sr][sc];
+    image[sr][sc] = color;
+    dfs(image, sr, sc, oldColor, color);
+    return image;
+  }
+};
+
+const dfs = (matrix, row, col, oldColor, newColor) => {
+  let adjacentCells = [
+    [-1, 0],
+    [0, -1],
+    [0, 1],
+    [1, 0],
+  ];
+
+  let matrixLength = matrix.length;
+  let rowLength = matrix[0].length;
+
+  for (let i = 0; i < adjacentCells.length; i++) {
+    let cellValue = adjacentCells[i];
+
+    // Calculate the row and column indexes of the adjacent cells
+    let r = row + cellValue[0];
+    let c = col + cellValue[1];
+
+    // If the adjacent cell is within the bounds of the
+    // matrix and has the same value as the starting cell
+    if (
+      r < matrixLength &&
+      r >= 0 &&
+      c < rowLength &&
+      c >= 0 &&
+      matrix[r][c] === oldColor
+    ) {
+      matrix[r][c] = newColor;
+
+      // pass the new indexes to the function and recalculate
+      dfs(matrix, r, c, oldColor, newColor);
+    }
+  }
+};
+
+console.log(
+  floodFill(
+    [
+      [1, 1, 1],
+      [1, 1, 0],
+      [1, 0, 1],
+    ],
+    1,
+    1,
+    2
+  )
+); // [[2,2,2],[2,2,0],[2,0,1]]
+console.log(
+  floodFill(
+    [
+      [0, 0, 0],
+      [0, 0, 0],
+    ],
+    0,
+    0,
+    0
+  )
+); // [[0,0,0],[0,0,0]]
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
@@ -5411,7 +5515,7 @@ const pivotIndex = function (nums) {
 
 const calculateSum = (arr) => {
   return arr.reduce((acc, el) => acc + el, 0);
-}
+};
 
 console.log(pivotIndex([1, 7, 3, 6, 5, 6])); // 3
 console.log(pivotIndex([1, 2, 3])); // -1
