@@ -1827,11 +1827,11 @@ console.log(isOneBitCharacter([1, 0])); // false
 console.log(isOneBitCharacter([1, 0, 1, 0, 0])); // true
 
 // * 45. (744) Find Smallest Letter Greater Than Target ----------------------------------------------------
-// You are given an array of characters letters that is sorted in non-decreasing order, 
-// and a character target. 
+// You are given an array of characters letters that is sorted in non-decreasing order,
+// and a character target.
 // There are at least two different characters in letters.
 
-// Return the smallest character in letters that is lexicographically greater than target. 
+// Return the smallest character in letters that is lexicographically greater than target.
 // If such a character does not exist, return the first character in letters.
 
 // Example 1:
@@ -1847,24 +1847,24 @@ console.log(isOneBitCharacter([1, 0, 1, 0, 0])); // true
 // Example 3:
 // Input: letters = ["x","x","y","y"], target = "z"
 // Output: "x"
-// Explanation: There are no characters in letters that is lexicographically greater than 'z' 
+// Explanation: There are no characters in letters that is lexicographically greater than 'z'
 // so we return letters[0].
 
-const nextGreatestLetter = function(letters, target) {
-    let set = Array.from(new Set(letters));
+const nextGreatestLetter = function (letters, target) {
+  let set = Array.from(new Set(letters));
 
-    if ((set[set.length - 1] <= target)) {
-      return set.shift();
-    } else {
-      for (let elem of set) {
-        if (elem > target) return elem;
-      }
+  if (set[set.length - 1] <= target) {
+    return set.shift();
+  } else {
+    for (let elem of set) {
+      if (elem > target) return elem;
     }
+  }
 };
 
-console.log(nextGreatestLetter(["c","f","j"], "a")); // "c"
-console.log(nextGreatestLetter(["c","f","j"], "c")); // "f"
-console.log(nextGreatestLetter(["x","x","y","y"], "z")); // "x" 
+console.log(nextGreatestLetter(["c", "f", "j"], "a")); // "c"
+console.log(nextGreatestLetter(["c", "f", "j"], "c")); // "f"
+console.log(nextGreatestLetter(["x", "x", "y", "y"], "z")); // "x"
 
 // ! =============== Simulation Problems ===================
 
@@ -5389,6 +5389,38 @@ console.log(findErrorNums([2, 2])); // [2, 1]
 console.log(findErrorNums([3, 2, 3, 4, 6, 5])); // [3,1]
 console.log(findErrorNums([1, 2, 3, 3, 5])); // [3, 4]
 
+// * 9. (747). Largest Number At Least Twice of Others ------------------------------------------
+// You are given an integer array nums where the largest integer is unique.
+
+// Determine whether the largest element in the array is at least twice
+// as much as every other number in the array.
+// If it is, return the index of the largest element, or return -1 otherwise.
+
+// Example 1:
+// Input: nums = [3,6,1,0]
+// Output: 1
+// Explanation: 6 is the largest integer.
+// For every other number in the array x, 6 is at least twice as big as x.
+// The index of value 6 is 1, so we return 1.
+
+// Example 2:
+// Input: nums = [1,2,3,4]
+// Output: -1
+// Explanation: 4 is less than twice the value of 3, so we return -1.
+
+var dominantIndex = function (nums) {
+  let sorted = [...nums].sort((a, b) => a - b);
+
+  let largest = sorted.pop();
+  let secondLargest = sorted.pop();
+  let diff = largest - secondLargest;
+
+  return diff >= secondLargest ? nums.indexOf(largest) : -1;
+};
+
+console.log(dominantIndex([3, 6, 1, 0])); // 1
+console.log(dominantIndex([1, 2, 3, 4])); // -1
+
 // ! =============== Prefix Sum ==============
 
 // * 1. Running Sum of 1d Array ---------------------------------
@@ -6023,7 +6055,7 @@ console.log(maxProfit([7, 1, 5, 3, 6, 4])); // 5
 console.log(maxProfit([7, 6, 4, 3, 1])); // 0
 
 // * 4. (746) Min Cost Climbing Stairs -----------------------------------
-// You are given an integer array cost where cost[i] is the cost of ith step on a staircase. 
+// You are given an integer array cost where cost[i] is the cost of ith step on a staircase.
 // Once you pay the cost, you can either climb one or two steps.
 
 // You can either start from the step with index 0, or the step with index 1.
@@ -6049,18 +6081,18 @@ console.log(maxProfit([7, 6, 4, 3, 1])); // 0
 // - Pay 1 and climb one step to reach the top.
 // The total cost is 6.
 
-const minCostClimbingStairs = function(cost) {
-    // start looping from the 3re element to the end go to the beginning
-    // change the value of each element by summing it up 
-    // with the lowest cost[i+1], cost [i+2] element 
-    for (let i = cost.length - 3; i >= 0; i--) {
-      cost[i] += Math.min(cost[i+1], cost[i+2]);
-    }
-    return Math.min(cost[0], cost[1]);
+const minCostClimbingStairs = function (cost) {
+  // start looping from the 3re element to the end go to the beginning
+  // change the value of each element by summing it up
+  // with the lowest cost[i+1], cost [i+2] element
+  for (let i = cost.length - 3; i >= 0; i--) {
+    cost[i] += Math.min(cost[i + 1], cost[i + 2]);
+  }
+  return Math.min(cost[0], cost[1]);
 };
 
-console.log(minCostClimbingStairs([10,15,20])); // 15
-console.log(minCostClimbingStairs([1,100,1,1,1,100,1,1,100,1])); // 6
+console.log(minCostClimbingStairs([10, 15, 20])); // 15
+console.log(minCostClimbingStairs([1, 100, 1, 1, 1, 100, 1, 1, 100, 1])); // 6
 
 // ! =============== Design ==============
 
