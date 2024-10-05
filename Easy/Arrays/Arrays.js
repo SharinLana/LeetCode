@@ -4042,6 +4042,61 @@ const findShortestSubArray = function (nums) {
 console.log(findShortestSubArray([1, 2, 2, 3, 1])); // 2
 console.log(findShortestSubArray([1, 2, 2, 3, 1, 4, 2])); // 6
 
+// * 17. (748). Shortest Completing Word ------------------------------------------
+// Given a string licensePlate and an array of strings words, find the shortest completing word in words.
+
+// A completing word is a word that contains all the letters in licensePlate. Ignore numbers and spaces in licensePlate,
+// and treat letters as case insensitive. If a letter appears more than once in licensePlate,
+// then it must appear in the word the same number of times or more.
+
+// For example, if licensePlate = "aBc 12c", then it contains letters 'a', 'b' (ignoring case),
+// and 'c' twice. Possible completing words are "abccdef", "caaacab", and "cbca".
+
+// Return the shortest completing word in words. It is guaranteed an answer exists.
+// If there are multiple shortest completing words, return the first one that occurs in words.
+
+const shortestCompletingWord = function (licensePlate, words) {
+  licensePlate = licensePlate.toLowerCase();
+  let hashTable = {};
+  let idx = 0;
+  let wordLength = Infinity;
+
+  for (let elem of licensePlate) {
+    if (isNaN(parseInt(elem)) && elem !== " ") {
+      hashTable[elem] ? (hashTable[elem] += 1) : (hashTable[elem] = 1);
+    }
+  }
+
+  let tempHash = Object.assign({}, hashTable);
+
+  for (let i = 0; i < words.length; i++) {
+    for (let j = 0; j < words[i].length; j++) {
+      if (tempHash[words[i][j]]) {
+        tempHash[words[i][j]]--;
+      }
+    }
+
+    let arr = Object.keys(tempHash).filter((key) => tempHash[key] > 0);
+
+    if (arr.length <= 0) {
+      if (words[i].length < wordLength) {
+        wordLength = words[i].length;
+        idx = i;
+      }
+    }
+    tempHash = Object.assign({}, hashTable);
+  }
+
+  return words[idx];
+};
+
+console.log(
+  shortestCompletingWord("1s3 PSt", ["step", "steps", "stripe", "stepple"])
+); // "steps"
+console.log(
+  shortestCompletingWord("1s3 456", ["looks", "pest", "stew", "show"])
+); // "pest"
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
