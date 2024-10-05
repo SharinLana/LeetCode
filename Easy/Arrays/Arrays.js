@@ -4061,29 +4061,39 @@ const shortestCompletingWord = function (licensePlate, words) {
   let idx = 0;
   let wordLength = Infinity;
 
+  // Store the letters in the hash table
   for (let elem of licensePlate) {
     if (isNaN(parseInt(elem)) && elem !== " ") {
       hashTable[elem] ? (hashTable[elem] += 1) : (hashTable[elem] = 1);
     }
   }
 
+  // Create a copy of the hashTable object
+  // that can be modified without affecting the initial hashTable
+  // We need to make such a copy to repeatedly empty its values for every word
+  // in words array and fill it back after each iteration
   let tempHash = Object.assign({}, hashTable);
 
   for (let i = 0; i < words.length; i++) {
     for (let j = 0; j < words[i].length; j++) {
+      // If there's a match, subtract the value from the tempHash
       if (tempHash[words[i][j]]) {
         tempHash[words[i][j]]--;
       }
     }
 
+    // Check if the tempHash property values are still bigger than 0...
     let arr = Object.keys(tempHash).filter((key) => tempHash[key] > 0);
 
+    // ...if they are not, that means we found a matching string
     if (arr.length <= 0) {
+      // find the shortest matching string and its index
       if (words[i].length < wordLength) {
         wordLength = words[i].length;
         idx = i;
       }
     }
+    // Fill tempHash back out for the next iteration
     tempHash = Object.assign({}, hashTable);
   }
 
