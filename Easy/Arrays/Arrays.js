@@ -3228,6 +3228,76 @@ console.log(haveConflict(["01:15", "02:00"], ["02:00", "03:00"])); // true
 console.log(haveConflict(["01:00", "02:00"], ["01:20", "03:00"])); // true
 console.log(haveConflict(["10:00", "11:00"], ["14:00", "15:00"])); // false
 
+// * 14. (806). Number of Lines To Write String ------------------------------------------
+// You are given a string s of lowercase English letters and an array widths
+// denoting how many pixels wide each lowercase English letter is. Specifically,
+// widths[0] is the width of 'a', widths[1] is the width of 'b', and so on.
+
+// You are trying to write s across several lines, where each line is no longer than 100 pixels.
+// Starting at the beginning of s, write as many letters on the first line
+// such that the total width does not exceed 100 pixels. Then, from where you stopped in s,
+// continue writing as many letters as you can on the second line.
+// Continue this process until you have written all of s.
+
+// Return an array result of length 2 where:
+
+// result[0] is the total number of lines.
+// result[1] is the width of the last line in pixels.
+
+// Example 1:
+// Input: widths = [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], s = "abcdefghijklmnopqrstuvwxyz"
+// Output: [3,60]
+// Explanation: You can write s as follows:
+// abcdefghij  // 100 pixels wide
+// klmnopqrst  // 100 pixels wide
+// uvwxyz      // 60 pixels wide
+// There are a total of 3 lines, and the last line is 60 pixels wide.
+
+// Example 2:
+// Input: widths = [4,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10], s = "bbbcccdddaaa"
+// Output: [2,4]
+// Explanation: You can write s as follows:
+// bbbcccdddaa  // 98 pixels wide
+// a            // 4 pixels wide
+// There are a total of 2 lines, and the last line is 4 pixels wide.
+
+const numberOfLines = function (widths, s) {
+  let alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let counter = 0;
+  let lines = 1;
+
+  for (let i = 0; i < s.length; i++) {
+    let charIdx = alphabet.indexOf(s[i]);
+
+    if (counter + widths[charIdx] > 100) {
+      lines++;
+      counter = 0;
+    }
+    counter += widths[charIdx];
+  }
+
+  return [lines, counter];
+};
+
+console.log(
+  numberOfLines(
+    [
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10, 10,
+    ],
+    "abcdefghijklmnopqrstuvwxyz"
+  )
+); // [3,60]
+console.log(
+  numberOfLines(
+    [
+      4, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+      10, 10, 10, 10, 10, 10, 10,
+    ],
+    "bbbcccdddaaa"
+  )
+); // [2,4]
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
@@ -6278,13 +6348,13 @@ MyHashSet.prototype.contains = function (key) {
 
 // Implement the MyHashMap class:
 // MyHashMap() initializes the object with an empty map.
-// void put(int key, int value) inserts a (key, value) pair into the HashMap. 
+// void put(int key, int value) inserts a (key, value) pair into the HashMap.
 // If the key already exists in the map, update the corresponding value.
-// int get(int key) returns the value to which the specified key is mapped, or -1 
+// int get(int key) returns the value to which the specified key is mapped, or -1
 // if this map contains no mapping for the key.
-// void remove(key) removes the key and its corresponding value 
+// void remove(key) removes the key and its corresponding value
 // if the map contains the mapping for the key.
- 
+
 // Example 1:
 // Input
 // ["MyHashMap", "put", "put", "get", "get", "put", "get", "remove", "get"]
@@ -6292,8 +6362,8 @@ MyHashSet.prototype.contains = function (key) {
 // Output
 // [null, null, null, 1, -1, null, 1, null, -1]
 
-const MyHashMap = function() {
-    this.hashMap = new Map([]);
+const MyHashMap = function () {
+  this.hashMap = new Map([]);
 };
 
 MyHashMap.prototype.put = function (key, value) {
@@ -6307,7 +6377,6 @@ MyHashMap.prototype.get = function (key) {
 MyHashMap.prototype.remove = function (key) {
   this.hashMap.delete(key);
 };
-
 
 // ! =============== Divide and Conquer ==============
 
