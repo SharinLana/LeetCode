@@ -3359,6 +3359,73 @@ console.log(
   )
 ); // [2,4]
 
+// * 15. (819). Most Common Word ------------------------------------------
+// Given a string paragraph and a string array of the banned words banned,
+// return the most frequent word that is not banned.
+// It is guaranteed there is at least one word that is not banned,
+// and that the answer is unique.
+
+// The words in paragraph are case-insensitive and the answer should be returned in lowercase.
+
+// Example 1:
+// Input: paragraph = "Bob hit a ball, the hit BALL flew far after it was hit.", banned = ["hit"]
+// Output: "ball"
+// Explanation:
+// "hit" occurs 3 times, but it is a banned word.
+// "ball" occurs twice (and no other word does),
+// so it is the most frequent non-banned word in the paragraph.
+// Note that words in the paragraph are not case sensitive,
+// that punctuation is ignored (even if adjacent to words, such as "ball,"),
+// and that "hit" isn't the answer even though it occurs more because it is banned.
+
+// Example 2:
+// Input: paragraph = "a.", banned = []
+// Output: "a"
+
+const mostCommonWord = function (paragraph, banned) {
+  let hashTable = {};
+
+  // add space between characters separated by a punctuation mark
+  // eg. to make this string: "a, a, a, a, b,b,b,c, c" look like this: "a, a, a, a, b, b, b, c, c"
+  paragraph = paragraph.replace(/[!?',;.](\S)/g, ", $1");
+  // remove all of the specified punctuation marks => "a a a a b b b c c"
+  paragraph = paragraph.replace(/[!?',;.]/gu, "");
+  paragraph = paragraph.toLowerCase();
+
+  let array = paragraph.split(" ");
+
+  // filter out the banned words from the paragraph
+  if (banned.length) {
+    for (let word of banned) {
+      array = array.filter((w) => w !== word);
+    }
+  }
+
+  // store the words in a hashTable and count them
+  for (let word of array) {
+    hashTable[word] ? (hashTable[word] += 1) : (hashTable[word] = 1);
+  }
+
+  // find the largest value in the hashTable
+  let maxVal = Object.keys(hashTable).reduce(
+    (acc, key) => Math.max(acc, hashTable[key]),
+    -Infinity
+  );
+  // filter hashTable keys by the maxVal
+  let keys = Object.keys(hashTable).filter((key) => hashTable[key] === maxVal);
+
+  return keys[0];
+};
+
+console.log(
+  mostCommonWord("Bob hit a ball, the hit BALL flew far after it was hit.", [
+    "hit",
+  ])
+); // "ball"
+console.log(mostCommonWord("a.", [])); // "a"
+console.log(mostCommonWord("Bob", [])); // bob
+console.log(mostCommonWord("a, a, a, a, b,b,b,c, c", ["a"])); // b
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
