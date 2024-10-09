@@ -3387,9 +3387,9 @@ const mostCommonWord = function (paragraph, banned) {
 
   // add space between characters separated by a punctuation mark
   // eg. to make this string: "a, a, a, a, b,b,b,c, c" look like this: "a, a, a, a, b, b, b, c, c"
-  paragraph = paragraph.replace(/[!?',;.](\S)/g, ", $1");
-  // remove all of the specified punctuation marks => "a a a a b b b c c"
-  paragraph = paragraph.replace(/[!?',;.]/gu, "");
+  paragraph = paragraph.replace(/[!?',;.](\S)/g, ", $1"); // $1 refers to the captured character after the punctuation mark
+  // remove all of the punctuation marks => "a a a a b b b c c"
+  paragraph = paragraph.replace(/[!?',;.]/gu, ""); // Unicode flag, to enable Unicode support in the regular expression.
   paragraph = paragraph.toLowerCase();
 
   let array = paragraph.split(" ");
