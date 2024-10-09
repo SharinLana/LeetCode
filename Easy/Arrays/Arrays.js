@@ -2658,6 +2658,67 @@ console.log(smallestRangeI([1], 0)); // 0
 console.log(smallestRangeI([0, 10], 2)); // 6
 console.log(smallestRangeI([1, 3, 6], 3)); // 0
 
+// * 9. (812) Largest Triangle Area -----------------------------------
+// Given an array of points on the X-Y plane points where points[i] = [xi, yi],
+// return the area of the largest triangle that can be formed by any three different points.
+// Answers within 10-5 of the actual answer will be accepted.
+
+// Example 1:
+// Input: points = [[0,0],[0,1],[1,0],[0,2],[2,0]]
+// Output: 2.00000
+// Explanation: The five points are shown in the above figure. The red triangle is the largest.
+
+// Example 2:
+// Input: points = [[1,0],[0,0],[0,1]]
+// Output: 0.50000
+
+const largestTriangleArea = function (points) {
+  // S = (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) * 0.5;
+  let result = [];
+
+  for (let i = 0; i < points.length; i++) {
+    for (let j = i + 1; j < points.length; j++) {
+      for (let k = j + 1; k < points.length; k++) {
+        let area =
+          0.5 *
+          Math.abs(
+            points[i][0] * (points[j][1] - points[k][1]) +
+              points[j][0] * (points[k][1] - points[i][1]) +
+              points[k][0] * (points[i][1] - points[j][1])
+          );
+
+        result.push(area);
+      }
+    }
+  }
+
+  return Math.max(...result);
+};
+
+console.log(
+  largestTriangleArea([
+    [0, 0],
+    [0, 1],
+    [1, 0],
+    [0, 2],
+    [2, 0],
+  ])
+); // 2.00000
+console.log(
+  largestTriangleArea([
+    [1, 0],
+    [0, 0],
+    [0, 1],
+  ])
+); // 0.50000
+console.log(
+  largestTriangleArea([
+    [4, 6],
+    [6, 5],
+    [3, 1],
+  ])
+); // 5.50000
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
