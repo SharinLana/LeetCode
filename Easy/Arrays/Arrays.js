@@ -5345,9 +5345,9 @@ console.log(
 // Output: 8
 
 var projectionArea = function (grid) {
-  // Area of the shadow (view from the top): count all the digits that are > than 0;
-  // Area of the shadow (front view): add the biggest values of each row
-  // Area of the shadow (side view): add the biggest values of each column
+  // Area of the shadow (view from the top): count all the digits in the grid that are > than 0;
+  // Area of the shadow (front view): sum up the biggest values of each row
+  // Area of the shadow (side view): sum up biggest values of each column
 
   let topArea = grid.flat().filter((el) => el !== 0).length;
   let frontArea = 0;
