@@ -5448,6 +5448,73 @@ console.log(
   ])
 ); // 14
 
+// * 16. (892). Surface Area of 3D Shapes ------------------------------------------
+// You are given an n x n grid where you have placed some 1 x 1 x 1 cubes.
+// Each value v = grid[i][j] represents a tower of v cubes placed on top of cell (i, j).
+// After placing these cubes, you have decided to glue any directly adjacent cubes to each other,
+// forming several irregular 3D shapes.
+// Return the total surface area of the resulting shapes.
+// Note: The bottom face of each shape counts toward its surface area.
+
+// Example 1:
+// Input: grid = [[1,2],[3,4]]
+// Output: 34
+
+// Example 2:
+// Input: grid = [[1,1,1],[1,0,1],[1,1,1]]
+// Output: 32
+
+// Example 3:
+// Input: grid = [[2,2,2],[2,1,2],[2,2,2]]
+// Output: 46
+
+const surfaceArea = function (grid) {
+  let height = grid.length;
+  let width = grid[0].length;
+  let sum = 0;
+
+  for (let i = 0; i < height; i++) {
+    for (let j = 0; j < width; j++) {
+      if (grid[i][j] !== 0) sum += grid[i][j] * 4 + 2;
+      // eg.: if cube value = 2 that means its height = 2 and width is always 1, so the area of this particular cube is:
+      // (cube height "2" * cube width "1") * 4 (for 4 sides)
+      // add 1 (area of the top for each cube)
+      // add 1 (area of the bottom for each cube)
+      // so the total for this particular segment will be (2 * 1) * 4 + 1 + 1 or 2 * 4 + 2
+
+      // Step 2: subtract all the adjacent sides from the sum:
+      if (i > 0) sum -= Math.min(grid[i][j], grid[i - 1][j]) * 2;
+      // if we have a lower value while analyzing the grid vertically,
+      // we need to subtract it from the sum twice
+      // since the lower cube touches 2 faces of the adjacent cubes
+      if (j > 0) sum -= Math.min(grid[i][j], grid[i][j - 1]) * 2;
+      // same thing for checking horizontally
+    }
+  }
+  return sum;
+};
+
+console.log(
+  surfaceArea([
+    [1, 2],
+    [3, 4],
+  ])
+); // 34
+console.log(
+  surfaceArea([
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1],
+  ])
+); // 32
+console.log(
+  surfaceArea([
+    [2, 2, 2],
+    [2, 1, 2],
+    [2, 2, 2],
+  ])
+); // 46
+
 // ! =============== Two Pointers ==============
 
 // * 1. Number of Arithmetic Triplets ------------------------------------------
