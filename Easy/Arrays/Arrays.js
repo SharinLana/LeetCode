@@ -4356,6 +4356,78 @@ console.log(
   shortestCompletingWord("1s3 456", ["looks", "pest", "stew", "show"])
 ); // "pest"
 
+// * 18. (914). X of a Kind in a Deck of Cards ------------------------------------------
+// You are given an integer array deck
+// where deck[i] represents the number written on the ith card.
+
+// Partition the cards into one or more groups such that:
+
+// Each group has exactly x cards where x > 1, and
+// All the cards in one group have the same integer written on them.
+// Return true if such partition is possible, or false otherwise.
+
+// Example 1:
+// Input: deck = [1,2,3,4,4,3,2,1]
+// Output: true
+// Explanation: Possible partition [1,1],[2,2],[3,3],[4,4].
+
+// Example 2:
+// Input: deck = [1,1,1,2,2,2,3,3]
+// Output: false
+// Explanation: No possible partition.
+
+const hasGroupsSizeX = function (deck) {
+  let hashTable = {};
+  // Fill out hashTable
+  for (elem of deck) {
+    hashTable[elem] ? (hashTable[elem] += 1) : (hashTable[elem] = 1);
+  }
+
+  // find the lowest value in the hashTable
+  const lowestVal = Object.keys(hashTable).reduce(
+    (acc, key) => Math.min(acc, hashTable[key]),
+    Infinity
+  );
+  if (lowestVal <= 1) return false;
+
+  let leftovers = [];
+
+  // Chcek if hashtable values can be divided by the lowest value without a remainder
+  leftovers = Object.keys(hashTable).filter(
+    (key) => hashTable[key] % lowestVal !== 0
+  );
+
+  // If they can't:
+  if (leftovers.length > 0) {
+    // Odd and even numbers can be divided by 3 without a remainder
+    leftovers = Object.keys(hashTable).filter(
+      (key) => hashTable[key] % 3 !== 0
+    );
+    // If it's not the case, and the lowestVal is an even number,
+    // then try to divide them by 2
+    if (leftovers.length > 0 && lowestVal % 2 === 0) {
+      leftovers = Object.keys(hashTable).filter(
+        (key) => hashTable[key] % 2 !== 0
+      );
+    }
+    // If it's not the case, and the lowestVal is an odd number,
+    // try to divide values in hashTable by 5
+    if (leftovers.length > 0 && lowestVal % 5 === 0) {
+      leftovers = Object.keys(hashTable).filter(
+        (key) => hashTable[key] % 5 !== 0
+      );
+    }
+  }
+
+  // If we still have some keys left in the leftovers array, return false
+  return leftovers.length ? false : true;
+};
+
+console.log(hasGroupsSizeX([1, 2, 3, 4, 4, 3, 2, 1])); // true
+console.log(hasGroupsSizeX([1, 1, 1, 2, 2, 2, 3, 3])); // false
+console.log(hasGroupsSizeX([1])); // false
+console.log(hasGroupsSizeX([1, 1, 1, 1, 2, 2, 2, 2, 2, 2])); // true
+
 // ! =================== Matrix ====================
 
 // * 1. Matrix Cells in Distance Order ------------------------------------------
