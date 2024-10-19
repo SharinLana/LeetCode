@@ -3477,6 +3477,67 @@ console.log(mostCommonWord("a.", [])); // "a"
 console.log(mostCommonWord("Bob", [])); // bob
 console.log(mostCommonWord("a, a, a, a, b,b,b,c, c", ["a"])); // b
 
+// * 16. (942). DI String Match ------------------------------------------
+// A permutation perm of n + 1 integers of all the integers in the range [0, n]
+// can be represented as a string s of length n where:
+
+// s[i] == 'I' if perm[i] < perm[i + 1], and
+// s[i] == 'D' if perm[i] > perm[i + 1].
+// Given a string s, reconstruct the permutation perm and return it.
+// If there are multiple valid permutations perm, return any of them.
+
+// Example 1:
+// Input: s = "IDID"
+// Output: [0,4,1,3,2]
+
+// Example 2:
+// Input: s = "III"
+// Output: [0,1,2,3]
+
+// Example 3:
+// Input: s = "DDI"
+// Output: [3,2,0,1]
+const diStringMatch = function (s) {
+  let iCounter = 0;
+  let dCounter = 0;
+
+  for (let elem of s) {
+    if (elem === "I") {
+      iCounter++;
+    } else {
+      dCounter++;
+    }
+  }
+
+  let iArr = [];
+  let dArr = [];
+
+  for (let i = 0; i <= s.length; i++) {
+    if (i <= iCounter ) {
+      iArr.push(i);
+    } else {
+      dArr.push(i);
+    }
+  }
+
+  let result = [];
+
+  for (let elem of s) {
+    if (elem === "I") {
+      result.push(iArr.shift())
+    } else {
+      result.push(dArr.pop());
+    }
+  }
+
+  result.push(iArr.shift());
+  return result;
+};
+
+console.log(diStringMatch("IDID")); // [0,4,1,3,2]
+console.log(diStringMatch("III")); // [0,1,2,3]
+console.log(diStringMatch("DDI")); // [3,2,0,1]
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
