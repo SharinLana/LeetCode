@@ -3584,6 +3584,52 @@ console.log(minDeletionSize(["cba", "daf", "ghi"])); // 1
 console.log(minDeletionSize(["a", "b"])); // 0
 console.log(minDeletionSize(["zyx", "wvu", "tsr"])); // 3
 
+// * 18. (953). Verifying an Alien Dictionary ------------------------------------------
+// In an alien language, surprisingly, they also use English lowercase letters,
+// but possibly in a different order.
+// The order of the alphabet is some permutation of lowercase letters.
+
+// Given a sequence of words written in the alien language, and the order of the alphabet,
+// return true if and only if the given words are sorted lexicographically in this alien language.
+
+// Example 1:
+// Input: words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
+// Output: true
+// Explanation: As 'h' comes before 'l' in this language, then the sequence is sorted.
+
+// Example 2:
+// Input: words = ["word","world","row"], order = "worldabcefghijkmnpqstuvxyz"
+// Output: false
+// Explanation: As 'd' comes after 'l' in this language, then words[0] > words[1],
+// hence the sequence is unsorted.
+
+const isAlienSorted = function (words, order) {
+  // Assign each letter of the order string to a unique number
+  let hashTable = {};
+  for (let i = 0; i < order.length; i++) {
+    hashTable[order[i]] = i + 1;
+  }
+
+  for (let i = 0; i < words.length - 1; i++) {
+    for (let j = 0; j < words[i].length; j++) {
+      if (words[i][j] === words[i + 1][j]) continue;
+      if (words[i + 1][j] === undefined) return false;
+      if (hashTable[words[i][j]] > hashTable[words[i + 1][j]]) return false;
+      break;
+    }
+  }
+  return true;
+};
+
+console.log(isAlienSorted(["hello", "leetcode"], "hlabcdefgijkmnopqrstuvwxyz")); // true
+console.log(
+  isAlienSorted(["word", "world", "row"], "worldabcefghijkmnpqstuvxyz")
+); // false
+console.log(isAlienSorted(["apple", "app"], "abcdefghijklmnopqrstuvwxyz")); // false
+console.log(isAlienSorted(["l", "h"], "xkbwnqozvterhpjifgualycmds")); // false
+console.log(isAlienSorted(["apap", "app"], "abcdefghijklmnopqrstuvwxyz")); // true
+console.log(isAlienSorted(["hello", "hello"], "abcdefghijklmnopqrstuvwxyz")); // true
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
@@ -7174,4 +7220,5 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
+
 
