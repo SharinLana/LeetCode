@@ -6327,6 +6327,27 @@ const sortArrayByParityII = function (nums) {
 console.log(sortArrayByParityII([4, 2, 5, 7])); // [4,5,2,7]
 console.log(sortArrayByParityII([2, 3])); // [2, 3]
 
+// * 12. (977). Squares of a Sorted Array ------------------------------------------
+// Given an integer array nums sorted in non-decreasing order,
+// return an array of the squares of each number sorted in non-decreasing order.
+
+// Example 1:
+// Input: nums = [-4,-1,0,3,10]
+// Output: [0,1,9,16,100]
+// Explanation: After squaring, the array becomes [16,1,0,9,100].
+// After sorting, it becomes [0,1,9,16,100].
+
+// Example 2:
+// Input: nums = [-7,-3,2,3,11]
+// Output: [4,9,9,49,121]
+
+const sortedSquares = function (nums) {
+  return nums.sort((a, b) => Math.abs(a) - Math.abs(b)).map((num) => num * num);
+};
+
+console.log(sortedSquares([-4, -1, 0, 3, 10])); // [0,1,9,16,100]
+console.log(sortedSquares([-7, -3, 2, 3, 11])); // [4,9,9,49,121]
+
 // ! =============== Prefix Sum ==============
 
 // * 1. Running Sum of 1d Array ---------------------------------
@@ -7257,5 +7278,3 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
-
-
