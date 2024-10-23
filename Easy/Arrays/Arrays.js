@@ -1941,14 +1941,21 @@ console.log(fairCandySwap([1, 2, 5], [2, 4])); // [5, 4]
 
 const addToArrayForm = function (num, k) {
   let sum = BigInt(num.join("")) + BigInt(k);
-  return sum.toString().split("").map((elem) => +(elem))
+  return sum
+    .toString()
+    .split("")
+    .map((elem) => +elem);
 };
 
 console.log(addToArrayForm([1, 2, 0, 0], 34)); // [1,2,3,4]
 console.log(addToArrayForm([2, 7, 4], 181)); // [4,5,5]
 console.log(addToArrayForm([2, 1, 5], 806)); // [1,0,2,1]
-console.log(addToArrayForm([1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,0,6,3], 516)); // [1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,5,7,9]
-
+console.log(
+  addToArrayForm(
+    [1, 2, 6, 3, 0, 7, 1, 7, 1, 9, 7, 5, 6, 6, 4, 4, 0, 0, 6, 3],
+    516
+  )
+); // [1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,5,7,9]
 
 // ! =============== Simulation Problems ===================
 
@@ -4650,6 +4657,73 @@ const repeatedNTimes = function (nums) {
 console.log(repeatedNTimes([1, 2, 3, 3])); // 3
 console.log(repeatedNTimes([2, 1, 2, 5, 3, 2])); // 2
 console.log(repeatedNTimes([5, 1, 5, 2, 5, 3, 5, 4])); // 5
+
+// * 20. (997). Find the Town Judge -----------------------------------------
+// In a town, there are n people labeled from 1 to n.
+// There is a rumor that one of these people is secretly the town judge.
+// If the town judge exists, then:
+// The town judge trusts nobody.
+// Everybody (except for the town judge) trusts the town judge.
+// There is exactly one person that satisfies properties 1 and 2.
+// You are given an array trust where trust[i] = [ai, bi] representing
+// that the person labeled ai trusts the person labeled bi.
+// If a trust relationship does not exist in trust array,
+// then such a trust relationship does not exist.
+
+// Return the label of the town judge if the town judge exists
+// and can be identified, or return -1 otherwise.
+
+// Example 1:
+// Input: n = 2, trust = [[1,2]]
+// Output: 2
+
+// Example 2:
+// Input: n = 3, trust = [[1,3],[2,3]]
+// Output: 3
+
+// Example 3:
+// Input: n = 3, trust = [[1,3],[2,3],[3,1]]
+// Output: -1
+
+const findJudge = function (n, trust) {
+  if (n > 1 && !trust.length) return -1;
+  if (n === 1 && !trust.length) return n;
+
+  let trustedBy = {};
+  let trustsSomeone = {};
+
+  trust.map((arr) => {
+    trustedBy[arr[1]] ? (trustedBy[arr[1]] += 1) : (trustedBy[arr[1]] = 1);
+    trustsSomeone[arr[0]] = true;
+    if (!trustsSomeone[arr[1]]) trustsSomeone[arr[1]] = false;
+  });
+
+  let potentialJudge = Object.keys(trustsSomeone).filter(
+    (key) => trustsSomeone[key] === false
+  );
+
+  if (!potentialJudge.length || trustedBy[potentialJudge[0]] !== n - 1) {
+    return -1;
+  }
+
+  return +potentialJudge[0];
+};
+
+console.log(findJudge(2, [[1, 2]])); // 2
+console.log(
+  findJudge(3, [
+    [1, 3],
+    [2, 3],
+  ])
+); // 3
+console.log(
+  findJudge(3, [
+    [1, 3],
+    [2, 3],
+    [3, 1],
+  ])
+); // -1
+
 
 // ! =================== Matrix ====================
 
