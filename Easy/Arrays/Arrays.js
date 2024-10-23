@@ -4686,26 +4686,34 @@ console.log(repeatedNTimes([5, 1, 5, 2, 5, 3, 5, 4])); // 5
 // Output: -1
 
 const findJudge = function (n, trust) {
+  // If there are several people in town and anybody trusts nobody:
   if (n > 1 && !trust.length) return -1;
+  // If there's only 1 person in a town, and he does not trust anyone
   if (n === 1 && !trust.length) return n;
 
   let trustedBy = {};
   let trustsSomeone = {};
 
   trust.map((arr) => {
+    // Count persons in whom others trust
     trustedBy[arr[1]] ? (trustedBy[arr[1]] += 1) : (trustedBy[arr[1]] = 1);
+
+    // Mark persons who trust somebody as true
     trustsSomeone[arr[0]] = true;
+    // If there is a person who doesn't trust anyone, mark him as false
     if (!trustsSomeone[arr[1]]) trustsSomeone[arr[1]] = false;
   });
 
+  // Find a person who doesn't trust anyone (marked as false in the trustsSomeone hash table)
   let potentialJudge = Object.keys(trustsSomeone).filter(
     (key) => trustsSomeone[key] === false
   );
 
+  // If there's no such a person, or if its value in the trustedBy hash table !== n - 1:
   if (!potentialJudge.length || trustedBy[potentialJudge[0]] !== n - 1) {
     return -1;
   }
-
+  // else:
   return +potentialJudge[0];
 };
 
@@ -4723,7 +4731,6 @@ console.log(
     [3, 1],
   ])
 ); // -1
-
 
 // ! =================== Matrix ====================
 
@@ -7385,4 +7392,3 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
-
