@@ -3670,6 +3670,35 @@ console.log(isAlienSorted(["l", "h"], "xkbwnqozvterhpjifgualycmds")); // false
 console.log(isAlienSorted(["apap", "app"], "abcdefghijklmnopqrstuvwxyz")); // true
 console.log(isAlienSorted(["hello", "hello"], "abcdefghijklmnopqrstuvwxyz")); // true
 
+// * 19. (1002). Find Common Characters ------------------------------------------
+// Given a string array words, return an array of all characters
+// that show up in all strings within the words (including duplicates).
+// You may return the answer in any order.
+
+// Example 1:
+// Input: words = ["bella","label","roller"]
+// Output: ["e","l","l"]
+
+// Example 2:
+// Input: words = ["cool","lock","cook"]
+// Output: ["c","o"]
+
+const commonChars = function (words) {
+  let result = [];
+  let firstString = words[0];
+
+  for (let char of firstString) {
+    if (words.every((word) => word.includes(char))) {
+      result.push(char);
+      words = words.map((word) => word.replace(char, ""));
+    }
+  }
+  return result;
+};
+
+console.log(commonChars(["bella", "label", "roller"])); // ["e","l","l"]
+console.log(commonChars(["cool", "lock", "cook"])); // ["c","o"]
+
 // ! =============== Enumeration ===================
 
 // ! =============== Hash Table ====================
