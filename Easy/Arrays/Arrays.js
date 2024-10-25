@@ -7012,6 +7012,56 @@ const lemonadeChange = function (bills) {
 console.log(lemonadeChange([5, 5, 5, 10, 20])); // true
 console.log(lemonadeChange([5, 5, 10, 10, 20])); // false
 
+// * 5. (1005). Maximize Sum Of Array After K Negations ------------------------------------------
+// Given an integer array nums and an integer k,
+// modify the array in the following way:
+// choose an index i and replace nums[i] with -nums[i].
+// You should apply this process exactly k times.
+// You may choose the same index i multiple times.
+// Return the largest possible sum of the array after modifying it in this way.
+
+// Example 1:
+// Input: nums = [4,2,3], k = 1
+// Output: 5
+// Explanation: Choose index 1 and nums becomes [4,-2,3].
+
+// Example 2:
+// Input: nums = [3,-1,0,2], k = 3
+// Output: 6
+// Explanation: Choose indices (1, 2, 2) and nums becomes [3,1,0,2].
+
+// Example 3:
+// Input: nums = [2,-3,-1,5,-4], k = 2
+// Output: 13
+// Explanation: Choose indices (1, 4) and nums becomes [2,3,-1,5,4].
+
+const largestSumAfterKNegations = function (nums, k) {
+  nums = nums.sort((a, b) => a - b);
+  let counter = 0;
+  let i = 0;
+
+  while (counter !== k) {
+    nums[i] *= -1;
+    counter++;
+    if (nums[i + 1] > 0 || nums[i + 1] === undefined) {
+      if (nums[i + 1] > nums[i] || nums[i + 1] === undefined) {
+        i--;
+      }
+    }
+    i++;
+  }
+
+  return nums.reduce((acc, elem) => acc + elem, 0);
+};
+
+console.log(largestSumAfterKNegations([4, 2, 3], 1)); // 5
+console.log(largestSumAfterKNegations([3, -1, 0, 2], 3)); // 6
+console.log(largestSumAfterKNegations([2, -3, -1, 5, -4], 2)); // 13
+console.log(largestSumAfterKNegations([-2, 5, 0, 2, -2], 3)); // 11
+console.log(largestSumAfterKNegations([8, -7, -3, -9, 1, 9, -6, -9, 3], 8)); // 53
+console.log(largestSumAfterKNegations([-4, -2, -3], 4)); // 5
+
+
 // ! =============== Backtracking ==============
 
 // ! =============== Heap (Priority Queue) ==============
@@ -7421,3 +7471,4 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
+
