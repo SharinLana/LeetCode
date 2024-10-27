@@ -2810,6 +2810,62 @@ console.log(
   ])
 ); // 5.50000
 
+// * 10. (1037). Valid Boomerang ------------------------------------------
+// Given an array points where points[i] = [xi, yi] represents a point on the X-Y plane,
+// return true if these points are a boomerang.
+
+// A boomerang is a set of three points that are all distinct and not in a straight line.
+
+// Example 1:
+// Input: points = [[1,1],[2,3],[3,2]]
+// Output: true
+
+// Example 2:
+// Input: points = [[1,1],[2,2],[3,3]]
+// Output: false
+
+const isBoomerang = function (points) {
+  // if the three points forms a triangle, then it's a boomerang.
+  // otherwise, return false.
+  // To understand, if it's a triangle or not, we have to try to find the area of the figure.
+  // if the area is not equal 0, then we return true.
+
+  // Formula for determining the area of the figure:
+  //0.5 * [x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)]
+
+  let area =
+    0.5 *
+    [
+      points[0][0] * (points[1][1] - points[2][1]) +
+        points[1][0] * (points[2][1] - points[0][1]) +
+        points[2][0] * (points[0][1] - points[1][1]),
+    ];
+
+    return area !== 0 ? true : false;
+};
+
+console.log(
+  isBoomerang([
+    [1, 1],
+    [2, 3],
+    [3, 2],
+  ])
+); // true
+console.log(
+  isBoomerang([
+    [1, 1],
+    [2, 2],
+    [3, 3],
+  ])
+); // false
+console.log(
+  isBoomerang([
+    [0, 0],
+    [1, 0],
+    [2, 2],
+  ])
+); // true
+
 // ! =============== Array of Strings ===================
 
 // * 1. Find Words Containing Character ----------------------------------------------------
@@ -6808,7 +6864,7 @@ console.log(hasTrailingZeros([1, 2, 3, 4, 5])); // true
 console.log(hasTrailingZeros([2, 4, 8, 16])); // true
 console.log(hasTrailingZeros([1, 3, 5, 7, 9])); // false
 
-// * 5. (1018). Binary Prefix Divisible By 5 ------------------------------------------
+// * 5 . (1018). Binary Prefix Divisible By 5 ------------------------------------------
 // You are given a binary array nums (0-indexed).
 // We define xi as the number whose binary representation
 // is the subarray nums[0..i] (from most-significant-bit to least-significant-bit).
@@ -6831,7 +6887,7 @@ const prefixDivBy5 = function (nums) {
   let currentNum = 0;
 
   for (let i = 0; i < nums.length; i++) {
-    currentNum = ((currentNum * 2) + nums[i]) % 5;
+    currentNum = (currentNum * 2 + nums[i]) % 5;
     result.push(currentNum === 0);
   }
   return result;
@@ -7555,5 +7611,4 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
-
 
