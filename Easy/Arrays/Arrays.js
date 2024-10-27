@@ -6808,6 +6808,38 @@ console.log(hasTrailingZeros([1, 2, 3, 4, 5])); // true
 console.log(hasTrailingZeros([2, 4, 8, 16])); // true
 console.log(hasTrailingZeros([1, 3, 5, 7, 9])); // false
 
+// * 5. (1018). Binary Prefix Divisible By 5 ------------------------------------------
+// You are given a binary array nums (0-indexed).
+// We define xi as the number whose binary representation
+// is the subarray nums[0..i] (from most-significant-bit to least-significant-bit).
+
+// For example, if nums = [1,0,1], then x0 = 1, x1 = 2, and x2 = 5.
+// Return an array of booleans answer where answer[i] is true if xi is divisible by 5.
+
+// Example 1:
+// Input: nums = [0,1,1]
+// Output: [true,false,false]
+// Explanation: The input numbers in binary are 0, 01, 011; which are 0, 1, and 3 in base-10.
+// Only the first number is divisible by 5, so answer[0] is true.
+
+// Example 2:
+// Input: nums = [1,1,1]
+// Output: [false,false,false]
+
+const prefixDivBy5 = function (nums) {
+  let result = [];
+  let currentNum = 0;
+
+  for (let i = 0; i < nums.length; i++) {
+    currentNum = ((currentNum * 2) + nums[i]) % 5;
+    result.push(currentNum === 0);
+  }
+  return result;
+};
+
+console.log(prefixDivBy5([0, 1, 1])); // [true,false,false]
+console.log(prefixDivBy5([1, 1, 1])); // [false,false,false]
+
 // ! =============== Greedy Algorithm ==============
 
 // * 1. (976). Largest Perimeter Triangle
@@ -7113,7 +7145,6 @@ console.log(
 console.log(canThreePartsEqualSum([1, -1, 1, -1])); // false
 console.log(canThreePartsEqualSum([0, 0, 0, 0])); // true
 console.log(canThreePartsEqualSum([10, -10, 10, -10, 10, -10, 10, -10])); // true
-
 
 // ! =============== Backtracking ==============
 
@@ -7524,4 +7555,5 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 // ! =============== Linked List ==============
 
 // ! =============== DFS, BFS ==============
+
 
