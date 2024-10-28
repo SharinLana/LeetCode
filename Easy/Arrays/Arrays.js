@@ -1957,6 +1957,53 @@ console.log(
   )
 ); // [1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,5,7,9]
 
+// * 48. (1046). Last Stone Weight ------------------------------------------
+// You are given an array of integers stones where stones[i] 
+// is the weight of the ith stone.
+
+// We are playing a game with the stones. On each turn, 
+// we choose the heaviest two stones and smash them together. 
+// Suppose the heaviest two stones have weights x and y with x <= y. 
+// The result of this smash is:
+
+// If x == y, both stones are destroyed, and
+// If x != y, the stone of weight x is destroyed, 
+// and the stone of weight y has new weight y - x.
+// At the end of the game, there is at most one stone left.
+
+// Return the weight of the last remaining stone. If there are no stones left, return 0.
+
+// Example 1:
+// Input: stones = [2,7,4,1,8,1]
+// Output: 1
+// Explanation: 
+// We combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then,
+// we combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then,
+// we combine 2 and 1 to get 1 so the array converts to [1,1,1] then,
+// we combine 1 and 1 to get 0 so the array converts to [1] then that's the value of the last stone.
+
+// Example 2:
+// Input: stones = [1]
+// Output: 1
+
+const lastStoneWeight = function (stones) {
+  while (stones.length > 1) {
+    let firstMax = Math.max.apply(null, stones)
+    stones.splice(stones.indexOf(firstMax), 1);
+
+    let secondMax = Math.max.apply(null, stones);
+    stones.splice(stones.indexOf(secondMax), 1);
+
+    let diff = firstMax - secondMax;
+    stones.push(diff);
+
+  }
+  return stones[0];
+};
+
+console.log(lastStoneWeight([2, 7, 4, 1, 8, 1])); // 1
+console.log(lastStoneWeight([1])); // 1
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -6547,6 +6594,60 @@ const sortedSquares = function (nums) {
 console.log(sortedSquares([-4, -1, 0, 3, 10])); // [0,1,9,16,100]
 console.log(sortedSquares([-7, -3, 2, 3, 11])); // [4,9,9,49,121]
 
+// * 13. (1051). Height Checker ------------------------------------------
+// A school is trying to take an annual photo of all the students. 
+// The students are asked to stand in a single file line in non-decreasing order by height. 
+// Let this ordering be represented by the integer array expected where expected[i] 
+// is the expected height of the ith student in line.
+
+// You are given an integer array heights representing the current order 
+// that the students are standing in. 
+// Each heights[i] is the height of the ith student in line (0-indexed).
+
+// Return the number of indices where heights[i] != expected[i].
+
+// Example 1:
+// Input: heights = [1,1,4,2,1,3]
+// Output: 3
+// Explanation: 
+// heights:  [1,1,4,2,1,3]
+// expected: [1,1,1,2,3,4]
+// Indices 2, 4, and 5 do not match.
+
+// Example 2:
+// Input: heights = [5,1,2,3,4]
+// Output: 5
+// Explanation:
+// heights:  [5,1,2,3,4]
+// expected: [1,2,3,4,5]
+// All indices do not match.
+
+// Example 3:
+// Input: heights = [1,2,3,4,5]
+// Output: 0
+// Explanation:
+// heights:  [1,2,3,4,5]
+// expected: [1,2,3,4,5]
+// All indices match.
+
+var heightChecker = function (heights) {
+  // slice() creates a shallow copy of the input array,
+  // so the input array remains the same
+  let expected = heights.slice().sort((a,b) => a - b);
+  let counter = 0;
+  console.log(heights)
+  console.log(expected)
+  for (let i = 0; i < heights.length; i++) {
+    if (heights[i] !== expected[i]) counter++;
+  }
+
+  return counter;
+};
+
+console.log(heightChecker([1, 1, 4, 2, 1, 3])); // 3
+console.log(heightChecker([5, 1, 2, 3, 4])); // 5
+console.log(heightChecker([1, 2, 3, 4, 5])); // 0
+
 // ! =============== Prefix Sum ==============
 
 // * 1. Running Sum of 1d Array ---------------------------------
@@ -7612,49 +7713,3 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 
 // ! =============== DFS, BFS ==============
 
-// * 1. (1046). Last Stone Weight ------------------------------------------
-// You are given an array of integers stones where stones[i] 
-// is the weight of the ith stone.
-
-// We are playing a game with the stones. On each turn, 
-// we choose the heaviest two stones and smash them together. 
-// Suppose the heaviest two stones have weights x and y with x <= y. 
-// The result of this smash is:
-
-// If x == y, both stones are destroyed, and
-// If x != y, the stone of weight x is destroyed, 
-// and the stone of weight y has new weight y - x.
-// At the end of the game, there is at most one stone left.
-
-// Return the weight of the last remaining stone. If there are no stones left, return 0.
-
-// Example 1:
-// Input: stones = [2,7,4,1,8,1]
-// Output: 1
-// Explanation: 
-// We combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then,
-// we combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then,
-// we combine 2 and 1 to get 1 so the array converts to [1,1,1] then,
-// we combine 1 and 1 to get 0 so the array converts to [1] then that's the value of the last stone.
-
-// Example 2:
-// Input: stones = [1]
-// Output: 1
-
-const lastStoneWeight = function (stones) {
-  while (stones.length > 1) {
-    let firstMax = Math.max.apply(null, stones)
-    stones.splice(stones.indexOf(firstMax), 1);
-
-    let secondMax = Math.max.apply(null, stones);
-    stones.splice(stones.indexOf(secondMax), 1);
-
-    let diff = firstMax - secondMax;
-    stones.push(diff);
-
-  }
-  return stones[0];
-};
-
-console.log(lastStoneWeight([2, 7, 4, 1, 8, 1])); // 1
-console.log(lastStoneWeight([1])); // 1
