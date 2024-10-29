@@ -1958,16 +1958,16 @@ console.log(
 ); // [1,2,6,3,0,7,1,7,1,9,7,5,6,6,4,4,0,5,7,9]
 
 // * 48. (1046). Last Stone Weight ------------------------------------------
-// You are given an array of integers stones where stones[i] 
+// You are given an array of integers stones where stones[i]
 // is the weight of the ith stone.
 
-// We are playing a game with the stones. On each turn, 
-// we choose the heaviest two stones and smash them together. 
-// Suppose the heaviest two stones have weights x and y with x <= y. 
+// We are playing a game with the stones. On each turn,
+// we choose the heaviest two stones and smash them together.
+// Suppose the heaviest two stones have weights x and y with x <= y.
 // The result of this smash is:
 
 // If x == y, both stones are destroyed, and
-// If x != y, the stone of weight x is destroyed, 
+// If x != y, the stone of weight x is destroyed,
 // and the stone of weight y has new weight y - x.
 // At the end of the game, there is at most one stone left.
 
@@ -1976,7 +1976,7 @@ console.log(
 // Example 1:
 // Input: stones = [2,7,4,1,8,1]
 // Output: 1
-// Explanation: 
+// Explanation:
 // We combine 7 and 8 to get 1 so the array converts to [2,4,1,1,1] then,
 // we combine 2 and 4 to get 2 so the array converts to [2,1,1,1] then,
 // we combine 2 and 1 to get 1 so the array converts to [1,1,1] then,
@@ -1988,7 +1988,7 @@ console.log(
 
 const lastStoneWeight = function (stones) {
   while (stones.length > 1) {
-    let firstMax = Math.max.apply(null, stones)
+    let firstMax = Math.max.apply(null, stones);
     stones.splice(stones.indexOf(firstMax), 1);
 
     let secondMax = Math.max.apply(null, stones);
@@ -1996,7 +1996,6 @@ const lastStoneWeight = function (stones) {
 
     let diff = firstMax - secondMax;
     stones.push(diff);
-
   }
   return stones[0];
 };
@@ -2888,7 +2887,7 @@ const isBoomerang = function (points) {
         points[2][0] * (points[0][1] - points[1][1]),
     ];
 
-    return area !== 0 ? true : false;
+  return area !== 0 ? true : false;
 };
 
 console.log(
@@ -6595,13 +6594,13 @@ console.log(sortedSquares([-4, -1, 0, 3, 10])); // [0,1,9,16,100]
 console.log(sortedSquares([-7, -3, 2, 3, 11])); // [4,9,9,49,121]
 
 // * 13. (1051). Height Checker ------------------------------------------
-// A school is trying to take an annual photo of all the students. 
-// The students are asked to stand in a single file line in non-decreasing order by height. 
-// Let this ordering be represented by the integer array expected where expected[i] 
+// A school is trying to take an annual photo of all the students.
+// The students are asked to stand in a single file line in non-decreasing order by height.
+// Let this ordering be represented by the integer array expected where expected[i]
 // is the expected height of the ith student in line.
 
-// You are given an integer array heights representing the current order 
-// that the students are standing in. 
+// You are given an integer array heights representing the current order
+// that the students are standing in.
 // Each heights[i] is the height of the ith student in line (0-indexed).
 
 // Return the number of indices where heights[i] != expected[i].
@@ -6609,7 +6608,7 @@ console.log(sortedSquares([-7, -3, 2, 3, 11])); // [4,9,9,49,121]
 // Example 1:
 // Input: heights = [1,1,4,2,1,3]
 // Output: 3
-// Explanation: 
+// Explanation:
 // heights:  [1,1,4,2,1,3]
 // expected: [1,1,1,2,3,4]
 // Indices 2, 4, and 5 do not match.
@@ -6633,10 +6632,10 @@ console.log(sortedSquares([-7, -3, 2, 3, 11])); // [4,9,9,49,121]
 var heightChecker = function (heights) {
   // slice() creates a shallow copy of the input array,
   // so the input array remains the same
-  let expected = heights.slice().sort((a,b) => a - b);
+  let expected = heights.slice().sort((a, b) => a - b);
   let counter = 0;
-  console.log(heights)
-  console.log(expected)
+  console.log(heights);
+  console.log(expected);
   for (let i = 0; i < heights.length; i++) {
     if (heights[i] !== expected[i]) counter++;
   }
@@ -7713,3 +7712,168 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 
 // ! =============== DFS, BFS ==============
 
+const productOfArrayExceptSelf = (arr) => {
+  const length = arr.length;
+  const result = new Array(length).fill(1);
+
+  // Calculate products of elements to the left of each index
+  let leftProduct = 1;
+  for (let i = 0; i < length; i++) {
+    result[i] = leftProduct;
+    leftProduct *= arr[i];
+  }
+
+  // Calculate products of elements to the right of each index
+  let rightProduct = 1;
+  for (let j = length - 1; j >= 0; j--) {
+    result[j] *= rightProduct;
+    rightProduct *= arr[j];
+  }
+
+  return result;
+};
+
+console.log(productOfArrayExceptSelf([1, 2, 3, 4])); // [24, 12, 8, 6]
+console.log(productOfArrayExceptSelf([5, 6, 2])); // [12, 10, 30]
+console.log(productOfArrayExceptSelf([2, 0, 4, 5])); // [0, 40, 0, 0]
+
+// Given an array of integers, nums, and an integer k,
+// your task is to rotate the array to the right by k steps.
+// This means that the elements of the array will shift to the right,
+// and the elements that go beyond the last index of the array will wrap around
+// to the beginning of the array.
+// The rotation should be done in-place, meaning you must modify the original array
+// without using an additional array.
+
+const rotateArrToTheRight = (nums, k) => {
+  // In case k is larger than the length of the array, we use modulo to optimize.
+  k = k % nums.length;
+
+  // Helper function to reverse a portion of the array.
+  const reverse = (arr, start, end) => {
+    while (start < end) {
+      [arr[start], arr[end]] = [arr[end], arr[start]]; // Swap elements
+      start++;
+      end--;
+    }
+  };
+
+  // Reverse the entire array
+  reverse(nums, 0, nums.length - 1);
+
+  // Reverse the first k elements
+  reverse(nums, 0, k - 1);
+
+  // Reverse the rest of the elements
+  reverse(nums, k, nums.length - 1);
+};
+
+console.log(rotateArrToTheRight([1, 2, 3, 4, 5], 2)); // [4, 5, 1, 2]
+console.log(rotateArrToTheRight([-1, -100, 3, 99], 2)); // [3, 99, -1, -100]
+console.log(rotateArrToTheRight([1, 2], 3)); // [2, 1]
+
+// The task is to find the length of the longest substring within a given string
+// that does not contain any repeating characters.
+// A substring is a contiguous sequence of characters within the string,
+// and it should be as long as possible while ensuring no character appears more than once.
+
+const longestSubstringOfString = (string) => {
+  if (!string.length) return 0;
+  if (string.length === 1) return 1;
+
+  let start = 0;
+  let end = start + 1;
+  let counter = 1;
+  let result = 0;
+
+  while (end < string.length) {
+    if (!string.slice(start, end).includes(string[end])) {
+      counter++;
+      end++;
+    } else {
+      counter = 1;
+      start++;
+      end = start + 1;
+    }
+    result = Math.max(result, counter);
+  }
+  return result;
+};
+
+console.log(longestSubstringOfString("abcabcbb")); // 3
+console.log(longestSubstringOfString("bbbbb")); // 1
+console.log(longestSubstringOfString("pwwkew")); // 3
+console.log(longestSubstringOfString("")); // 0
+console.log(longestSubstringOfString("abba")); // 2
+
+// Given a string containing only the characters (, ), {, }, [ and ],
+// determine if the input string is valid. A string is considered valid if:
+
+// Each opening bracket has a corresponding closing bracket of the same type.
+// The brackets are correctly nested,
+// meaning every closing bracket matches the most recent unmatched opening bracket.
+
+const isInputStringValid = (str) => {
+  let stack = [];
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === "(" || str[i] === "{" || str[i] === "[") {
+      stack.push(str[i]);
+    } else {
+      if (!stack.length) {
+        return false;
+      } else if (
+        (str[i] === ")" && stack[stack.length - 1] !== "(") ||
+        (str[i] === "}" && stack[stack.length - 1] !== "{") ||
+        (str[i] === "]" && stack[stack.length - 1] !== "[")
+      ) {
+        return false;
+      } else {
+        stack.pop();
+      }
+    }
+  }
+
+  return !stack.length ? true : false;
+};
+console.log(isInputStringValid("()")); // true
+console.log(isInputStringValid("()[]{}")); // true
+console.log(isInputStringValid("(]")); // false
+console.log(isInputStringValid("([{}])")); // true
+console.log(isInputStringValid("([)]")); // false
+
+// Given an array of strings, group the strings that are anagrams of each other.
+// Anagrams are words that contain the same characters in the same frequency
+// but in different orders. The function should return a list of groups,
+// where each group contains anagrams from the input array.
+
+const groupAnagrams = (arr) => {
+  let result = [];
+
+  let sortedStrings = arr.map((string) => string.split("").sort().join(""));
+
+  for (let i = 0; i < sortedStrings.length; i++) {
+    let subArr = [];
+    if (result.flat().includes(arr[i])) {
+      continue;
+    } else {
+      subArr.push(arr[i]);
+
+      for (let j = i + 1; j < sortedStrings.length; j++) {
+        if (sortedStrings[i] === sortedStrings[j]) {
+          subArr.push(arr[j]);
+        }
+      }
+      result.push(subArr);
+    }
+  }
+
+  return result;
+};
+
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])); // [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
+console.log(groupAnagrams([""])); // [[""]]
+console.log(groupAnagrams(["a"])); // [["a"]]
+console.log(
+  groupAnagrams(["listen", "silent", "enlist", "inlets", "google", "gogole"])
+); // [["listen", "silent", "enlist", "inlets"], ["google", "gogole"]]
