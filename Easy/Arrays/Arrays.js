@@ -2003,6 +2003,41 @@ const lastStoneWeight = function (stones) {
 console.log(lastStoneWeight([2, 7, 4, 1, 8, 1])); // 1
 console.log(lastStoneWeight([1])); // 1
 
+// * 49. (1089). Duplicate Zeroes ------------------------------------------
+// Given a fixed-length integer array arr, duplicate each occurrence of zero, 
+// shifting the remaining elements to the right.
+
+// Note that elements beyond the length of the original array are not written. 
+// Do the above modifications to the input array in place and do not return anything.
+
+ 
+
+// Example 1:
+// Input: arr = [1,0,2,3,0,4,5,0]
+// Output: [1,0,0,2,3,0,0,4]
+// Explanation: After calling your function, the input array is modified to: [1,0,0,2,3,0,0,4]
+
+// Example 2:
+// Input: arr = [1,2,3]
+// Output: [1,2,3]
+// Explanation: After calling your function, the input array is modified to: [1,2,3]
+
+const duplicateZeros = function (arr) {
+  if (!arr.includes(0)) return arr;
+
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === 0) {
+      arr.splice(i, 0, 0);
+      i++;
+      arr.pop();
+    }
+  }
+  return arr;
+};
+
+console.log(duplicateZeros([1, 0, 2, 3, 0, 4, 5, 0])); // [1,0,0,2,3,0,0,4]
+console.log(duplicateZeros([1, 2, 3])); // [1,2,3]
+
 // ! =============== Simulation Problems ===================
 
 // * 1. Build Array From Permutation -----------------------------------------
@@ -7712,168 +7747,3 @@ console.log(sortedArrayToBST([1, 3])); // [3,1] or [3,1], or [1,null,3]
 
 // ! =============== DFS, BFS ==============
 
-const productOfArrayExceptSelf = (arr) => {
-  const length = arr.length;
-  const result = new Array(length).fill(1);
-
-  // Calculate products of elements to the left of each index
-  let leftProduct = 1;
-  for (let i = 0; i < length; i++) {
-    result[i] = leftProduct;
-    leftProduct *= arr[i];
-  }
-
-  // Calculate products of elements to the right of each index
-  let rightProduct = 1;
-  for (let j = length - 1; j >= 0; j--) {
-    result[j] *= rightProduct;
-    rightProduct *= arr[j];
-  }
-
-  return result;
-};
-
-console.log(productOfArrayExceptSelf([1, 2, 3, 4])); // [24, 12, 8, 6]
-console.log(productOfArrayExceptSelf([5, 6, 2])); // [12, 10, 30]
-console.log(productOfArrayExceptSelf([2, 0, 4, 5])); // [0, 40, 0, 0]
-
-// Given an array of integers, nums, and an integer k,
-// your task is to rotate the array to the right by k steps.
-// This means that the elements of the array will shift to the right,
-// and the elements that go beyond the last index of the array will wrap around
-// to the beginning of the array.
-// The rotation should be done in-place, meaning you must modify the original array
-// without using an additional array.
-
-const rotateArrToTheRight = (nums, k) => {
-  // In case k is larger than the length of the array, we use modulo to optimize.
-  k = k % nums.length;
-
-  // Helper function to reverse a portion of the array.
-  const reverse = (arr, start, end) => {
-    while (start < end) {
-      [arr[start], arr[end]] = [arr[end], arr[start]]; // Swap elements
-      start++;
-      end--;
-    }
-  };
-
-  // Reverse the entire array
-  reverse(nums, 0, nums.length - 1);
-
-  // Reverse the first k elements
-  reverse(nums, 0, k - 1);
-
-  // Reverse the rest of the elements
-  reverse(nums, k, nums.length - 1);
-};
-
-console.log(rotateArrToTheRight([1, 2, 3, 4, 5], 2)); // [4, 5, 1, 2]
-console.log(rotateArrToTheRight([-1, -100, 3, 99], 2)); // [3, 99, -1, -100]
-console.log(rotateArrToTheRight([1, 2], 3)); // [2, 1]
-
-// The task is to find the length of the longest substring within a given string
-// that does not contain any repeating characters.
-// A substring is a contiguous sequence of characters within the string,
-// and it should be as long as possible while ensuring no character appears more than once.
-
-const longestSubstringOfString = (string) => {
-  if (!string.length) return 0;
-  if (string.length === 1) return 1;
-
-  let start = 0;
-  let end = start + 1;
-  let counter = 1;
-  let result = 0;
-
-  while (end < string.length) {
-    if (!string.slice(start, end).includes(string[end])) {
-      counter++;
-      end++;
-    } else {
-      counter = 1;
-      start++;
-      end = start + 1;
-    }
-    result = Math.max(result, counter);
-  }
-  return result;
-};
-
-console.log(longestSubstringOfString("abcabcbb")); // 3
-console.log(longestSubstringOfString("bbbbb")); // 1
-console.log(longestSubstringOfString("pwwkew")); // 3
-console.log(longestSubstringOfString("")); // 0
-console.log(longestSubstringOfString("abba")); // 2
-
-// Given a string containing only the characters (, ), {, }, [ and ],
-// determine if the input string is valid. A string is considered valid if:
-
-// Each opening bracket has a corresponding closing bracket of the same type.
-// The brackets are correctly nested,
-// meaning every closing bracket matches the most recent unmatched opening bracket.
-
-const isInputStringValid = (str) => {
-  let stack = [];
-
-  for (let i = 0; i < str.length; i++) {
-    if (str[i] === "(" || str[i] === "{" || str[i] === "[") {
-      stack.push(str[i]);
-    } else {
-      if (!stack.length) {
-        return false;
-      } else if (
-        (str[i] === ")" && stack[stack.length - 1] !== "(") ||
-        (str[i] === "}" && stack[stack.length - 1] !== "{") ||
-        (str[i] === "]" && stack[stack.length - 1] !== "[")
-      ) {
-        return false;
-      } else {
-        stack.pop();
-      }
-    }
-  }
-
-  return !stack.length ? true : false;
-};
-console.log(isInputStringValid("()")); // true
-console.log(isInputStringValid("()[]{}")); // true
-console.log(isInputStringValid("(]")); // false
-console.log(isInputStringValid("([{}])")); // true
-console.log(isInputStringValid("([)]")); // false
-
-// Given an array of strings, group the strings that are anagrams of each other.
-// Anagrams are words that contain the same characters in the same frequency
-// but in different orders. The function should return a list of groups,
-// where each group contains anagrams from the input array.
-
-const groupAnagrams = (arr) => {
-  let result = [];
-
-  let sortedStrings = arr.map((string) => string.split("").sort().join(""));
-
-  for (let i = 0; i < sortedStrings.length; i++) {
-    let subArr = [];
-    if (result.flat().includes(arr[i])) {
-      continue;
-    } else {
-      subArr.push(arr[i]);
-
-      for (let j = i + 1; j < sortedStrings.length; j++) {
-        if (sortedStrings[i] === sortedStrings[j]) {
-          subArr.push(arr[j]);
-        }
-      }
-      result.push(subArr);
-    }
-  }
-
-  return result;
-};
-
-console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"])); // [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
-console.log(groupAnagrams([""])); // [[""]]
-console.log(groupAnagrams(["a"])); // [["a"]]
-console.log(
-  groupAnagrams(["listen", "silent", "enlist", "inlets", "google", "gogole"])
-); // [["listen", "silent", "enlist", "inlets"], ["google", "gogole"]]
